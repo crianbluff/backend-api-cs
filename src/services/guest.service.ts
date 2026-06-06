@@ -93,6 +93,7 @@ export class GuestService {
     }
 
     // Solo guest — spread individual fields at root level
+
     const {
       wasACouple: _w,
       nights,
@@ -151,13 +152,6 @@ export class GuestService {
   async delete(guestId: string): Promise<boolean> {
     const result = await GuestModel.deleteOne({ guestId });
     return result.deletedCount === 1;
-  }
-
-  /**
-   * Check if a guest exists by guestId.
-   */
-  async exists(guestId: string): Promise<boolean> {
-    return !!(await GuestModel.exists({ guestId }));
   }
 }
 

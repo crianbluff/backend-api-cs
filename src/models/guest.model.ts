@@ -106,8 +106,7 @@ const guestSchema = new Schema<IGuestDocument>(
     comments: { type: String, default: null, trim: true },
     wasACouple: { type: Boolean, required: true },
     coupleId: { type: String, default: null },
-
-    // Solo guest flat fields (undefined when wasACouple=true)
+    // Solo flat fields
     rating: { type: Number, min: 1, max: 5, default: null },
     countryCode: { type: String, lowercase: true, trim: true },
     prefixCode: { type: String, default: null },

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { guestService } from '../services/guest.service';
-import { sendSuccess, sendCreated, sendNotFound, sendBadRequest, sendInternalError } from '../utils/response';
+import { sendSuccess, sendCreated, sendNotFound, sendBadRequest } from '../utils/response';
 import { CreateGuestInput, UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 import { logger } from '../utils/logger';
 
@@ -28,12 +28,10 @@ export class GuestController {
     try {
       const { id } = req.params;
       const guest = await guestService.findById(id);
-
       if (!guest) {
         sendNotFound(res, 'Guest');
         return;
       }
-
       sendSuccess(res, guest, 'Guest retrieved successfully');
     } catch (error) {
       logger.error('[GuestController.getById]', error);
@@ -85,7 +83,6 @@ export class GuestController {
         sendNotFound(res, 'Guest');
         return;
       }
-
       sendSuccess(res, updated, 'Guest updated successfully');
     } catch (error) {
       logger.error('[GuestController.update]', error);
@@ -101,13 +98,11 @@ export class GuestController {
     try {
       const { id } = req.params;
       const deleted = await guestService.delete(id);
-
       if (!deleted) {
         sendNotFound(res, 'Guest');
         return;
       }
-
-      sendSuccess(res, null, 'Guest deleted successfully', 200);
+      sendSuccess(res, null, 'Guest deleted successfully');
     } catch (error) {
       logger.error('[GuestController.delete]', error);
       next(error);

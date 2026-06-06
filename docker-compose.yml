@@ -26,10 +26,9 @@ services:
     container_name: guests_mongo
     restart: unless-stopped
     ports:
-      - '27017:27017' # expose only for debugging; remove in prod if not needed
+      - '27017:27017'
     volumes:
       - mongo_data:/data/db
-      - ./mongo-init:/docker-entrypoint-initdb.d:ro
     environment:
       MONGO_INITDB_DATABASE: guests_db
     healthcheck:

@@ -23,12 +23,10 @@ export function globalErrorHandler(err: Error, _req: Request, res: Response, _ne
   }
 
   // Mongoose duplicate key
-  if ((err as NodeJS.ErrnoException).name === 'MongoServerError') {
-    const mongoErr = err as NodeJS.ErrnoException & { code?: number };
-    if (mongoErr.code === 11000) {
-      sendError(res, 'Duplicate key error — resource already exists', 409);
-      return;
-    }
+  const mongoErr = err as NodeJS.ErrnoException & { code?: number };
+  if (mongoErr.name === 'MongoServerError' && mongoErr.code === 11000) {
+    sendError(res, 'Duplicate key error — resource already exists', 409);
+    return;
   }
 
   // Mongoose validation error
