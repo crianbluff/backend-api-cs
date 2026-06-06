@@ -1,0 +1,17 @@
+# ─── Development image (hot-reload via ts-node-dev) ───────────────────────────
+FROM node:20-alpine
+
+ENV NODE_ENV=development
+
+WORKDIR /app
+
+# Install dependencies (including devDependencies)
+COPY package*.json ./
+RUN npm install --ignore-scripts
+
+# Source is mounted as a volume in docker-compose.dev.yml
+# so we don't COPY src here — changes reflect instantly
+
+EXPOSE 3001
+
+CMD ["npm", "run", "dev"]

@@ -1,0 +1,51 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: guests_api
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      MONGO_URI: mongodb://mongo:27017/guests_db
+      API_VERSION: v1
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX: 100
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - guests_network
+
+  mongo:
+    image: mongo:7.0-jammy
+    container_name: guests_mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017' # expose only for debugging; remove in prod if not needed
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
+    environment:
+      MONGO_INITDB_DATABASE: guests_db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - guests_network
+
+volumes:
+  mongo_data:
+    name: guests_mongo_data
+
+networks:
+  guests_network:
+    name: guests_network
+    driver: bridge
