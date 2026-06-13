@@ -18,7 +18,7 @@ const MONTHS: VisitedMonth[] = [
   'December',
 ];
 
-// ─── Sub-document for individual person info ──────────────────────────────────
+// ─── Sub-document for individual person info ─
 
 const individualInfoSchema = new Schema(
   {
@@ -122,7 +122,6 @@ const guestSchema = new Schema<IGuestDocument>(
     gender: { type: String, enum: GENDERS },
     whatsapp: { type: String, default: null },
     instagram: { type: String, default: null },
-
     // Couple nested array
     coupleInfo: { type: [individualInfoSchema], default: undefined },
   },

@@ -64,6 +64,7 @@ export class GuestService {
   /**
    * Find a single guest by its guestId.
    */
+
   async findById(guestId: string): Promise<IGuestDocument | null> {
     return GuestModel.findOne({ guestId }).lean() as Promise<IGuestDocument | null>;
   }

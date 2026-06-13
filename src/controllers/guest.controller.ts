@@ -28,10 +28,12 @@ export class GuestController {
     try {
       const { id } = req.params;
       const guest = await guestService.findById(id);
+
       if (!guest) {
-        sendNotFound(res, 'Guest');
+        sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
+
       sendSuccess(res, guest, 'Guest retrieved successfully');
     } catch (error) {
       logger.error('[GuestController.getById]', error);
@@ -43,6 +45,7 @@ export class GuestController {
    * POST /guests
    * Creates a new guest (solo or couple).
    */
+
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const input = req.body as CreateGuestInput;
@@ -63,8 +66,8 @@ export class GuestController {
       const { id } = req.params;
       const input = req.body as UpdateGuestInput;
 
-      if (Object.keys(input).length === 0) {
-        sendBadRequest(res, 'Request body must not be empty');
+      if (!input || Object.keys(input).length === 0) {
+        sendBadRequest(res, 'Request body is empty. Please provide at least one field to update.');
         return;
       }
 
@@ -73,16 +76,21 @@ export class GuestController {
         updated = await guestService.update(id, input);
       } catch (serviceError) {
         if (serviceError instanceof Error && serviceError.message.includes('wasACouple')) {
-          sendBadRequest(res, serviceError.message);
+          sendBadRequest(
+            res,
+            'The "wasACouple" field cannot be changed after a guest is created. ' +
+              'Delete this record and create a new one if the type needs to change.'
+          );
           return;
         }
         throw serviceError;
       }
 
       if (!updated) {
-        sendNotFound(res, 'Guest');
+        sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
+
       sendSuccess(res, updated, 'Guest updated successfully');
     } catch (error) {
       logger.error('[GuestController.update]', error);
@@ -98,11 +106,13 @@ export class GuestController {
     try {
       const { id } = req.params;
       const deleted = await guestService.delete(id);
+
       if (!deleted) {
-        sendNotFound(res, 'Guest');
+        sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
-      sendSuccess(res, null, 'Guest deleted successfully');
+
+      sendSuccess(res, null, `Guest "${id}" deleted successfully`);
     } catch (error) {
       logger.error('[GuestController.delete]', error);
       next(error);

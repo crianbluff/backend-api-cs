@@ -15,8 +15,11 @@ export function sendError(res: Response, message: string, statusCode: number, er
   res.status(statusCode).json(body);
 }
 
-export function sendNotFound(res: Response, resource = 'Resource'): void {
-  sendError(res, `${resource} not found`, 404);
+/**
+ * @param message - Full descriptive message, e.g. `No guest found with ID "abc123"`
+ */
+export function sendNotFound(res: Response, message = 'Resource not found'): void {
+  sendError(res, message, 404);
 }
 
 export function sendBadRequest(res: Response, message = 'Bad request', errors?: Record<string, string>[]): void {
@@ -24,5 +27,5 @@ export function sendBadRequest(res: Response, message = 'Bad request', errors?: 
 }
 
 export function sendInternalError(res: Response): void {
-  sendError(res, 'Internal server error', 500);
+  sendError(res, 'An unexpected error occurred on the server. Please try again later.', 500);
 }
