@@ -2,7 +2,7 @@
  * Seed script — populates the database with initial guest data from seed-data.json
  *
  * Usage (with Docker running):
- *   docker exec -it guests_api_dev npx ts-node src/scripts/seed.ts
+ *   npm run seed:docker
  *
  * Usage (local):
  *   npm run seed
@@ -25,8 +25,6 @@ interface RawIndividual {
   rating?:       number | null;
   countryCode?:  string;
   prefixCode?:   string | null;
-  country?:      string;
-  flag?:         string;
   continent?:    string;
   fullName?:     string | null;
   birthplace?:   string | null;
@@ -63,17 +61,14 @@ interface RawCoupleGroup {
   gift?:        string[];
   comments?:    string | null;
   coupleInfo:   RawIndividual[];
-  // Fields sometimes hoisted to root
-  country?:     string;
   countryCode?: string;
   prefixCode?:  string | null;
-  flag?:        string;
   continent?:   string;
   birthplace?:  string | null;
   'living in'?: string | null;
 }
 
-// ─── Normalisation helpers ────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function nullify(value: unknown): string | null {
   if (value === null || value === undefined) return null;
@@ -102,8 +97,6 @@ function normaliseIndividual(raw: RawIndividual, rootFallback?: RawCoupleGroup) 
     rating:       raw.rating ?? null,
     countryCode:  nullify(raw.countryCode ?? rootFallback?.countryCode) ?? 'unk',
     prefixCode:   nullify(raw.prefixCode  ?? rootFallback?.prefixCode),
-    country:      nullify(raw.country     ?? rootFallback?.country) ?? 'Unknown',
-    flag:         nullify(raw.flag        ?? rootFallback?.flag) ?? '',
     continent:    nullify(raw.continent   ?? rootFallback?.continent) ?? 'Europe',
     fullName:     nullify(raw.fullName) ?? 'Unknown',
     birthplace:   nullify(raw.birthplace ?? rootFallback?.birthplace),
@@ -175,12 +168,10 @@ async function seed(): Promise<void> {
   let skipped = 0;
 
   for (const item of rawData as Array<RawSolo | RawCoupleGroup[]>) {
-    // ── Couple group: raw item is an array of couple-groups ──
     if (Array.isArray(item)) {
       for (const coupleGroup of item) {
         try {
           if (!coupleGroup.coupleInfo || coupleGroup.coupleInfo.length < 2) {
-            // Treat as solo using first coupleInfo member if possible
             if (coupleGroup.coupleInfo?.length === 1) {
               const solo = { ...coupleGroup, ...coupleGroup.coupleInfo[0] } as RawSolo;
               docs.push(buildSoloDoc(solo));
@@ -199,7 +190,6 @@ async function seed(): Promise<void> {
       continue;
     }
 
-    // ── Solo entry (may have coupleInfo by mistake) ──
     const raw = item as RawSolo;
     try {
       if (raw.coupleInfo && raw.coupleInfo.length >= 2) {

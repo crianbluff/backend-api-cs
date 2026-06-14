@@ -22,8 +22,6 @@ const individualInfoSchema = z.object({
   rating: z.number().int().min(1).max(5).nullable().optional().default(null),
   countryCode: z.string().min(2).max(4).toLowerCase(),
   prefixCode: z.string().nullable().optional().default(null),
-  country: z.string().min(1).max(100),
-  flag: z.string().min(1).max(10),
   continent: continentEnum,
   fullName: z.string().min(1).max(200),
   birthplace: z.string().max(200).nullable().optional().default(null),
@@ -74,7 +72,6 @@ export const updateGuestSchema = z.union([updateSoloGuestSchema, updateCoupleGue
 export const guestQuerySchema = z.object({
   page: z.string().regex(/^\d+$/).optional().default('1'),
   limit: z.string().regex(/^\d+$/).optional().default('10'),
-  country: z.string().optional(),
   continent: continentEnum.optional(),
   from: z
     .string()

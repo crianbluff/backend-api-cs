@@ -1,5 +1,3 @@
-// ─── Enums & Unions ───────────────────────────────────────────────────────────
-
 export type Continent = 'Africa' | 'South America' | 'North America' | 'Central America' | 'Europe' | 'Asia' | 'Oceania';
 
 export type Gender = 'male' | 'female' | 'trans';
@@ -18,14 +16,10 @@ export type VisitedMonth =
   | 'November'
   | 'December';
 
-// ─── Sub-schemas ──────────────────────────────────────────────────────────────
-
 export interface IndividualInfo {
   rating: number | null;
   countryCode: string;
   prefixCode: string | null;
-  country: string;
-  flag: string;
   continent: Continent;
   fullName: string;
   birthplace: string | null;
@@ -65,14 +59,7 @@ export interface CoupleGuest extends GuestSharedFields {
 
 export type Guest = SoloGuest | CoupleGuest;
 
-export interface GuestQueryParams {
-  page?: string;
-  limit?: string;
-  country?: string;
-  continent?: string;
-  from?: string;
-  to?: string;
-}
+// ─── Flattened paginated response (no nested data.data) ──────────────────────
 
 export interface PaginatedResponse<T> {
   data: T[];
@@ -89,4 +76,17 @@ export interface ApiResponse<T = unknown> {
   message: string;
   data?: T;
   errors?: Record<string, string>[];
+}
+
+// Paginated API response — merges pagination fields at the top level
+export interface PaginatedApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
 }

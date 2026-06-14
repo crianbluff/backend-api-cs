@@ -18,15 +18,11 @@ const MONTHS: VisitedMonth[] = [
   'December',
 ];
 
-// ─── Sub-document for individual person info ─
-
 const individualInfoSchema = new Schema(
   {
     rating: { type: Number, min: 1, max: 5, default: null },
     countryCode: { type: String, required: true, lowercase: true, trim: true },
     prefixCode: { type: String, default: null },
-    country: { type: String, required: true, trim: true },
-    flag: { type: String, required: true },
     continent: { type: String, required: true, enum: CONTINENTS },
     fullName: { type: String, required: true, trim: true },
     birthplace: { type: String, default: null },
@@ -41,8 +37,6 @@ const individualInfoSchema = new Schema(
   { _id: false }
 );
 
-// ─── Document interface ───────────────────────────────────────────────────────
-
 export interface IGuestDocument extends Document {
   guestId: string;
   nights: number;
@@ -54,12 +48,10 @@ export interface IGuestDocument extends Document {
   comments: string | null;
   wasACouple: boolean;
   coupleId: string | null;
-  // Solo fields
+  // Solo flat fields
   rating?: number | null;
   countryCode?: string;
   prefixCode?: string | null;
-  country?: string;
-  flag?: string;
   continent?: Continent;
   fullName?: string;
   birthplace?: string | null;
@@ -75,8 +67,6 @@ export interface IGuestDocument extends Document {
     rating: number | null;
     countryCode: string;
     prefixCode: string | null;
-    country: string;
-    flag: string;
     continent: Continent;
     fullName: string;
     birthplace: string | null;
@@ -91,8 +81,6 @@ export interface IGuestDocument extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
-
-// ─── Schema ───────────────────────────────────────────────────────────────────
 
 const guestSchema = new Schema<IGuestDocument>(
   {
@@ -110,8 +98,6 @@ const guestSchema = new Schema<IGuestDocument>(
     rating: { type: Number, min: 1, max: 5, default: null },
     countryCode: { type: String, lowercase: true, trim: true },
     prefixCode: { type: String, default: null },
-    country: { type: String, trim: true },
-    flag: { type: String },
     continent: { type: String, enum: CONTINENTS },
     fullName: { type: String, trim: true },
     birthplace: { type: String, default: null },
@@ -137,14 +123,9 @@ const guestSchema = new Schema<IGuestDocument>(
   }
 );
 
-// ─── Indexes ──────────────────────────────────────────────────────────────────
-
 guestSchema.index({ visitedYear: 1, visitedMonth: 1 });
-guestSchema.index({ country: 1 });
 guestSchema.index({ continent: 1 });
 guestSchema.index({ wasACouple: 1 });
 guestSchema.index({ coupleId: 1 }, { sparse: true });
-
-// ─── Model ────────────────────────────────────────────────────────────────────
 
 export const GuestModel: Model<IGuestDocument> = mongoose.model<IGuestDocument>('Guest', guestSchema, 'guests');

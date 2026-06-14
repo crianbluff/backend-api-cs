@@ -19,10 +19,6 @@ const router = Router();
  *         name: limit
  *         schema: { type: integer, default: 10, minimum: 1, maximum: 100 }
  *       - in: query
- *         name: country
- *         schema: { type: string }
- *         example: Morocco
- *       - in: query
  *         name: continent
  *         schema:
  *           type: string
@@ -40,12 +36,7 @@ const router = Router();
  *         description: Guests retrieved successfully
  *         content:
  *           application/json:
- *             schema:
- *               allOf:
- *                 - $ref: '#/components/schemas/ApiSuccess'
- *                 - type: object
- *                   properties:
- *                     data: { $ref: '#/components/schemas/PaginatedGuests' }
+ *             schema: { $ref: '#/components/schemas/PaginatedGuests' }
  *       400:
  *         description: Invalid query parameters
  *         content:

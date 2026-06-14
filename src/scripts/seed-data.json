@@ -207,7 +207,7 @@
     "whatsapp": "8130726808",
     "instagram": "evelinrg35",
     "gift": ["lulo chocolate tablet"],
-    "comments":"We were her first couchsurfing host"
+    "comments": "We were her first couchsurfing host"
   },
   {
     "nights": 1,
@@ -231,7 +231,7 @@
     "whatsapp": "7541009696",
     "instagram": null,
     "gift": ["keychain"],
-    "comments":"We were her first couchsurfing host"
+    "comments": "We were her first couchsurfing host"
   },
   {
     "nights": 2,
@@ -255,7 +255,7 @@
     "whatsapp": "9711505817",
     "instagram": "shadasviaa_",
     "gift": ["chile de árbol"],
-    "comments":"We were her first couchsurfing host"
+    "comments": "We were her first couchsurfing host"
   },
   {
     "nights": 3,
@@ -279,7 +279,7 @@
     "whatsapp": "4425597340",
     "instagram": "lovewinsforev3r",
     "gift": ["candy"],
-    "comments":"We were her first couchsurfing host"
+    "comments": "We were her first couchsurfing host"
   },
   {
     "nights": 5,
@@ -303,7 +303,7 @@
     "whatsapp": "4445871022",
     "instagram": "calyazcona",
     "gift": [],
-    "comments":"We were her first couchsurfing host"
+    "comments": "We were her first couchsurfing host"
   },
   {
     "nights": 2,
@@ -374,7 +374,7 @@
     "whatsapp": "89089594",
     "instagram": "edvinsalas2",
     "gift": ["ecuatorian coin"],
-    "comments":"We were his first couchsurfing host"
+    "comments": "We were his first couchsurfing host"
   },
   {
     "nights": 2,
@@ -449,7 +449,7 @@
     "nights": 1,
     "stayed": false,
     "rating": 2,
-    "countryCode": "guy",
+    "countryCode": "guf",
     "prefixCode": "+592",
     "country": "Guyana",
     "flag": "🇬🇾",
@@ -467,7 +467,7 @@
     "whatsapp": "6716573",
     "instagram": "lbella81",
     "gift": [],
-    "comments":"We were her first couchsurfing host"
+    "comments": "We were her first couchsurfing host"
   },
   {
     "nights": 3,
@@ -884,7 +884,17 @@
     "gender": "male",
     "whatsapp": "93813003113",
     "instagram": "ezeqc",
-    "gift": ["invite me a cholao", "bill 1x50 ARS", "bill 1x200 ARS", "coin 1X10 centavos reales", "coin 1X50 centavos reales", "coin 1X5 rappen", "coin 1X10 rappen", "coin 1X20 rappen", "coin 1X50 rappen"]
+    "gift": [
+      "invite me a cholao",
+      "bill 1x50 ARS",
+      "bill 1x200 ARS",
+      "coin 1X10 centavos reales",
+      "coin 1X50 centavos reales",
+      "coin 1X5 rappen",
+      "coin 1X10 rappen",
+      "coin 1X20 rappen",
+      "coin 1X50 rappen"
+    ]
   },
   {
     "nights": 2,
@@ -1115,7 +1125,13 @@
     "gender": "female",
     "whatsapp": "763091219",
     "instagram": "celine__maier__",
-    "gift": ["coin 1X2 euro cent", "coin 3X25 cent dollar", "coin 1X1 euro", "coin 1X25 canadian cents", "coin 1X2 canadian dollars"]
+    "gift": [
+      "coin 1X2 euro cent",
+      "coin 3X25 cent dollar",
+      "coin 1X1 euro",
+      "coin 1X25 canadian cents",
+      "coin 1X2 canadian dollars"
+    ]
   },
   {
     "nights": 2,
@@ -1138,7 +1154,16 @@
     "gender": "female",
     "whatsapp": "764671912",
     "instagram": "francine_maier",
-    "gift": ["coin 1X10 quetzal centavos", "coin 1X25 quetzal centavos", "coin 1X1 canadian cent", "coin 1X5 canadian cent", "coin 2X10 candiant cent", "coin 3X25 candiant cent", "coin 1X1 canadian dollar", "coin 1X2 canadian dollars"],
+    "gift": [
+      "coin 1X10 quetzal centavos",
+      "coin 1X25 quetzal centavos",
+      "coin 1X1 canadian cent",
+      "coin 1X5 canadian cent",
+      "coin 2X10 candiant cent",
+      "coin 3X25 candiant cent",
+      "coin 1X1 canadian dollar",
+      "coin 1X2 canadian dollars"
+    ],
     "comments": "we play chess :) she won all matches, alo beat her all matches"
   },
   {
@@ -1349,7 +1374,13 @@
     "gender": "female",
     "whatsapp": "608217918",
     "instagram": "chrzaszczbrzmiwtrzcinie",
-    "gift": ["magnete rep dominicana", "chocolate e.wedel gorzka wisniowa 100g", "coin 1X5 dominican pesos", "coin 1X10 dominican pesos", "cholao"]
+    "gift": [
+      "magnete rep dominicana",
+      "chocolate e.wedel gorzka wisniowa 100g",
+      "coin 1X5 dominican pesos",
+      "coin 1X10 dominican pesos",
+      "cholao"
+    ]
   },
   {
     "nights": 2,
@@ -1378,7 +1409,7 @@
     "nights": 3,
     "stayed": true,
     "rating": 3,
-    "countryCode": "czk",
+    "countryCode": "cze",
     "prefixCode": "+420",
     "country": "Czech Republic",
     "flag": "🇨🇿",
@@ -1441,7 +1472,10 @@
     "gender": "male",
     "whatsapp": "911533356",
     "instagram": "samrevay",
-    "gift": ["ferrero rocher raffaello kokos & mandel creme white 90g", "ferrero rocher bombón de wafer recubierto 4 porciones"]
+    "gift": [
+      "ferrero rocher raffaello kokos & mandel creme white 90g",
+      "ferrero rocher bombón de wafer recubierto 4 porciones"
+    ]
   },
   {
     "nights": 1,
@@ -1464,7 +1498,10 @@
     "gender": "male",
     "whatsapp": "556038427",
     "instagram": "nemanjabojkovic",
-    "gift": ["he invited me to eat breakfast in a restaurnt in la candelaria, caldo de costilla & eggs", "poker uae airlines for me and one for my mom"]
+    "gift": [
+      "he invited me to eat breakfast in a restaurnt in la candelaria, caldo de costilla & eggs",
+      "poker uae airlines for me and one for my mom"
+    ]
   },
   {
     "nights": 3,
@@ -1628,7 +1665,11 @@
     "gender": "female",
     "whatsapp": "9291140356",
     "instagram": "kn_f0x",
-    "gift": ["arepa de huevo, empanada de carne, hit de lulo close to golden museum", "piece of tómate de árbol, pitaya", "bill 100X1 RUB"]
+    "gift": [
+      "arepa de huevo, empanada de carne, hit de lulo close to golden museum",
+      "piece of tómate de árbol, pitaya",
+      "bill 100X1 RUB"
+    ]
   },
   {
     "nights": 3,
@@ -1744,7 +1785,7 @@
     "whatsapp": "1025395418",
     "instagram": "_saffron.c",
     "gift": [],
-    "comments":"We were his first couchsurfing host, he didn't let a reference"
+    "comments": "We were his first couchsurfing host, he didn't let a reference"
   },
   {
     "nights": 3,
@@ -1790,7 +1831,15 @@
     "gender": "female",
     "whatsapp": "7806556318",
     "instagram": "fanli_zeng",
-    "gift": ["bill 1X1 CNY", "bill 1X5 CNY", "bill 1X5 CAD", "coin 1X5 cents CAD", "coin 1X25 centavos ecuador", "chinnese cookie", "chinese waterprooof bag"]
+    "gift": [
+      "bill 1X1 CNY",
+      "bill 1X5 CNY",
+      "bill 1X5 CAD",
+      "coin 1X5 cents CAD",
+      "coin 1X25 centavos ecuador",
+      "chinnese cookie",
+      "chinese waterprooof bag"
+    ]
   },
   {
     "nights": 2,
@@ -2267,7 +2316,7 @@
       "wasACouple": true,
       "gift": [],
       "coupleId": 5,
-      "comments":"We were her first couchsurfing host",
+      "comments": "We were her first couchsurfing host",
       "coupleInfo": [
         {
           "rating": 3,
@@ -2794,7 +2843,14 @@
           "gender": "male",
           "whatsapp": null,
           "instagram": "blaimontalex",
-          "gift": ["bocadillo, bocadillo de coco from cartagena", "he prepared some crepas for me & alo", "2 belgium beers", "a letter", "ice cream cake", "1 knife"]
+          "gift": [
+            "bocadillo, bocadillo de coco from cartagena",
+            "he prepared some crepas for me & alo",
+            "2 belgium beers",
+            "a letter",
+            "ice cream cake",
+            "1 knife"
+          ]
         },
         {
           "rating": 3,

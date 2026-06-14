@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { guestService } from '../services/guest.service';
-import { sendSuccess, sendCreated, sendNotFound, sendBadRequest } from '../utils/response';
+import { sendSuccess, sendCreated, sendNotFound, sendBadRequest, sendPaginated } from '../utils/response';
 import { CreateGuestInput, UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 import { logger } from '../utils/logger';
 
@@ -13,7 +13,7 @@ export class GuestController {
     try {
       const query = req.query as unknown as GuestQueryInput;
       const result = await guestService.findAll(query);
-      sendSuccess(res, result, 'Guests retrieved successfully');
+      sendPaginated(res, result, 'Guests retrieved successfully');
     } catch (error) {
       logger.error('[GuestController.getAll]', error);
       next(error);

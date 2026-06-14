@@ -20,13 +20,11 @@ const options: swaggerJsdoc.Options = {
       schemas: {
         IndividualInfo: {
           type: 'object',
-          required: ['countryCode', 'country', 'flag', 'continent', 'fullName', 'gender'],
+          required: ['countryCode', 'continent', 'fullName', 'gender'],
           properties: {
             rating: { type: 'number', nullable: true, minimum: 1, maximum: 5 },
             countryCode: { type: 'string', example: 'mar' },
             prefixCode: { type: 'string', nullable: true, example: '+212' },
-            country: { type: 'string', example: 'Morocco' },
-            flag: { type: 'string', example: '🇲🇦' },
             continent: {
               type: 'string',
               enum: ['Africa', 'South America', 'North America', 'Central America', 'Europe', 'Asia', 'Oceania'],
@@ -109,8 +107,6 @@ const options: swaggerJsdoc.Options = {
             'nights',
             'stayed',
             'countryCode',
-            'country',
-            'flag',
             'continent',
             'fullName',
             'gender',
@@ -124,8 +120,6 @@ const options: swaggerJsdoc.Options = {
             rating: { type: 'number', nullable: true, minimum: 1, maximum: 5 },
             countryCode: { type: 'string' },
             prefixCode: { type: 'string', nullable: true },
-            country: { type: 'string' },
-            flag: { type: 'string' },
             continent: {
               type: 'string',
               enum: ['Africa', 'South America', 'North America', 'Central America', 'Europe', 'Asia', 'Oceania'],
@@ -194,16 +188,19 @@ const options: swaggerJsdoc.Options = {
             coupleInfo: { type: 'array', minItems: 2, maxItems: 2, items: { $ref: '#/components/schemas/IndividualInfo' } },
           },
         },
+        // Flattened paginated response — no nested data.data
         PaginatedGuests: {
           type: 'object',
           properties: {
+            success: { type: 'boolean', example: true },
+            message: { type: 'string', example: 'Guests retrieved successfully' },
             data: { type: 'array', items: { $ref: '#/components/schemas/Guest' } },
             total: { type: 'number', example: 42 },
             page: { type: 'number', example: 1 },
             limit: { type: 'number', example: 10 },
             totalPages: { type: 'number', example: 5 },
-            hasNextPage: { type: 'boolean' },
-            hasPrevPage: { type: 'boolean' },
+            hasNextPage: { type: 'boolean', example: true },
+            hasPrevPage: { type: 'boolean', example: false },
           },
         },
         ApiSuccess: {
