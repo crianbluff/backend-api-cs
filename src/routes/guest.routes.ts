@@ -10,7 +10,8 @@ const router = Router();
  * /guests:
  *   get:
  *     tags: [Guests]
- *     summary: Get all guests
+ *     summary: Get all guests (list view)
+ *     description: Returns a paginated list with projected fields. Filterable by continent, region and date range.
  *     parameters:
  *       - in: query
  *         name: page
@@ -22,7 +23,12 @@ const router = Router();
  *         name: continent
  *         schema:
  *           type: string
- *           enum: [Africa, South America, North America, Central America, Europe, Asia, Oceania]
+ *           enum: [Africa, America, Europe, Asia, Oceania]
+ *       - in: query
+ *         name: region
+ *         schema:
+ *           type: string
+ *           enum: [North America, Central America, South America, Caribe, Middle East Asia, Southeast Asia, Eastern Asia, South Asia, Central Asia, West Europe, Scandinavia, Southern Europe, Northern Europe, Eastern Europe, Oceania, Africa]
  *       - in: query
  *         name: from
  *         schema: { type: string }
@@ -55,7 +61,7 @@ router.get('/', validate(guestQuerySchema, 'query'), guestController.getAll.bind
  * /guests/{id}:
  *   get:
  *     tags: [Guests]
- *     summary: Get a guest by ID
+ *     summary: Get a guest by ID (full detail)
  *     parameters:
  *       - in: path
  *         name: id

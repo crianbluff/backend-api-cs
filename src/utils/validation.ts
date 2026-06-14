@@ -1,6 +1,24 @@
 import { z } from 'zod';
 
-const continentEnum = z.enum(['Africa', 'South America', 'North America', 'Central America', 'Europe', 'Asia', 'Oceania']);
+const continentEnum = z.enum(['Africa', 'America', 'Europe', 'Asia', 'Oceania']);
+const regionEnum = z.enum([
+  'North America',
+  'Central America',
+  'South America',
+  'Caribe',
+  'Middle East Asia',
+  'Southeast Asia',
+  'Eastern Asia',
+  'South Asia',
+  'Central Asia',
+  'West Europe',
+  'Scandinavia',
+  'Southern Europe',
+  'Northern Europe',
+  'Eastern Europe',
+  'Oceania',
+  'Africa',
+]);
 const genderEnum = z.enum(['male', 'female', 'trans']);
 const monthEnum = z.enum([
   'January',
@@ -23,6 +41,7 @@ const individualInfoSchema = z.object({
   countryCode: z.string().min(2).max(4).toLowerCase(),
   prefixCode: z.string().nullable().optional().default(null),
   continent: continentEnum,
+  region: regionEnum,
   fullName: z.string().min(1).max(200),
   birthplace: z.string().max(200).nullable().optional().default(null),
   livingIn: z.string().max(200).nullable().optional().default(null),
@@ -73,6 +92,7 @@ export const guestQuerySchema = z.object({
   page: z.string().regex(/^\d+$/).optional().default('1'),
   limit: z.string().regex(/^\d+$/).optional().default('10'),
   continent: continentEnum.optional(),
+  region: regionEnum.optional(),
   from: z
     .string()
     .regex(/^[a-z]+-\d{4}$/i, 'format: month-year e.g. november-2022')

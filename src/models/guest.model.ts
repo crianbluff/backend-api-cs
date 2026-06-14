@@ -1,7 +1,25 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
-import { Continent, Gender, VisitedMonth } from '../types/guest.types';
+import { Continent, Region, Gender, VisitedMonth } from '../types/guest.types';
 
-const CONTINENTS: Continent[] = ['Africa', 'South America', 'North America', 'Central America', 'Europe', 'Asia', 'Oceania'];
+const CONTINENTS: Continent[] = ['Africa', 'America', 'Europe', 'Asia', 'Oceania'];
+const REGIONS: Region[] = [
+  'North America',
+  'Central America',
+  'South America',
+  'Caribe',
+  'Middle East Asia',
+  'Southeast Asia',
+  'Eastern Asia',
+  'South Asia',
+  'Central Asia',
+  'West Europe',
+  'Scandinavia',
+  'Southern Europe',
+  'Northern Europe',
+  'Eastern Europe',
+  'Oceania',
+  'Africa',
+];
 const GENDERS: Gender[] = ['male', 'female', 'trans'];
 const MONTHS: VisitedMonth[] = [
   'January',
@@ -24,6 +42,7 @@ const individualInfoSchema = new Schema(
     countryCode: { type: String, required: true, lowercase: true, trim: true },
     prefixCode: { type: String, default: null },
     continent: { type: String, required: true, enum: CONTINENTS },
+    region: { type: String, required: true, enum: REGIONS },
     fullName: { type: String, required: true, trim: true },
     birthplace: { type: String, default: null },
     livingIn: { type: String, default: null },
@@ -53,6 +72,7 @@ export interface IGuestDocument extends Document {
   countryCode?: string;
   prefixCode?: string | null;
   continent?: Continent;
+  region?: Region;
   fullName?: string;
   birthplace?: string | null;
   livingIn?: string | null;
@@ -62,12 +82,13 @@ export interface IGuestDocument extends Document {
   gender?: Gender;
   whatsapp?: string | null;
   instagram?: string | null;
-  // Couple field
+  // Couple nested array
   coupleInfo?: Array<{
     rating: number | null;
     countryCode: string;
     prefixCode: string | null;
     continent: Continent;
+    region: Region;
     fullName: string;
     birthplace: string | null;
     livingIn: string | null;
@@ -99,6 +120,7 @@ const guestSchema = new Schema<IGuestDocument>(
     countryCode: { type: String, lowercase: true, trim: true },
     prefixCode: { type: String, default: null },
     continent: { type: String, enum: CONTINENTS },
+    region: { type: String, enum: REGIONS },
     fullName: { type: String, trim: true },
     birthplace: { type: String, default: null },
     livingIn: { type: String, default: null },
@@ -108,7 +130,6 @@ const guestSchema = new Schema<IGuestDocument>(
     gender: { type: String, enum: GENDERS },
     whatsapp: { type: String, default: null },
     instagram: { type: String, default: null },
-    // Couple nested array
     coupleInfo: { type: [individualInfoSchema], default: undefined },
   },
   {
@@ -125,6 +146,7 @@ const guestSchema = new Schema<IGuestDocument>(
 
 guestSchema.index({ visitedYear: 1, visitedMonth: 1 });
 guestSchema.index({ continent: 1 });
+guestSchema.index({ region: 1 });
 guestSchema.index({ wasACouple: 1 });
 guestSchema.index({ coupleId: 1 }, { sparse: true });
 

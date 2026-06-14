@@ -5,6 +5,5 @@ dist
 .DS_Store
 coverage
 .git
-.gitignore
 README.md
 docker-compose*.yml

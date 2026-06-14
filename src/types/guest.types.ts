@@ -1,4 +1,22 @@
-export type Continent = 'Africa' | 'South America' | 'North America' | 'Central America' | 'Europe' | 'Asia' | 'Oceania';
+export type Continent = 'Africa' | 'America' | 'Europe' | 'Asia' | 'Oceania';
+
+export type Region =
+  | 'North America'
+  | 'Central America'
+  | 'South America'
+  | 'Caribe'
+  | 'Middle East Asia'
+  | 'Southeast Asia'
+  | 'Eastern Asia'
+  | 'South Asia'
+  | 'Central Asia'
+  | 'West Europe'
+  | 'Scandinavia'
+  | 'Southern Europe'
+  | 'Northern Europe'
+  | 'Eastern Europe'
+  | 'Oceania'
+  | 'Africa';
 
 export type Gender = 'male' | 'female' | 'trans';
 
@@ -21,6 +39,7 @@ export interface IndividualInfo {
   countryCode: string;
   prefixCode: string | null;
   continent: Continent;
+  region: Region;
   fullName: string;
   birthplace: string | null;
   livingIn: string | null;
@@ -59,7 +78,43 @@ export interface CoupleGuest extends GuestSharedFields {
 
 export type Guest = SoloGuest | CoupleGuest;
 
-// ─── Flattened paginated response (no nested data.data) ──────────────────────
+// ─── GET all projection (list view) ──────────────────────────────────────────
+
+export interface GuestListItem {
+  guestId: string;
+  wasACouple: boolean;
+  nights: number;
+  stayed: boolean;
+  visitedMonth: VisitedMonth;
+  visitedYear: number;
+  // Solo fields (null when couple)
+  fullName: string | null;
+  countryCode: string | null;
+  prefixCode: string | null;
+  age: number | null;
+  occupation: string[] | null;
+  livingIn: string | null;
+  birthplace: string | null;
+  didWeHangOut: boolean;
+  rating: number | null;
+  gender: Gender | null;
+  whatsapp: string | null;
+  // Couple fields (null when solo)
+  coupleInfo?: Array<{
+    fullName: string;
+    countryCode: string;
+    prefixCode: string | null;
+    age: number | null;
+    occupation: string[];
+    livingIn: string | null;
+    birthplace: string | null;
+    rating: number | null;
+    gender: Gender;
+    whatsapp: string | null;
+  }>;
+}
+
+// ─── Pagination ───────────────────────────────────────────────────────────────
 
 export interface PaginatedResponse<T> {
   data: T[];
@@ -78,7 +133,6 @@ export interface ApiResponse<T = unknown> {
   errors?: Record<string, string>[];
 }
 
-// Paginated API response — merges pagination fields at the top level
 export interface PaginatedApiResponse<T> {
   success: boolean;
   message: string;

@@ -5,14 +5,9 @@ import { CreateGuestInput, UpdateGuestInput, GuestQueryInput } from '../utils/va
 import { logger } from '../utils/logger';
 
 export class GuestController {
-  /**
-   * GET /guests
-   * Returns all guests with pagination, filtering and date range support.
-   */
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const query = req.query as unknown as GuestQueryInput;
-      const result = await guestService.findAll(query);
+      const result = await guestService.findAll(req.query as unknown as GuestQueryInput);
       sendPaginated(res, result, 'Guests retrieved successfully');
     } catch (error) {
       logger.error('[GuestController.getAll]', error);
@@ -20,20 +15,14 @@ export class GuestController {
     }
   }
 
-  /**
-   * GET /guests/:id
-   * Returns a single guest by guestId.
-   */
   async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
       const guest = await guestService.findById(id);
-
       if (!guest) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
-
       sendSuccess(res, guest, 'Guest retrieved successfully');
     } catch (error) {
       logger.error('[GuestController.getById]', error);
@@ -41,15 +30,9 @@ export class GuestController {
     }
   }
 
-  /**
-   * POST /guests
-   * Creates a new guest (solo or couple).
-   */
-
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const input = req.body as CreateGuestInput;
-      const guest = await guestService.create(input);
+      const guest = await guestService.create(req.body as CreateGuestInput);
       sendCreated(res, guest, 'Guest created successfully');
     } catch (error) {
       logger.error('[GuestController.create]', error);
@@ -57,20 +40,14 @@ export class GuestController {
     }
   }
 
-  /**
-   * PUT /guests/:id
-   * Partially updates a guest by guestId.
-   */
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
       const input = req.body as UpdateGuestInput;
-
       if (!input || Object.keys(input).length === 0) {
         sendBadRequest(res, 'Request body is empty. Please provide at least one field to update.');
         return;
       }
-
       let updated;
       try {
         updated = await guestService.update(id, input);
@@ -78,19 +55,16 @@ export class GuestController {
         if (serviceError instanceof Error && serviceError.message.includes('wasACouple')) {
           sendBadRequest(
             res,
-            'The "wasACouple" field cannot be changed after a guest is created. ' +
-              'Delete this record and create a new one if the type needs to change.'
+            'The "wasACouple" field cannot be changed after creation. Delete and recreate the guest instead.'
           );
           return;
         }
         throw serviceError;
       }
-
       if (!updated) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
-
       sendSuccess(res, updated, 'Guest updated successfully');
     } catch (error) {
       logger.error('[GuestController.update]', error);
@@ -98,20 +72,14 @@ export class GuestController {
     }
   }
 
-  /**
-   * DELETE /guests/:id
-   * Deletes a guest by guestId.
-   */
   async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
       const deleted = await guestService.delete(id);
-
       if (!deleted) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
-
       sendSuccess(res, null, `Guest "${id}" deleted successfully`);
     } catch (error) {
       logger.error('[GuestController.delete]', error);
