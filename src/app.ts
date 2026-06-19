@@ -27,14 +27,7 @@ export function createApp(): Application {
   });
 
   // ─── Swagger docs ─────────────────────────────────────────────────────────
-  app.use(
-    '/docs',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec, {
-      customSiteTitle: 'Guests API Docs',
-      swaggerOptions: { persistAuthorization: true },
-    })
-  );
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { customSiteTitle: 'Guests API Docs' }));
 
   // Expose raw swagger.yaml / swagger.json
   app.get('/docs.json', (_req, res) => {

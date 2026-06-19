@@ -18,8 +18,6 @@ export type Region =
   | 'Oceania'
   | 'Africa';
 
-export type Gender = 'male' | 'female' | 'trans';
-
 export type VisitedMonth =
   | 'January'
   | 'February'
@@ -33,6 +31,8 @@ export type VisitedMonth =
   | 'October'
   | 'November'
   | 'December';
+
+export type Gender = 'male' | 'female' | 'trans';
 
 export interface IndividualInfo {
   rating: number | null;
@@ -56,8 +56,11 @@ interface GuestSharedFields {
   nights: number;
   stayed: boolean;
   didWeHangOut: boolean;
-  visitedMonth: VisitedMonth;
-  visitedYear: number;
+  /** Raw string as provided e.g. "November 2025" or "08 June 2026" */
+  visitedDate: string;
+  /** Computed Date used for sorting/filtering. Day defaults to 1 when not provided. */
+  visitedAt: Date;
+  isFirstTime: boolean;
   gift: string[] | null;
   comments: string | null;
   wasACouple: boolean;
@@ -78,15 +81,17 @@ export interface CoupleGuest extends GuestSharedFields {
 
 export type Guest = SoloGuest | CoupleGuest;
 
-// ─── GET all projection (list view) ──────────────────────────────────────────
+// ─── GET all list projection ──────────────────────────────────────────────────
 
 export interface GuestListItem {
   guestId: string;
   wasACouple: boolean;
+  isFirstTime: boolean;
   nights: number;
   stayed: boolean;
-  visitedMonth: VisitedMonth;
-  visitedYear: number;
+  visitedDate: string;
+  visitedAt: Date;
+  didWeHangOut: boolean;
   // Solo fields (null when couple)
   fullName: string | null;
   countryCode: string | null;
@@ -95,11 +100,10 @@ export interface GuestListItem {
   occupation: string[] | null;
   livingIn: string | null;
   birthplace: string | null;
-  didWeHangOut: boolean;
   rating: number | null;
   gender: Gender | null;
   whatsapp: string | null;
-  // Couple fields (null when solo)
+  // Couple fields
   coupleInfo?: Array<{
     fullName: string;
     countryCode: string;

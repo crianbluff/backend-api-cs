@@ -1,11 +1,8 @@
 /**
- * Seed script — populates the database with initial guest data from seed-data.json
+ * Seed script — populates the database from seed-data.json
  *
- * Usage (with Docker running):
- *   npm run seed:docker
- *
- * Usage (local):
- *   npm run seed
+ * Usage (Docker):  npm run seed:docker
+ * Usage (local):   npm run seed
  *
  * Idempotent: drops the guests collection before inserting.
  */
@@ -13,6 +10,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { nanoid } from 'nanoid';
+import { parseVisitedDate } from '../utils/visitedDate';
 import rawData from './seed-data.json';
 
 dotenv.config();
@@ -44,10 +42,10 @@ interface RawSolo extends RawIndividual {
   nights: number;
   stayed: boolean;
   didWeHangOut: boolean | null;
-  visitedMonth: string;
-  visitedYear: number;
+  visitedDate: string;
   wasACouple?: boolean;
   coupleId?: number | null;
+  isFirstTime?: boolean;
   gift?: string[];
   comments?: string | null;
   coupleInfo?: RawIndividual[];
@@ -57,23 +55,24 @@ interface RawCoupleGroup {
   nights: number;
   stayed: boolean;
   didWeHangOut: boolean | null;
-  visitedMonth: string;
-  visitedYear: number;
+  visitedDate: string;
   wasACouple?: boolean;
   coupleId?: number;
+  isFirstTime?: boolean;
   gift?: string[];
   comments?: string | null;
   coupleInfo: RawIndividual[];
-  // Fields sometimes hoisted to root (coupleId 17 & 18 pattern)
+  // Fields hoisted to root (coupleId 17–20 pattern)
   countryCode?: string;
   prefixCode?: string | null;
   continent?: string;
   region?: string;
   birthplace?: string | null;
   'living in'?: string | null;
+  rating?: number | null;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Normalisation helpers ────────────────────────────────────────────────────
 
 function nullify(value: unknown): string | null {
   if (value === null || value === undefined) return null;
@@ -100,11 +99,10 @@ function normaliseGift(value: string[] | null | undefined): string[] | null {
 
 function normaliseOccupation(value: string[] | string | null | undefined): string[] {
   if (!value) return [];
-  if (typeof value === 'string') return value ? [value] : [];
+  if (typeof value === 'string') return value.trim() ? [value] : [];
   return value.filter((o) => o && o.trim() !== '');
 }
 
-// Map raw continent values to the 5 allowed continents
 function normaliseContinent(raw: string | null | undefined): string {
   if (!raw) return 'America';
   const map: Record<string, string> = {
@@ -123,7 +121,6 @@ function normaliseContinent(raw: string | null | undefined): string {
 
 function normaliseRegion(raw: string | null | undefined, continent?: string): string {
   if (!raw) {
-    // Fallback based on continent
     const fallbacks: Record<string, string> = {
       Africa: 'Africa',
       America: 'South America',
@@ -133,7 +130,7 @@ function normaliseRegion(raw: string | null | undefined, continent?: string): st
     };
     return fallbacks[continent ?? 'America'] ?? 'South America';
   }
-  const VALID_REGIONS = [
+  const VALID = [
     'North America',
     'Central America',
     'South America',
@@ -151,11 +148,9 @@ function normaliseRegion(raw: string | null | undefined, continent?: string): st
     'Oceania',
     'Africa',
   ];
-  // Try exact match first
-  const exact = VALID_REGIONS.find((r) => r.toLowerCase() === raw.toLowerCase());
+  const exact = VALID.find((r) => r.toLowerCase() === raw.toLowerCase());
   if (exact) return exact;
-  // Partial match
-  const partial = VALID_REGIONS.find((r) => raw.toLowerCase().includes(r.toLowerCase()));
+  const partial = VALID.find((r) => raw.toLowerCase().includes(r.toLowerCase()));
   return partial ?? 'South America';
 }
 
@@ -167,7 +162,7 @@ function normaliseIndividual(raw: RawIndividual, rootFallback?: RawCoupleGroup) 
 
   return {
     rating: raw.rating ?? null,
-    countryCode: nullify(raw.countryCode ?? rootFallback?.countryCode) ?? 'unk',
+    countryCode: (nullify(raw.countryCode ?? rootFallback?.countryCode) ?? 'UNK').toUpperCase(),
     prefixCode: nullify(raw.prefixCode ?? rootFallback?.prefixCode),
     continent,
     region,
@@ -186,14 +181,16 @@ function normaliseIndividual(raw: RawIndividual, rootFallback?: RawCoupleGroup) 
 // ─── Document builders ────────────────────────────────────────────────────────
 
 function buildSoloDoc(raw: RawSolo) {
+  const visitedDate = raw.visitedDate ?? '';
   return {
     guestId: nanoid(11),
     coupleId: null,
     nights: raw.nights,
     stayed: raw.stayed,
     didWeHangOut: raw.didWeHangOut ?? false,
-    visitedMonth: raw.visitedMonth,
-    visitedYear: raw.visitedYear,
+    visitedDate,
+    visitedAt: parseVisitedDate(visitedDate),
+    isFirstTime: raw.isFirstTime ?? false,
     gift: normaliseGift(raw.gift),
     comments: nullify(raw.comments),
     wasACouple: false,
@@ -203,14 +200,16 @@ function buildSoloDoc(raw: RawSolo) {
 
 function buildCoupleDoc(raw: RawCoupleGroup) {
   const [memberA, memberB] = raw.coupleInfo;
+  const visitedDate = raw.visitedDate ?? '';
   return {
     guestId: nanoid(11),
     coupleId: nanoid(18),
     nights: raw.nights,
     stayed: raw.stayed,
     didWeHangOut: raw.didWeHangOut ?? false,
-    visitedMonth: raw.visitedMonth,
-    visitedYear: raw.visitedYear,
+    visitedDate,
+    visitedAt: parseVisitedDate(visitedDate),
+    isFirstTime: raw.isFirstTime ?? false,
     gift: normaliseGift(raw.gift),
     comments: nullify(raw.comments),
     wasACouple: true,
@@ -228,17 +227,18 @@ async function seed(): Promise<void> {
   const db = mongoose.connection.db;
   if (!db) throw new Error('No database connection');
 
-  const collections = await db.listCollections({ name: 'guests' }).toArray();
-  if (collections.length > 0) {
+  const existing = await db.listCollections({ name: 'guests' }).toArray();
+  if (existing.length > 0) {
     await db.collection('guests').drop();
     console.log('🗑️   Dropped existing guests collection');
   }
 
   const docs: object[] = [];
   let skipped = 0;
+  type SeedRecord = RawSolo | RawCoupleGroup[];
+  const data: SeedRecord[] = rawData as unknown as SeedRecord[];
 
-  for (const item of rawData as Array<RawSolo | RawCoupleGroup[]>) {
-    // ── Couple group: raw item is an array ──
+  for (const item of data) {
     if (Array.isArray(item)) {
       for (const coupleGroup of item) {
         try {
@@ -260,7 +260,6 @@ async function seed(): Promise<void> {
       continue;
     }
 
-    // ── Solo entry ──
     const raw = item as RawSolo;
     try {
       if (raw.coupleInfo && raw.coupleInfo.length >= 2) {

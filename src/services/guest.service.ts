@@ -1,31 +1,30 @@
 import { FilterQuery } from 'mongoose';
 import { GuestModel, IGuestDocument } from '../models/guest.model';
 import { generateGuestId, generateCoupleId } from '../utils/nanoid';
-import { buildDateRangeFilter } from '../utils/dateRange';
-import { PaginatedResponse, GuestListItem, Gender, VisitedMonth } from '../types/guest.types';
+import { parseVisitedDate, parseMonthYearParam } from '../utils/visitedDate';
+import { PaginatedResponse, GuestListItem, Gender } from '../types/guest.types';
 import { CreateGuestInput, UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 
-// ─── Age helper ───────────────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function calcAge(birthyear: number | null | undefined): number | null {
   if (!birthyear || birthyear === 0) return null;
   return new Date().getFullYear() - birthyear;
 }
 
-// ─── List item projector ──────────────────────────────────────────────────────
-
 function toListItem(doc: Record<string, unknown>): GuestListItem {
   const wasACouple = doc['wasACouple'] as boolean;
 
   if (wasACouple) {
-    const coupleInfo = (doc['coupleInfo'] as Array<Record<string, unknown>>) ?? [];
+    const ci = (doc['coupleInfo'] as Array<Record<string, unknown>>) ?? [];
     return {
       guestId: doc['guestId'] as string,
       wasACouple: true,
+      isFirstTime: (doc['isFirstTime'] as boolean) ?? false,
       nights: doc['nights'] as number,
       stayed: doc['stayed'] as boolean,
-      visitedMonth: doc['visitedMonth'] as VisitedMonth,
-      visitedYear: doc['visitedYear'] as number,
+      visitedDate: doc['visitedDate'] as string,
+      visitedAt: doc['visitedAt'] as Date,
       didWeHangOut: doc['didWeHangOut'] as boolean,
       fullName: null,
       countryCode: null,
@@ -37,7 +36,7 @@ function toListItem(doc: Record<string, unknown>): GuestListItem {
       rating: null,
       gender: null,
       whatsapp: null,
-      coupleInfo: coupleInfo.map((m) => ({
+      coupleInfo: ci.map((m) => ({
         fullName: m['fullName'] as string,
         countryCode: m['countryCode'] as string,
         prefixCode: (m['prefixCode'] as string | null) ?? null,
@@ -55,10 +54,11 @@ function toListItem(doc: Record<string, unknown>): GuestListItem {
   return {
     guestId: doc['guestId'] as string,
     wasACouple: false,
+    isFirstTime: (doc['isFirstTime'] as boolean) ?? false,
     nights: doc['nights'] as number,
     stayed: doc['stayed'] as boolean,
-    visitedMonth: doc['visitedMonth'] as VisitedMonth,
-    visitedYear: doc['visitedYear'] as number,
+    visitedDate: doc['visitedDate'] as string,
+    visitedAt: doc['visitedAt'] as Date,
     didWeHangOut: doc['didWeHangOut'] as boolean,
     fullName: (doc['fullName'] as string) ?? null,
     countryCode: (doc['countryCode'] as string) ?? null,
@@ -73,11 +73,9 @@ function toListItem(doc: Record<string, unknown>): GuestListItem {
   };
 }
 
-// ─── Filter builder ───────────────────────────────────────────────────────────
-
 function parsePagination(query: GuestQueryInput): { page: number; limit: number; skip: number } {
   const page = Math.max(1, parseInt(query.page ?? '1', 10));
-  const limit = Math.min(100, Math.max(1, parseInt(query.limit ?? '10', 10)));
+  const limit = Math.min(200, Math.max(1, parseInt(query.limit ?? '10', 10)));
   return { page, limit, skip: (page - 1) * limit };
 }
 
@@ -92,8 +90,28 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
     filter.$or = [{ region: query.region }, { 'coupleInfo.region': query.region }];
   }
 
-  const dateFilter = buildDateRangeFilter(query.from, query.to);
-  Object.assign(filter, dateFilter);
+  if (query.isFirstTime !== undefined) {
+    filter.isFirstTime = query.isFirstTime === 'true';
+  }
+
+  // Date range using visitedAt (native Date)
+  if (query.from || query.to) {
+    const dateFilter: Record<string, Date> = {};
+    if (query.from) {
+      const d = parseMonthYearParam(query.from);
+      if (d) dateFilter['$gte'] = d;
+    }
+    if (query.to) {
+      const d = parseMonthYearParam(query.to);
+      if (d) {
+        // Include the full month: advance to first day of next month
+        dateFilter['$lt'] = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+      }
+    }
+    if (Object.keys(dateFilter).length > 0) {
+      filter.visitedAt = dateFilter as FilterQuery<IGuestDocument>['visitedAt'];
+    }
+  }
 
   return filter;
 }
@@ -105,16 +123,15 @@ export class GuestService {
     const { page, limit, skip } = parsePagination(query);
     const filter = buildFilter(query);
 
-    // Only select the fields needed for the list view
     const projection = {
       guestId: 1,
       wasACouple: 1,
+      isFirstTime: 1,
       nights: 1,
       stayed: 1,
-      visitedMonth: 1,
-      visitedYear: 1,
+      visitedDate: 1,
+      visitedAt: 1,
       didWeHangOut: 1,
-      // Solo fields
       fullName: 1,
       countryCode: 1,
       prefixCode: 1,
@@ -125,7 +142,6 @@ export class GuestService {
       rating: 1,
       gender: 1,
       whatsapp: 1,
-      // Couple fields
       'coupleInfo.fullName': 1,
       'coupleInfo.countryCode': 1,
       'coupleInfo.prefixCode': 1,
@@ -139,13 +155,16 @@ export class GuestService {
     };
 
     const [raw, total] = await Promise.all([
-      GuestModel.find(filter, projection).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      GuestModel.find(filter, projection)
+        .sort({ visitedAt: -1 }) // newest visitedDate first
+        .skip(skip)
+        .limit(limit)
+        .lean(),
       GuestModel.countDocuments(filter),
     ]);
 
     const totalPages = Math.ceil(total / limit);
     const data = raw.map((doc) => toListItem(doc as unknown as Record<string, unknown>));
-
     return { data, total, page, limit, totalPages, hasNextPage: page < totalPages, hasPrevPage: page > 1 };
   }
 
@@ -155,17 +174,18 @@ export class GuestService {
 
   async create(input: CreateGuestInput): Promise<IGuestDocument> {
     const guestId = generateGuestId();
+    const visitedAt = parseVisitedDate(input.visitedDate);
 
     if (input.wasACouple) {
-      const coupleId = generateCoupleId();
       const doc = await GuestModel.create({
         guestId,
-        coupleId,
+        coupleId: generateCoupleId(),
         nights: input.nights,
         stayed: input.stayed,
         didWeHangOut: input.didWeHangOut,
-        visitedMonth: input.visitedMonth,
-        visitedYear: input.visitedYear,
+        visitedDate: input.visitedDate,
+        visitedAt,
+        isFirstTime: input.isFirstTime ?? false,
         gift: input.gift ?? null,
         comments: input.comments ?? null,
         wasACouple: true,
@@ -179,8 +199,8 @@ export class GuestService {
       nights,
       stayed,
       didWeHangOut,
-      visitedMonth,
-      visitedYear,
+      visitedDate,
+      isFirstTime,
       gift,
       comments,
       ...individualFields
@@ -192,8 +212,9 @@ export class GuestService {
       nights,
       stayed,
       didWeHangOut,
-      visitedMonth,
-      visitedYear,
+      visitedDate,
+      visitedAt,
+      isFirstTime: isFirstTime ?? false,
       gift: gift ?? null,
       comments: comments ?? null,
       wasACouple: false,
@@ -211,9 +232,15 @@ export class GuestService {
       throw new Error('Cannot change wasACouple after creation');
     }
 
+    // If visitedDate is being updated, recompute visitedAt
+    const updatePayload: Record<string, unknown> = { ...input };
+    if (input.visitedDate) {
+      updatePayload['visitedAt'] = parseVisitedDate(input.visitedDate);
+    }
+
     const updated = await GuestModel.findOneAndUpdate(
       { guestId },
-      { $set: input },
+      { $set: updatePayload },
       { new: true, runValidators: true }
     ).lean();
 

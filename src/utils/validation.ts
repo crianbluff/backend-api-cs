@@ -20,25 +20,14 @@ const regionEnum = z.enum([
   'Africa',
 ]);
 const genderEnum = z.enum(['male', 'female', 'trans']);
-const monthEnum = z.enum([
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]);
 const currentYear = new Date().getFullYear();
+
+// visitedDate: accepts "Month Year" or "DD Month Year"
+const visitedDateRegex = /^(\d{1,2}\s+)?[A-Za-z]+\s+\d{4}$/;
 
 const individualInfoSchema = z.object({
   rating: z.number().int().min(1).max(5).nullable().optional().default(null),
-  countryCode: z.string().min(2).max(4).toLowerCase(),
+  countryCode: z.string().min(2).max(4).toUpperCase(),
   prefixCode: z.string().nullable().optional().default(null),
   continent: continentEnum,
   region: regionEnum,
@@ -57,12 +46,10 @@ const visitFields = {
   nights: z.number().int().min(1, 'nights must be at least 1'),
   stayed: z.boolean(),
   didWeHangOut: z.boolean(),
-  visitedMonth: monthEnum,
-  visitedYear: z
-    .number()
-    .int()
-    .min(2007)
-    .max(currentYear + 1),
+  visitedDate: z
+    .string()
+    .regex(visitedDateRegex, 'visitedDate must be "Month Year" or "DD Month Year" e.g. "November 2025" or "08 June 2026"'),
+  isFirstTime: z.boolean().optional().default(false),
   gift: z.array(z.string().max(200)).nullable().optional().default(null),
   comments: z.string().max(2000).nullable().optional().default(null),
 };
@@ -93,6 +80,7 @@ export const guestQuerySchema = z.object({
   limit: z.string().regex(/^\d+$/).optional().default('10'),
   continent: continentEnum.optional(),
   region: regionEnum.optional(),
+  isFirstTime: z.enum(['true', 'false']).optional(),
   from: z
     .string()
     .regex(/^[a-z]+-\d{4}$/i, 'format: month-year e.g. november-2022')

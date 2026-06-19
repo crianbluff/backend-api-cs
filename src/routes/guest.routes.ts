@@ -10,8 +10,7 @@ const router = Router();
  * /guests:
  *   get:
  *     tags: [Guests]
- *     summary: Get all guests (list view)
- *     description: Returns a paginated list with projected fields. Filterable by continent, region and date range.
+ *     summary: Get all guests (list view, sorted by most recent visitedDate)
  *     parameters:
  *       - in: query
  *         name: page
@@ -21,21 +20,25 @@ const router = Router();
  *         schema: { type: integer, default: 10, minimum: 1, maximum: 100 }
  *       - in: query
  *         name: continent
- *         schema:
- *           type: string
- *           enum: [Africa, America, Europe, Asia, Oceania]
+ *         schema: { type: string, enum: [Africa, America, Europe, Asia, Oceania] }
  *       - in: query
  *         name: region
  *         schema:
  *           type: string
  *           enum: [North America, Central America, South America, Caribe, Middle East Asia, Southeast Asia, Eastern Asia, South Asia, Central Asia, West Europe, Scandinavia, Southern Europe, Northern Europe, Eastern Europe, Oceania, Africa]
  *       - in: query
+ *         name: isFirstTime
+ *         schema: { type: string, enum: [true, false] }
+ *         description: Filter by first-time couchsurfing guests
+ *       - in: query
  *         name: from
  *         schema: { type: string }
+ *         description: "Start of visitedAt range. Format: month-year e.g. november-2022"
  *         example: november-2022
  *       - in: query
  *         name: to
  *         schema: { type: string }
+ *         description: "End of visitedAt range. Format: month-year e.g. august-2025"
  *         example: august-2025
  *     responses:
  *       200:
@@ -84,11 +87,6 @@ router.get('/', validate(guestQuerySchema, 'query'), guestController.getAll.bind
  *         content:
  *           application/json:
  *             schema: { $ref: '#/components/schemas/ApiError' }
- *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
  */
 router.get('/:id', guestController.getById.bind(guestController));
 
@@ -106,6 +104,23 @@ router.get('/:id', guestController.getById.bind(guestController));
  *             oneOf:
  *               - $ref: '#/components/schemas/CreateSoloGuestDto'
  *               - $ref: '#/components/schemas/CreateCoupleGuestDto'
+ *           examples:
+ *             solo:
+ *               summary: Solo guest
+ *               value:
+ *                 nights: 2
+ *                 stayed: true
+ *                 rating: 4
+ *                 countryCode: MAR
+ *                 prefixCode: "+212"
+ *                 continent: Africa
+ *                 region: Africa
+ *                 fullName: Simo Amri
+ *                 gender: male
+ *                 didWeHangOut: true
+ *                 visitedDate: "November 2025"
+ *                 isFirstTime: false
+ *                 wasACouple: false
  *     responses:
  *       201:
  *         description: Guest created successfully
@@ -119,11 +134,6 @@ router.get('/:id', guestController.getById.bind(guestController));
  *                     data: { $ref: '#/components/schemas/Guest' }
  *       400:
  *         description: Validation error
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
- *       500:
- *         description: Internal server error
  *         content:
  *           application/json:
  *             schema: { $ref: '#/components/schemas/ApiError' }
@@ -141,7 +151,6 @@ router.post('/', validate(createGuestSchema), guestController.create.bind(guestC
  *         name: id
  *         required: true
  *         schema: { type: string }
- *         example: aT84plm2UiN
  *     requestBody:
  *       required: true
  *       content:
@@ -162,17 +171,12 @@ router.post('/', validate(createGuestSchema), guestController.create.bind(guestC
  *                   properties:
  *                     data: { $ref: '#/components/schemas/Guest' }
  *       400:
- *         description: Validation error or invalid operation
+ *         description: Validation error
  *         content:
  *           application/json:
  *             schema: { $ref: '#/components/schemas/ApiError' }
  *       404:
  *         description: Guest not found
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
- *       500:
- *         description: Internal server error
  *         content:
  *           application/json:
  *             schema: { $ref: '#/components/schemas/ApiError' }
@@ -190,7 +194,6 @@ router.put('/:id', validate(updateGuestSchema), guestController.update.bind(gues
  *         name: id
  *         required: true
  *         schema: { type: string }
- *         example: aT84plm2UiN
  *     responses:
  *       200:
  *         description: Guest deleted successfully
@@ -199,11 +202,6 @@ router.put('/:id', validate(updateGuestSchema), guestController.update.bind(gues
  *             schema: { $ref: '#/components/schemas/ApiSuccess' }
  *       404:
  *         description: Guest not found
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
- *       500:
- *         description: Internal server error
  *         content:
  *           application/json:
  *             schema: { $ref: '#/components/schemas/ApiError' }

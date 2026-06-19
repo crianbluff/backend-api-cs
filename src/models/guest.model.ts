@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
-import { Continent, Region, Gender, VisitedMonth } from '../types/guest.types';
+import { Continent, Region, Gender } from '../types/guest.types';
 
 const CONTINENTS: Continent[] = ['Africa', 'America', 'Europe', 'Asia', 'Oceania'];
 const REGIONS: Region[] = [
@@ -21,25 +21,11 @@ const REGIONS: Region[] = [
   'Africa',
 ];
 const GENDERS: Gender[] = ['male', 'female', 'trans'];
-const MONTHS: VisitedMonth[] = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 const individualInfoSchema = new Schema(
   {
     rating: { type: Number, min: 1, max: 5, default: null },
-    countryCode: { type: String, required: true, lowercase: true, trim: true },
+    countryCode: { type: String, required: true, uppercase: true, trim: true },
     prefixCode: { type: String, default: null },
     continent: { type: String, required: true, enum: CONTINENTS },
     region: { type: String, required: true, enum: REGIONS },
@@ -61,8 +47,9 @@ export interface IGuestDocument extends Document {
   nights: number;
   stayed: boolean;
   didWeHangOut: boolean;
-  visitedMonth: VisitedMonth;
-  visitedYear: number;
+  visitedDate: string;
+  visitedAt: Date;
+  isFirstTime: boolean;
   gift: string[] | null;
   comments: string | null;
   wasACouple: boolean;
@@ -82,7 +69,6 @@ export interface IGuestDocument extends Document {
   gender?: Gender;
   whatsapp?: string | null;
   instagram?: string | null;
-  // Couple nested array
   coupleInfo?: Array<{
     rating: number | null;
     countryCode: string;
@@ -109,15 +95,16 @@ const guestSchema = new Schema<IGuestDocument>(
     nights: { type: Number, required: true, min: [1, 'nights must be at least 1'] },
     stayed: { type: Boolean, required: true },
     didWeHangOut: { type: Boolean, required: true },
-    visitedMonth: { type: String, required: true, enum: MONTHS },
-    visitedYear: { type: Number, required: true, min: [2007, 'visitedYear cannot be before 2007'] },
+    visitedDate: { type: String, required: true, trim: true },
+    visitedAt: { type: Date, required: true, index: true },
+    isFirstTime: { type: Boolean, default: false },
     gift: { type: [String], default: null },
     comments: { type: String, default: null, trim: true },
     wasACouple: { type: Boolean, required: true },
     coupleId: { type: String, default: null },
     // Solo flat fields
     rating: { type: Number, min: 1, max: 5, default: null },
-    countryCode: { type: String, lowercase: true, trim: true },
+    countryCode: { type: String, uppercase: true, trim: true },
     prefixCode: { type: String, default: null },
     continent: { type: String, enum: CONTINENTS },
     region: { type: String, enum: REGIONS },
@@ -144,9 +131,11 @@ const guestSchema = new Schema<IGuestDocument>(
   }
 );
 
-guestSchema.index({ visitedYear: 1, visitedMonth: 1 });
+// Indexes
+guestSchema.index({ visitedAt: -1 });
 guestSchema.index({ continent: 1 });
 guestSchema.index({ region: 1 });
+guestSchema.index({ isFirstTime: 1 });
 guestSchema.index({ wasACouple: 1 });
 guestSchema.index({ coupleId: 1 }, { sparse: true });
 
