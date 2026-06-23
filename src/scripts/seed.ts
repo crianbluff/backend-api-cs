@@ -1,16 +1,13 @@
 /**
  * Seed script — populates the database from seed-data.json
- *
  * Usage (Docker):  npm run seed:docker
  * Usage (local):   npm run seed
- *
  * Idempotent: drops the guests collection before inserting.
  */
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { nanoid } from 'nanoid';
-import { parseVisitedDate } from '../utils/visitedDate';
 import rawData from './seed-data.json';
 
 dotenv.config();
@@ -21,14 +18,22 @@ const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://localhost:27017/guests_db'
 
 interface RawIndividual {
   rating?: number | null;
+  // accept both old (countryCode) and new (hometownCode) field names
   countryCode?: string;
+  hometownCode?: string;
+  livingInCode?: string | null;
   prefixCode?: string | null;
   continent?: string;
   region?: string;
   fullName?: string | null;
+  // accept both old (birthplace) and new (hometown) field names
   birthplace?: string | null;
+  hometown?: string | null;
   'living in'?: string | null;
+  livingIn?: string | null;
+  // accept both old (birthyear) and new (birthDate) field names
   birthyear?: number | string | null;
+  birthDate?: string | null;
   occupation?: string[] | string;
   urlProfileCs?: string | number | null;
   gender?: string;
@@ -41,7 +46,9 @@ interface RawIndividual {
 interface RawSolo extends RawIndividual {
   nights: number;
   stayed: boolean;
-  didWeHangOut: boolean | null;
+  // accept both old (didWeHangOut) and new (hangOut) field names
+  didWeHangOut?: boolean | null;
+  hangOut?: boolean | null;
   visitedDate: string;
   wasACouple?: boolean;
   coupleId?: number | null;
@@ -54,7 +61,8 @@ interface RawSolo extends RawIndividual {
 interface RawCoupleGroup {
   nights: number;
   stayed: boolean;
-  didWeHangOut: boolean | null;
+  didWeHangOut?: boolean | null;
+  hangOut?: boolean | null;
   visitedDate: string;
   wasACouple?: boolean;
   coupleId?: number;
@@ -62,13 +70,17 @@ interface RawCoupleGroup {
   gift?: string[];
   comments?: string | null;
   coupleInfo: RawIndividual[];
-  // Fields hoisted to root (coupleId 17–20 pattern)
+  // Fields hoisted to root
   countryCode?: string;
+  hometownCode?: string;
+  livingInCode?: string | null;
   prefixCode?: string | null;
   continent?: string;
   region?: string;
   birthplace?: string | null;
+  hometown?: string | null;
   'living in'?: string | null;
+  livingIn?: string | null;
   rating?: number | null;
 }
 
@@ -85,11 +97,25 @@ function normaliseInstagram(value: string | string[] | null | undefined): string
   return nullify(value);
 }
 
-function normaliseBirthyear(value: number | string | null | undefined): number | null {
-  if (value === null || value === undefined) return null;
-  const n = typeof value === 'string' ? parseInt(value, 10) : value;
-  if (isNaN(n) || n === 0) return null;
-  return n;
+/**
+ * Normalise birthDate: accepts number (old birthyear), string year, or full date string.
+ * Always returns a string like "2000", "March 2000", or "15 March 2000", or null.
+ */
+function normaliseBirthDate(
+  birthDate: string | null | undefined,
+  birthyear: number | string | null | undefined
+): string | null {
+  // Prefer new birthDate field
+  if (birthDate !== null && birthDate !== undefined) {
+    const s = String(birthDate).trim();
+    return s === '' ? null : s;
+  }
+  // Fall back to old birthyear
+  if (birthyear !== null && birthyear !== undefined) {
+    const n = typeof birthyear === 'string' ? parseInt(birthyear, 10) : birthyear;
+    if (!isNaN(n) && n !== 0) return String(n);
+  }
+  return null;
 }
 
 function normaliseGift(value: string[] | null | undefined): string[] | null {
@@ -112,11 +138,12 @@ function normaliseContinent(raw: string | null | undefined): string {
     'north america': 'America',
     'central america': 'America',
     caribe: 'America',
+    caribbean: 'America',
     europe: 'Europe',
     asia: 'Asia',
     oceania: 'Oceania',
   };
-  return map[raw.toLowerCase()] ?? 'America';
+  return map[raw.toLowerCase()] ?? raw;
 }
 
 function normaliseRegion(raw: string | null | undefined, continent?: string): string {
@@ -134,7 +161,7 @@ function normaliseRegion(raw: string | null | undefined, continent?: string): st
     'North America',
     'Central America',
     'South America',
-    'Caribe',
+    'Caribbean',
     'Middle East Asia',
     'Southeast Asia',
     'Eastern Asia',
@@ -148,10 +175,17 @@ function normaliseRegion(raw: string | null | undefined, continent?: string): st
     'Oceania',
     'Africa',
   ];
+  // Also map old "Caribe" → "Caribbean"
+  if (raw.toLowerCase() === 'caribe') return 'Caribbean';
   const exact = VALID.find((r) => r.toLowerCase() === raw.toLowerCase());
   if (exact) return exact;
   const partial = VALID.find((r) => raw.toLowerCase().includes(r.toLowerCase()));
   return partial ?? 'South America';
+}
+
+function getHometownCode(raw: RawIndividual, fallback?: RawCoupleGroup): string {
+  const code = raw.hometownCode ?? raw.countryCode ?? fallback?.hometownCode ?? fallback?.countryCode;
+  return (nullify(code) ?? 'UNK').toUpperCase();
 }
 
 function normaliseIndividual(raw: RawIndividual, rootFallback?: RawCoupleGroup) {
@@ -160,16 +194,22 @@ function normaliseIndividual(raw: RawIndividual, rootFallback?: RawCoupleGroup) 
   const continent = normaliseContinent(rawContinent);
   const region = normaliseRegion(rawRegion, continent);
 
+  // livingIn: prefer named field, fall back to "living in" key
+  const livingIn = nullify(raw.livingIn ?? raw['living in'] ?? rootFallback?.livingIn ?? rootFallback?.['living in']);
+  // hometown: prefer named field, fall back to old birthplace
+  const hometown = nullify(raw.hometown ?? raw.birthplace ?? rootFallback?.hometown ?? rootFallback?.birthplace);
+
   return {
     rating: raw.rating ?? null,
-    countryCode: (nullify(raw.countryCode ?? rootFallback?.countryCode) ?? 'UNK').toUpperCase(),
+    hometownCode: getHometownCode(raw, rootFallback),
+    livingInCode: nullify(raw.livingInCode ?? rootFallback?.livingInCode)?.toUpperCase() ?? null,
     prefixCode: nullify(raw.prefixCode ?? rootFallback?.prefixCode),
     continent,
     region,
     fullName: nullify(raw.fullName) ?? 'Unknown',
-    birthplace: nullify(raw.birthplace ?? rootFallback?.birthplace),
-    livingIn: nullify(raw['living in'] ?? rootFallback?.['living in']),
-    birthyear: normaliseBirthyear(raw.birthyear),
+    hometown,
+    livingIn,
+    birthDate: normaliseBirthDate(raw.birthDate, raw.birthyear),
     occupation: normaliseOccupation(raw.occupation),
     urlProfileCs: raw.urlProfileCs && String(raw.urlProfileCs).trim() !== '' ? raw.urlProfileCs : null,
     gender: raw.gender ?? 'male',
@@ -180,16 +220,18 @@ function normaliseIndividual(raw: RawIndividual, rootFallback?: RawCoupleGroup) 
 
 // ─── Document builders ────────────────────────────────────────────────────────
 
+function getHangOut(raw: { didWeHangOut?: boolean | null; hangOut?: boolean | null }): boolean {
+  return raw.hangOut ?? raw.didWeHangOut ?? false;
+}
+
 function buildSoloDoc(raw: RawSolo) {
-  const visitedDate = raw.visitedDate ?? '';
   return {
     guestId: nanoid(11),
     coupleId: null,
     nights: raw.nights,
     stayed: raw.stayed,
-    didWeHangOut: raw.didWeHangOut ?? false,
-    visitedDate,
-    visitedAt: parseVisitedDate(visitedDate),
+    hangOut: getHangOut(raw),
+    visitedDate: raw.visitedDate ?? '',
     isFirstTime: raw.isFirstTime ?? false,
     gift: normaliseGift(raw.gift),
     comments: nullify(raw.comments),
@@ -200,15 +242,13 @@ function buildSoloDoc(raw: RawSolo) {
 
 function buildCoupleDoc(raw: RawCoupleGroup) {
   const [memberA, memberB] = raw.coupleInfo;
-  const visitedDate = raw.visitedDate ?? '';
   return {
     guestId: nanoid(11),
     coupleId: nanoid(18),
     nights: raw.nights,
     stayed: raw.stayed,
-    didWeHangOut: raw.didWeHangOut ?? false,
-    visitedDate,
-    visitedAt: parseVisitedDate(visitedDate),
+    hangOut: getHangOut(raw),
+    visitedDate: raw.visitedDate ?? '',
     isFirstTime: raw.isFirstTime ?? false,
     gift: normaliseGift(raw.gift),
     comments: nullify(raw.comments),
@@ -235,10 +275,8 @@ async function seed(): Promise<void> {
 
   const docs: object[] = [];
   let skipped = 0;
-  type SeedRecord = RawSolo | RawCoupleGroup[];
-  const data: SeedRecord[] = rawData as unknown as SeedRecord[];
 
-  for (const item of data) {
+  for (const item of rawData as Array<RawSolo | RawCoupleGroup[]>) {
     if (Array.isArray(item)) {
       for (const coupleGroup of item) {
         try {

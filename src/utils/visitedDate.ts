@@ -1,29 +1,39 @@
 /**
- * Parses a visitedDate string into a JS Date for sorting/filtering.
- * Supports:
- *   - "November 2025"       → 2025-11-01
- *   - "March 2026"          → 2026-03-01
- *   - "08 June 2026"        → 2026-06-08
- *   - "15 May 2026"         → 2026-05-15
- *   - "21 May 2026"         → 2026-05-21
+ * Utilities for parsing visitedDate strings for filtering purposes.
+ *
+ * Supported formats:
+ *   - "May 2026"       → month + year
+ *   - "05 May 2026"    → day + month + year
+ *   - "November 2025"  → month + year
+ *   - "08 June 2026"   → day + month + year
  */
 
 const MONTHS: Record<string, number> = {
-  january: 0,
-  february: 1,
-  march: 2,
-  april: 3,
-  may: 4,
-  june: 5,
-  july: 6,
-  august: 7,
-  september: 8,
-  october: 9,
-  november: 10,
-  december: 11,
+  january: 1,
+  february: 2,
+  march: 3,
+  april: 4,
+  may: 5,
+  june: 6,
+  july: 7,
+  august: 8,
+  september: 9,
+  october: 10,
+  november: 11,
+  december: 12,
 };
 
-export function parseVisitedDate(raw: string): Date {
+export interface ParsedVisitedDate {
+  year: number;
+  month: number; // 1–12
+  day: number; // 1 if not provided
+}
+
+/**
+ * Parses a visitedDate string into { year, month, day }.
+ * Returns null if the string cannot be parsed.
+ */
+export function parseVisitedDate(raw: string): ParsedVisitedDate | null {
   const parts = raw.trim().split(/\s+/);
 
   // "Month Year" → 2 parts
@@ -32,7 +42,7 @@ export function parseVisitedDate(raw: string): Date {
     const month = MONTHS[monthStr.toLowerCase()];
     const year = parseInt(yearStr, 10);
     if (month !== undefined && !isNaN(year)) {
-      return new Date(year, month, 1);
+      return { year, month, day: 1 };
     }
   }
 
@@ -43,25 +53,31 @@ export function parseVisitedDate(raw: string): Date {
     const month = MONTHS[monthStr.toLowerCase()];
     const year = parseInt(yearStr, 10);
     if (!isNaN(day) && month !== undefined && !isNaN(year)) {
-      return new Date(year, month, day);
+      return { year, month, day };
     }
   }
 
-  // Fallback: try native Date parse
-  const fallback = new Date(raw);
-  return isNaN(fallback.getTime()) ? new Date() : fallback;
+  return null;
 }
 
 /**
- * Parses a query param like "november-2022" or "june-2026" into a Date.
+ * Converts a ParsedVisitedDate to a numeric sort key: YYYYMM (ignores day for range filtering).
+ * e.g. { year: 2026, month: 5 } → 202605
+ */
+export function toSortKey(parsed: ParsedVisitedDate): number {
+  return parsed.year * 100 + parsed.month;
+}
+
+/**
+ * Parses a query param like "november-2022" or "june-2026" into a sort key.
  * Returns null if invalid.
  */
-export function parseMonthYearParam(param: string): Date | null {
+export function parseMonthYearParam(param: string): number | null {
   const parts = param.toLowerCase().split('-');
   if (parts.length !== 2) return null;
   const [monthStr, yearStr] = parts;
   const month = MONTHS[monthStr];
   const year = parseInt(yearStr, 10);
   if (month === undefined || isNaN(year) || year < 2007) return null;
-  return new Date(year, month, 1);
+  return year * 100 + month;
 }

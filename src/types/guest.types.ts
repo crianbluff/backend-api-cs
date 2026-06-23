@@ -4,7 +4,7 @@ export type Region =
   | 'North America'
   | 'Central America'
   | 'South America'
-  | 'Caribe'
+  | 'Caribbean'
   | 'Middle East Asia'
   | 'Southeast Asia'
   | 'Eastern Asia'
@@ -36,14 +36,15 @@ export type Gender = 'male' | 'female' | 'trans';
 
 export interface IndividualInfo {
   rating: number | null;
-  countryCode: string;
+  hometownCode: string;
+  livingInCode: string | null;
   prefixCode: string | null;
   continent: Continent;
   region: Region;
   fullName: string;
-  birthplace: string | null;
+  hometown: string | null;
   livingIn: string | null;
-  birthyear: number | null;
+  birthDate: string | null;
   occupation: string[];
   urlProfileCs: string | number | null;
   gender: Gender;
@@ -55,11 +56,8 @@ interface GuestSharedFields {
   guestId: string;
   nights: number;
   stayed: boolean;
-  didWeHangOut: boolean;
-  /** Raw string as provided e.g. "November 2025" or "08 June 2026" */
+  hangOut: boolean;
   visitedDate: string;
-  /** Computed Date used for sorting/filtering. Day defaults to 1 when not provided. */
-  visitedAt: Date;
   isFirstTime: boolean;
   gift: string[] | null;
   comments: string | null;
@@ -90,28 +88,33 @@ export interface GuestListItem {
   nights: number;
   stayed: boolean;
   visitedDate: string;
-  visitedAt: Date;
-  didWeHangOut: boolean;
+  hangOut: boolean;
   // Solo fields (null when couple)
   fullName: string | null;
-  countryCode: string | null;
+  hometownCode: string | null;
+  livingInCode: string | null;
   prefixCode: string | null;
+  continent: Continent | null;
+  region: Region | null;
   age: number | null;
   occupation: string[] | null;
   livingIn: string | null;
-  birthplace: string | null;
+  hometown: string | null;
   rating: number | null;
   gender: Gender | null;
   whatsapp: string | null;
   // Couple fields
   coupleInfo?: Array<{
     fullName: string;
-    countryCode: string;
+    hometownCode: string;
+    livingInCode: string | null;
     prefixCode: string | null;
+    continent: Continent;
+    region: Region;
     age: number | null;
     occupation: string[];
     livingIn: string | null;
-    birthplace: string | null;
+    hometown: string | null;
     rating: number | null;
     gender: Gender;
     whatsapp: string | null;

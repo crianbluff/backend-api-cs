@@ -5,7 +5,7 @@ const regionEnum = z.enum([
   'North America',
   'Central America',
   'South America',
-  'Caribe',
+  'Caribbean',
   'Middle East Asia',
   'Southeast Asia',
   'Eastern Asia',
@@ -20,21 +20,32 @@ const regionEnum = z.enum([
   'Africa',
 ]);
 const genderEnum = z.enum(['male', 'female', 'trans']);
-const currentYear = new Date().getFullYear();
 
-// visitedDate: accepts "Month Year" or "DD Month Year"
+// visitedDate: "Month Year" or "DD Month Year"
 const visitedDateRegex = /^(\d{1,2}\s+)?[A-Za-z]+\s+\d{4}$/;
+
+// birthDate: "YYYY" or "Month YYYY" or "DD Month YYYY"
+const birthDateRegex = /^(\d{1,2}\s+)?([A-Za-z]+\s+)?\d{4}$/;
 
 const individualInfoSchema = z.object({
   rating: z.number().int().min(1).max(5).nullable().optional().default(null),
-  countryCode: z.string().min(2).max(4).toUpperCase(),
+  hometownCode: z.string().min(2).max(4).toUpperCase(),
+  livingInCode: z.string().min(2).max(4).toUpperCase().nullable().optional().default(null),
   prefixCode: z.string().nullable().optional().default(null),
   continent: continentEnum,
   region: regionEnum,
   fullName: z.string().min(1).max(200),
-  birthplace: z.string().max(200).nullable().optional().default(null),
+  hometown: z.string().max(200).nullable().optional().default(null),
   livingIn: z.string().max(200).nullable().optional().default(null),
-  birthyear: z.number().int().min(1900).max(currentYear).nullable().optional().default(null),
+  birthDate: z
+    .string()
+    .regex(
+      birthDateRegex,
+      'birthDate must be "YYYY", "Month YYYY" or "DD Month YYYY" e.g. "2000", "March 2000" or "15 March 2000"'
+    )
+    .nullable()
+    .optional()
+    .default(null),
   occupation: z.array(z.string().max(100)).optional().default([]),
   urlProfileCs: z.union([z.string(), z.number()]).nullable().optional().default(null),
   gender: genderEnum,
@@ -45,10 +56,10 @@ const individualInfoSchema = z.object({
 const visitFields = {
   nights: z.number().int().min(1, 'nights must be at least 1'),
   stayed: z.boolean(),
-  didWeHangOut: z.boolean(),
+  hangOut: z.boolean(),
   visitedDate: z
     .string()
-    .regex(visitedDateRegex, 'visitedDate must be "Month Year" or "DD Month Year" e.g. "November 2025" or "08 June 2026"'),
+    .regex(visitedDateRegex, 'visitedDate must be "Month Year" or "DD Month Year" e.g. "May 2026" or "05 May 2026"'),
   isFirstTime: z.boolean().optional().default(false),
   gift: z.array(z.string().max(200)).nullable().optional().default(null),
   comments: z.string().max(2000).nullable().optional().default(null),

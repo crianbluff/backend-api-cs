@@ -10,7 +10,7 @@ const router = Router();
  * /guests:
  *   get:
  *     tags: [Guests]
- *     summary: Get all guests (list view, sorted by most recent visitedDate)
+ *     summary: Get all guests (list view, sorted by most recently added)
  *     parameters:
  *       - in: query
  *         name: page
@@ -25,20 +25,19 @@ const router = Router();
  *         name: region
  *         schema:
  *           type: string
- *           enum: [North America, Central America, South America, Caribe, Middle East Asia, Southeast Asia, Eastern Asia, South Asia, Central Asia, West Europe, Scandinavia, Southern Europe, Northern Europe, Eastern Europe, Oceania, Africa]
+ *           enum: [North America, Central America, South America, Caribbean, Middle East Asia, Southeast Asia, Eastern Asia, South Asia, Central Asia, West Europe, Scandinavia, Southern Europe, Northern Europe, Eastern Europe, Oceania, Africa]
  *       - in: query
  *         name: isFirstTime
  *         schema: { type: string, enum: [true, false] }
- *         description: Filter by first-time couchsurfing guests
  *       - in: query
  *         name: from
  *         schema: { type: string }
- *         description: "Start of visitedAt range. Format: month-year e.g. november-2022"
+ *         description: "Start of visitedDate range. Format: month-year e.g. november-2022"
  *         example: november-2022
  *       - in: query
  *         name: to
  *         schema: { type: string }
- *         description: "End of visitedAt range. Format: month-year e.g. august-2025"
+ *         description: "End of visitedDate range. Format: month-year e.g. august-2025"
  *         example: august-2025
  *     responses:
  *       200:
@@ -108,18 +107,25 @@ router.get('/:id', guestController.getById.bind(guestController));
  *             solo:
  *               summary: Solo guest
  *               value:
- *                 nights: 2
+ *                 nights: 4
  *                 stayed: true
  *                 rating: 4
- *                 countryCode: MAR
- *                 prefixCode: "+212"
- *                 continent: Africa
- *                 region: Africa
- *                 fullName: Simo Amri
+ *                 hometownCode: CHN
+ *                 livingInCode: CHN
+ *                 prefixCode: "+86"
+ *                 continent: Asia
+ *                 region: Eastern Asia
+ *                 fullName: "苠全 Randy"
+ *                 hometown: "Zhangjiajie, Hunan"
+ *                 livingIn: "Zhangjiajie, Hunan"
+ *                 birthDate: "2000"
+ *                 hangOut: true
+ *                 visitedDate: "January 2026"
+ *                 urlProfileCs: "minquan-zhao"
+ *                 occupation: ["human resources"]
  *                 gender: male
- *                 didWeHangOut: true
- *                 visitedDate: "November 2025"
- *                 isFirstTime: false
+ *                 whatsapp: "18174467658"
+ *                 instagram: "justyourboyrandy"
  *                 wasACouple: false
  *     responses:
  *       201:
