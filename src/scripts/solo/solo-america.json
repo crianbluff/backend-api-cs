@@ -1,5 +1,6 @@
 [
   {
+    "groupType": "solo",
     "nights": 8,
     "stayed": true,
     "rating": 2,
@@ -22,6 +23,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 5,
     "stayed": true,
     "rating": 2,
@@ -45,6 +47,7 @@
     "comments": "She asked for permission to let stay an italian man for one day & a pickpocket stole her phone on 7 carrera"
   },
   {
+    "groupType": "solo",
     "nights": 7,
     "stayed": true,
     "rating": 3,
@@ -68,6 +71,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 3,
@@ -91,6 +95,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -114,6 +119,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -137,6 +143,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 5,
     "stayed": true,
     "rating": 3,
@@ -160,6 +167,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 5,
     "stayed": true,
     "rating": 4,
@@ -183,6 +191,7 @@
     "comments": "Luego volvió y se quedo una noche más"
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 3,
@@ -206,6 +215,7 @@
     "comments": "no photo & he unintentionally robbed one of my t-shirt and post a wapp status with it"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -228,6 +238,7 @@
     "gift": ["jamaica magnet", "rappi dinner"]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 4,
@@ -251,6 +262,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 6,
     "stayed": true,
     "rating": 4,
@@ -274,6 +286,7 @@
     "comments": "no reference"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -296,6 +309,7 @@
     "gift": ["2 pizzas slices for me & alo"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -318,6 +332,7 @@
     "gift": ["barquillos pirulin", "bill 1x20 VES", "bill 1x50 VES", "bill 1x200 VES"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -340,6 +355,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": false,
     "rating": 2,
@@ -363,6 +379,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -385,6 +402,7 @@
     "gift": ["achiras"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -407,6 +425,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 5,
@@ -421,7 +440,7 @@
     "birthDate": "1997",
     "hangOut": true,
     "visitedDate": "March 2026",
-    "urlProfileCs": "yenni+carolina-guevara+rosero",
+    "urlProfileCs": "carito2696",
     "occupation": ["clothes seller"],
     "gender": "female",
     "whatsapp": "3248910046",
@@ -429,6 +448,7 @@
     "gift": ["café tostado y molido, café de la loma el mejor especial 500gr sanmaniego nariño"]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 5,
@@ -452,6 +472,7 @@
     "comments": "He was the person that I have hosted #100 only inlcuding staying"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -476,6 +497,7 @@
     "comments": "she come with her mom"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -498,6 +520,7 @@
     "gift": ["salchipapas", "ecuador magnet to my mom"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -520,6 +543,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -543,6 +567,7 @@
     "comments": "I was the reference #100"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -565,6 +590,7 @@
     "gift": ["4 galletas casino (chocolate, limón, crema de maní, menta)", "4 piruletas", "choco bum galletas"]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": false,
     "rating": 4,
@@ -587,6 +613,7 @@
     "gift": ["dulces de perú", "she invited me & alo to eat patacon & cerdo ahumado"]
   },
   {
+    "groupType": "solo",
     "nights": 4,
     "stayed": true,
     "rating": 4,
@@ -609,6 +636,7 @@
     "gift": ["2 cachaça mini bottles"]
   },
   {
+    "groupType": "solo",
     "nights": 9,
     "stayed": true,
     "rating": 4,
@@ -632,6 +660,7 @@
     "comments": "Me pidió que lo dejara quedar 5 días mas vino dos veces"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -654,6 +683,7 @@
     "gift": ["1 keychain from brazil to me", "1 keychain from brazil for alo"]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 4,
@@ -676,6 +706,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 3,
@@ -700,6 +731,7 @@
     ]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -722,6 +754,7 @@
     "gift": ["el popol vuh en el arte maya book", "nos preparo ñuquis plato tipico de argentina"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -744,6 +777,7 @@
     "gift": ["tortilla española"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -766,6 +800,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 5,
@@ -798,6 +833,7 @@
     ]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 3,

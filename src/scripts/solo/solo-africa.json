@@ -1,5 +1,6 @@
 [
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 3,
@@ -23,6 +24,7 @@
     "comments": "It is an ambassador ⭐"
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 4,
@@ -45,6 +47,7 @@
     "gift": ["socks from paris", "tiphanie corvez chocolatiére, ballotin 32 pieces, 10.5x10.5x3cm 110gr"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 2,
@@ -68,6 +71,7 @@
     "comments": "Me pidió que lo dejara quedar de nuevo pero le dije que no"
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": false,
     "rating": 3,

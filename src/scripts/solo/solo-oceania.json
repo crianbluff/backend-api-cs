@@ -1,5 +1,6 @@
 [
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 5,
@@ -22,6 +23,7 @@
     "gift": ["arepa with cheese for my mom", "coffee"]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 4,

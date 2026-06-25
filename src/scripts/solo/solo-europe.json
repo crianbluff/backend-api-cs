@@ -1,5 +1,6 @@
 [
   {
+    "groupType": "solo",
     "nights": 5,
     "stayed": true,
     "rating": 4,
@@ -23,6 +24,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 4,
@@ -46,6 +48,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 4,
     "stayed": true,
     "rating": 5,
@@ -68,6 +71,7 @@
     "gift": ["2 jamones fud for alo", "chiles verdes for alo"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -91,6 +95,7 @@
     "comments": "no reference"
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 2,
@@ -113,6 +118,7 @@
     "gift": ["mittens for me and mittens for alo"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -135,6 +141,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 5,
@@ -162,6 +169,7 @@
     ]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 5,
@@ -184,6 +192,7 @@
     "gift": ["she invited me & alo 1 cholao"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -213,6 +222,7 @@
     "comments": "Votó el queso del chocolate en la basura pq no le gusto"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 5,
@@ -245,6 +255,7 @@
     "comments": "we play chess :) she won all matches, alo beat her all matches"
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 3,
@@ -268,6 +279,7 @@
     "comments": "no reference"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -290,6 +302,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 5,
@@ -312,6 +325,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 2,
@@ -334,6 +348,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -357,6 +372,7 @@
     "comments": "Es reportera de antena 3"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -379,6 +395,7 @@
     "gift": ["breakfast in la concordia"]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 3,
@@ -401,6 +418,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -423,6 +441,30 @@
     "gift": []
   },
   {
+    "groupType": "solo",
+    "nights": 2,
+    "stayed": true,
+    "rating": 4,
+    "hometownCode": "ITA",
+    "prefixCode": "+39",
+    "continent": "Europe",
+    "region": "Southern Europe",
+    "fullName": "Daniele Sibilli",
+    "hometown": "Naples",
+    "livingIn": "Naples",
+    "livingInCode": "ITA",
+    "birthDate": "1997",
+    "hangOut": false,
+    "visitedDate": "19 June 2026",
+    "urlProfileCs": "dansib",
+    "occupation": ["physiotherapist"],
+    "gender": "male",
+    "whatsapp": "3314727797",
+    "instagram": "da77ila",
+    "gift": []
+  },
+  {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -445,6 +487,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 4,
@@ -471,6 +514,7 @@
     "comments": "Lo robaron en barranquilla se confío"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -493,6 +537,7 @@
     "gift": ["montenegro magnet"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -515,6 +560,7 @@
     "gift": ["annas saffran pepparkakor limited edition", "scandinavan spirt ted", "coffe invitation in San Alberto"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -537,6 +583,7 @@
     "gift": ["Dubai Chocolate Küche pistachio kunafa dark chocolate 100g", "breakfast caldo close to golden museum"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -565,6 +612,7 @@
     ]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 5,
@@ -588,6 +636,7 @@
     "comments": "we play chess :) I won the 3 matches, she arrived one day before expected cause the place she was going to stay look so dangerous, I lend the taxi price and she paid me back"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -610,6 +659,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -636,6 +686,7 @@
     ]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": true,
     "rating": 1,
@@ -659,6 +710,7 @@
     "comments": "no reference"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 3,
@@ -681,6 +733,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 5,
@@ -704,6 +757,7 @@
     "comments": "He arrived and helped us to organize the album panini world cup 2026 stickers"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -730,6 +784,7 @@
     ]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,

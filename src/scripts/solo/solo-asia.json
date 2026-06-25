@@ -1,5 +1,6 @@
 [
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -22,6 +23,7 @@
     "gift": ["cezve", "magnet", "turkish airlines bolsa para viaje", "Tarihi Beyoğlu Fırını Tahini Cookies"]
   },
   {
+    "groupType": "solo",
     "nights": 1,
     "stayed": false,
     "rating": 3,
@@ -45,6 +47,7 @@
     "comments": "Le molestaba pancho y era mamon"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": false,
     "rating": 3,
@@ -76,6 +79,7 @@
     "comments": "She stay in 2 hilton hotels, She come in the house but didn't stay, didn't sleep, she had a lot of money, she was too picky, she stole some stuff from the hotel"
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -99,6 +103,7 @@
     "isFirstTime": true
   },
   {
+    "groupType": "solo",
     "nights": 6,
     "stayed": true,
     "rating": 4,
@@ -121,6 +126,7 @@
     "gift": ["hamsa"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 5,
@@ -143,6 +149,7 @@
     "gift": ["he made teriyaki chicken for my mom, ryan, alo & me"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -169,6 +176,7 @@
     "comments": "Era demasiado timido"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -191,6 +199,7 @@
     "gift": ["coin 1X1 quetzal", "coin 1X1 balboa"]
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 3,
@@ -213,6 +222,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 4,
     "stayed": true,
     "rating": 1,
@@ -237,6 +247,7 @@
     "comments": "he did not let a reference, he did not want to pay me at the end he paid but just what he consumed, we play soccer together with alo and ryan"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,
@@ -259,6 +270,7 @@
     "gift": ["magnet", "soda"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -289,6 +301,7 @@
     ]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 3,
@@ -311,6 +324,7 @@
     "gift": ["cholao"]
   },
   {
+    "groupType": "solo",
     "nights": 4,
     "stayed": true,
     "rating": 4,
@@ -333,6 +347,7 @@
     "gift": ["arepas dulces de queso", "coin 1X5 cetesimos de balvoa"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 5,
@@ -361,6 +376,7 @@
     "comments": "le robaron el celular, Grabo videos en una red social china sobre lo que paso y agradeciendo"
   },
   {
+    "groupType": "solo",
     "nights": 4,
     "stayed": true,
     "rating": 4,
@@ -384,9 +400,10 @@
     "comments": "vino dos veces me pidió quedarse de nuevo"
   },
   {
-    "nights": 3,
+    "groupType": "solo",
+    "nights": 4,
     "stayed": true,
-    "rating": 5,
+    "rating": 4,
     "hometownCode": "CHN",
     "prefixCode": "+1",
     "continent": "Asia",
@@ -401,13 +418,20 @@
     "urlProfileCs": "anthony-xu",
     "occupation": ["student ing minería y studies hispánicos"],
     "gender": "male",
-    "whatsapp": "+14373408308",
+    "whatsapp": "4373408308",
     "instagram": "a.lobo.x",
-    "gift": ["coca cola de café", "empanada oxxo"],
+    "gift": [
+      "coca cola de café",
+      "empanada oxxo",
+      "cocino un plato tipico de mongolia interior fideos estofados de cordero",
+      "2 letters one in mandarin and one in mongoliano",
+      "guatemalan worry dolls"
+    ],
     "isFirstTime": true,
-    "comments": "amo a pancho, vimos el partido de portugal vs dr congo 1-1, tambn el de england vs croatia 4-2 y vio con mi mamá el de colombia vs uzbekistan"
+    "comments": "amo a pancho, vimos el partido de portugal vs dr congo 1-1, tambn el de england vs croatia 4-2 y vio con mi mamá el de colombia vs uzbekistan, fue con mi mamá al parque el tunal y al teleferico de alli"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 5,
@@ -430,6 +454,7 @@
     "gift": ["bill 20 polski", "coin 3X10 groszy", "coin 1X50 groszy", "coin 1X1 złoty"]
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 5,
@@ -452,6 +477,7 @@
     "gift": []
   },
   {
+    "groupType": "solo",
     "nights": 2,
     "stayed": true,
     "rating": 4,
@@ -475,6 +501,7 @@
     "comments": "we play chess :) he won one match and we draw one, accidentally we offered arepa but his religion does not allow him to eat pork"
   },
   {
+    "groupType": "solo",
     "nights": 3,
     "stayed": true,
     "rating": 4,

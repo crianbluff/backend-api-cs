@@ -1,328 +1,195 @@
-/**
- * Seed script — populates the database from seed-data.json
- * Usage (Docker):  npm run seed:docker
- * Usage (local):   npm run seed
- * Idempotent: drops the guests collection before inserting.
- */
-
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { nanoid } from 'nanoid';
-import rawData from './seed-data.json';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://localhost:27017/guests_db';
 
-// ─── Raw JSON types ───────────────────────────────────────────────────────────
+/**
+ * ----------------------------
+ * LOAD FILES SAFE
+ * ----------------------------
+ */
+function loadJSONFile(filePath: string): any[] {
+  const fullPath = path.resolve(filePath);
 
-interface RawIndividual {
-  rating?: number | null;
-  // accept both old (countryCode) and new (hometownCode) field names
-  countryCode?: string;
-  hometownCode?: string;
-  livingInCode?: string | null;
-  prefixCode?: string | null;
-  continent?: string;
-  region?: string;
-  fullName?: string | null;
-  // accept both old (birthplace) and new (hometown) field names
-  birthplace?: string | null;
-  hometown?: string | null;
-  'living in'?: string | null;
-  livingIn?: string | null;
-  // accept both old (birthyear) and new (birthDate) field names
-  birthyear?: number | string | null;
-  birthDate?: string | null;
-  occupation?: string[] | string;
-  urlProfileCs?: string | number | null;
-  gender?: string;
-  whatsapp?: string | null;
-  instagram?: string | string[] | null;
-  gift?: string[];
-  comments?: string | null;
+  if (!fs.existsSync(fullPath)) {
+    console.warn(`⚠️ Missing file: ${fullPath}`);
+    return [];
+  }
+
+  const data = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
+  return Array.isArray(data) ? data : [data];
 }
 
-interface RawSolo extends RawIndividual {
-  nights: number;
-  stayed: boolean;
-  // accept both old (didWeHangOut) and new (hangOut) field names
-  didWeHangOut?: boolean | null;
-  hangOut?: boolean | null;
-  visitedDate: string;
-  wasACouple?: boolean;
-  coupleId?: number | null;
-  isFirstTime?: boolean;
-  gift?: string[];
-  comments?: string | null;
-  coupleInfo?: RawIndividual[];
-}
+const SOLO_FILES = [
+  'src/scripts/solo/solo-africa.json',
+  'src/scripts/solo/solo-america.json',
+  'src/scripts/solo/solo-asia.json',
+  'src/scripts/solo/solo-europe.json',
+  'src/scripts/solo/solo-oceania.json',
+];
 
-interface RawCoupleGroup {
-  nights: number;
-  stayed: boolean;
-  didWeHangOut?: boolean | null;
-  hangOut?: boolean | null;
-  visitedDate: string;
-  wasACouple?: boolean;
-  coupleId?: number;
-  isFirstTime?: boolean;
-  gift?: string[];
-  comments?: string | null;
-  coupleInfo: RawIndividual[];
-  // Fields hoisted to root
-  countryCode?: string;
-  hometownCode?: string;
-  livingInCode?: string | null;
-  prefixCode?: string | null;
-  continent?: string;
-  region?: string;
-  birthplace?: string | null;
-  hometown?: string | null;
-  'living in'?: string | null;
-  livingIn?: string | null;
-  rating?: number | null;
-}
-
-// ─── Normalisation helpers ────────────────────────────────────────────────────
-
-function nullify(value: unknown): string | null {
-  if (value === null || value === undefined) return null;
-  const str = String(value).trim();
-  return str === '' ? null : str;
-}
-
-function normaliseInstagram(value: string | string[] | null | undefined): string | null {
-  if (Array.isArray(value)) return nullify(value[0]);
-  return nullify(value);
-}
+const GROUP_FILES = [
+  'src/scripts/group/america-group.json',
+  'src/scripts/group/asia-group.json',
+  'src/scripts/group/europe-group.json',
+];
 
 /**
- * Normalise birthDate: accepts number (old birthyear), string year, or full date string.
- * Always returns a string like "2000", "March 2000", or "15 March 2000", or null.
+ * ----------------------------
+ * DATE NORMALIZATION
+ * ----------------------------
  */
-function normaliseBirthDate(
-  birthDate: string | null | undefined,
-  birthyear: number | string | null | undefined
-): string | null {
-  // Prefer new birthDate field
-  if (birthDate !== null && birthDate !== undefined) {
-    const s = String(birthDate).trim();
-    return s === '' ? null : s;
+function parseDateToISO(value: string | null | undefined): string | null {
+  if (!value) return null;
+
+  const s = String(value).trim();
+
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+    return new Date(s).toISOString().split('T')[0];
   }
-  // Fall back to old birthyear
-  if (birthyear !== null && birthyear !== undefined) {
-    const n = typeof birthyear === 'string' ? parseInt(birthyear, 10) : birthyear;
-    if (!isNaN(n) && n !== 0) return String(n);
+
+  const d = new Date(s);
+  if (!isNaN(d.getTime()) && isNaN(Number(s))) {
+    return d.toISOString().split('T')[0];
   }
+
+  if (/^\d{4}$/.test(s)) return s;
+
   return null;
 }
 
-function normaliseGift(value: string[] | null | undefined): string[] | null {
-  if (!value || value.length === 0) return null;
-  return value;
+/**
+ * ----------------------------
+ * HELPERS
+ * ----------------------------
+ */
+function nullify(v: unknown): string | null {
+  if (v === null || v === undefined) return null;
+  const s = String(v).trim();
+  return s === '' ? null : s;
 }
 
-function normaliseOccupation(value: string[] | string | null | undefined): string[] {
-  if (!value) return [];
-  if (typeof value === 'string') return value.trim() ? [value] : [];
-  return value.filter((o) => o && o.trim() !== '');
-}
-
-function normaliseContinent(raw: string | null | undefined): string {
-  if (!raw) return 'America';
-  const map: Record<string, string> = {
-    africa: 'Africa',
-    america: 'America',
-    'south america': 'America',
-    'north america': 'America',
-    'central america': 'America',
-    caribe: 'America',
-    caribbean: 'America',
-    europe: 'Europe',
-    asia: 'Asia',
-    oceania: 'Oceania',
-  };
-  return map[raw.toLowerCase()] ?? raw;
-}
-
-function normaliseRegion(raw: string | null | undefined, continent?: string): string {
-  if (!raw) {
-    const fallbacks: Record<string, string> = {
-      Africa: 'Africa',
-      America: 'South America',
-      Europe: 'West Europe',
-      Asia: 'Eastern Asia',
-      Oceania: 'Oceania',
-    };
-    return fallbacks[continent ?? 'America'] ?? 'South America';
-  }
-  const VALID = [
-    'North America',
-    'Central America',
-    'South America',
-    'Caribbean',
-    'Middle East Asia',
-    'Southeast Asia',
-    'Eastern Asia',
-    'South Asia',
-    'Central Asia',
-    'West Europe',
-    'Scandinavia',
-    'Southern Europe',
-    'Northern Europe',
-    'Eastern Europe',
-    'Oceania',
-    'Africa',
-  ];
-  // Also map old "Caribe" → "Caribbean"
-  if (raw.toLowerCase() === 'caribe') return 'Caribbean';
-  const exact = VALID.find((r) => r.toLowerCase() === raw.toLowerCase());
-  if (exact) return exact;
-  const partial = VALID.find((r) => raw.toLowerCase().includes(r.toLowerCase()));
-  return partial ?? 'South America';
-}
-
-function getHometownCode(raw: RawIndividual, fallback?: RawCoupleGroup): string {
-  const code = raw.hometownCode ?? raw.countryCode ?? fallback?.hometownCode ?? fallback?.countryCode;
-  return (nullify(code) ?? 'UNK').toUpperCase();
-}
-
-function normaliseIndividual(raw: RawIndividual, rootFallback?: RawCoupleGroup) {
-  const rawContinent = raw.continent ?? rootFallback?.continent;
-  const rawRegion = raw.region ?? rootFallback?.region;
-  const continent = normaliseContinent(rawContinent);
-  const region = normaliseRegion(rawRegion, continent);
-
-  // livingIn: prefer named field, fall back to "living in" key
-  const livingIn = nullify(raw.livingIn ?? raw['living in'] ?? rootFallback?.livingIn ?? rootFallback?.['living in']);
-  // hometown: prefer named field, fall back to old birthplace
-  const hometown = nullify(raw.hometown ?? raw.birthplace ?? rootFallback?.hometown ?? rootFallback?.birthplace);
-
+/**
+ * ----------------------------
+ * BUILD DOCUMENT
+ * ----------------------------
+ */
+function buildGuest(raw: any, groupId?: string) {
   return {
+    guestId: nanoid(11),
+
+    groupId,
+    groupType: raw.groupType,
+
+    nights: raw.nights,
+    stayed: raw.stayed,
+    hangOut: raw.hangOut ?? raw.didWeHangOut ?? false,
+
+    visitedDate: parseDateToISO(raw.visitedDate),
+
+    isFirstTime: raw.isFirstTime ?? false,
+
+    gift: Array.isArray(raw.gift) && raw.gift.length > 0 ? raw.gift : null,
+
+    comments: nullify(raw.comments),
+
     rating: raw.rating ?? null,
-    hometownCode: getHometownCode(raw, rootFallback),
-    livingInCode: nullify(raw.livingInCode ?? rootFallback?.livingInCode)?.toUpperCase() ?? null,
-    prefixCode: nullify(raw.prefixCode ?? rootFallback?.prefixCode),
-    continent,
-    region,
-    fullName: nullify(raw.fullName) ?? 'Unknown',
-    hometown,
-    livingIn,
-    birthDate: normaliseBirthDate(raw.birthDate, raw.birthyear),
-    occupation: normaliseOccupation(raw.occupation),
-    urlProfileCs: raw.urlProfileCs && String(raw.urlProfileCs).trim() !== '' ? raw.urlProfileCs : null,
-    gender: raw.gender ?? 'male',
+
+    hometownCode: raw.hometownCode,
+    livingInCode: raw.livingInCode ?? null,
+    prefixCode: raw.prefixCode ?? null,
+
+    continent: raw.continent,
+    region: raw.region,
+
+    fullName: raw.fullName ?? 'Unknown',
+    hometown: raw.hometown ?? null,
+    livingIn: raw.livingIn ?? null,
+
+    birthDate: parseDateToISO(raw.birthDate),
+
+    occupation: Array.isArray(raw.occupation) ? raw.occupation : [],
+
+    urlProfileCs: raw.urlProfileCs ?? null,
+
+    gender: raw.gender ?? 'unknown',
+
     whatsapp: nullify(raw.whatsapp),
-    instagram: normaliseInstagram(raw.instagram),
+    instagram: nullify(raw.instagram),
   };
 }
 
-// ─── Document builders ────────────────────────────────────────────────────────
+/**
+ * ----------------------------
+ * GROUP BY groupId
+ * ----------------------------
+ */
+function groupByGroupId(all: any[]) {
+  const map = new Map<string, any[]>();
+  const singles: any[] = [];
 
-function getHangOut(raw: { didWeHangOut?: boolean | null; hangOut?: boolean | null }): boolean {
-  return raw.hangOut ?? raw.didWeHangOut ?? false;
-}
-
-function buildSoloDoc(raw: RawSolo) {
-  return {
-    guestId: nanoid(11),
-    coupleId: null,
-    nights: raw.nights,
-    stayed: raw.stayed,
-    hangOut: getHangOut(raw),
-    visitedDate: raw.visitedDate ?? '',
-    isFirstTime: raw.isFirstTime ?? false,
-    gift: normaliseGift(raw.gift),
-    comments: nullify(raw.comments),
-    wasACouple: false,
-    ...normaliseIndividual(raw),
-  };
-}
-
-function buildCoupleDoc(raw: RawCoupleGroup) {
-  const [memberA, memberB] = raw.coupleInfo;
-  return {
-    guestId: nanoid(11),
-    coupleId: nanoid(18),
-    nights: raw.nights,
-    stayed: raw.stayed,
-    hangOut: getHangOut(raw),
-    visitedDate: raw.visitedDate ?? '',
-    isFirstTime: raw.isFirstTime ?? false,
-    gift: normaliseGift(raw.gift),
-    comments: nullify(raw.comments),
-    wasACouple: true,
-    coupleInfo: [normaliseIndividual(memberA, raw), normaliseIndividual(memberB, raw)],
-  };
-}
-
-// ─── Main ─────────────────────────────────────────────────────────────────────
-
-async function seed(): Promise<void> {
-  console.log('🌱  Connecting to MongoDB...');
-  await mongoose.connect(MONGO_URI);
-  console.log(`✅  Connected to: ${mongoose.connection.host}`);
-
-  const db = mongoose.connection.db;
-  if (!db) throw new Error('No database connection');
-
-  const existing = await db.listCollections({ name: 'guests' }).toArray();
-  if (existing.length > 0) {
-    await db.collection('guests').drop();
-    console.log('🗑️   Dropped existing guests collection');
-  }
-
-  const docs: object[] = [];
-  let skipped = 0;
-
-  for (const item of rawData as Array<RawSolo | RawCoupleGroup[]>) {
-    if (Array.isArray(item)) {
-      for (const coupleGroup of item) {
-        try {
-          if (!coupleGroup.coupleInfo || coupleGroup.coupleInfo.length < 2) {
-            if (coupleGroup.coupleInfo?.length === 1) {
-              docs.push(buildSoloDoc({ ...coupleGroup, ...coupleGroup.coupleInfo[0] } as RawSolo));
-            } else {
-              console.warn(`⚠️  Skipping malformed couple (coupleId: ${coupleGroup.coupleId})`);
-              skipped++;
-            }
-          } else {
-            docs.push(buildCoupleDoc(coupleGroup));
-          }
-        } catch (err) {
-          console.warn(`⚠️  Error on couple coupleId=${coupleGroup.coupleId}:`, err);
-          skipped++;
-        }
-      }
+  for (const item of all) {
+    if (!item.groupId) {
+      singles.push(buildGuest(item));
       continue;
     }
 
-    const raw = item as RawSolo;
-    try {
-      if (raw.coupleInfo && raw.coupleInfo.length >= 2) {
-        docs.push(buildCoupleDoc(raw as unknown as RawCoupleGroup));
-      } else {
-        docs.push(buildSoloDoc(raw));
-      }
-    } catch (err) {
-      console.warn(`⚠️  Error on guest "${raw.fullName}":`, err);
-      skipped++;
+    const gid = String(item.groupId);
+
+    if (!map.has(gid)) map.set(gid, []);
+    map.get(gid)!.push(item);
+  }
+
+  const result: any[] = [...singles];
+
+  for (const [groupId, members] of map.entries()) {
+    for (const member of members) {
+      result.push(buildGuest(member, groupId));
     }
   }
 
-  if (docs.length > 0) {
-    await db.collection('guests').insertMany(docs);
-    console.log(`✅  Inserted ${docs.length} guests`);
-  }
+  return result;
+}
 
-  if (skipped > 0) console.log(`⚠️  Skipped ${skipped} malformed records`);
+/**
+ * ----------------------------
+ * SEED
+ * ----------------------------
+ */
+async function seed() {
+  console.log('🌱 Loading data...');
+
+  const soloData = SOLO_FILES.flatMap(loadJSONFile);
+  const groupData = GROUP_FILES.flatMap(loadJSONFile);
+
+  const allData = [...soloData, ...groupData];
+
+  console.log(`📦 Loaded ${allData.length} records`);
+
+  await mongoose.connect(MONGO_URI);
+
+  const db = mongoose.connection.db;
+  if (!db) throw new Error('No DB connection');
+
+  await db.collection('guests').deleteMany({});
+  console.log('🗑️ Cleared collection');
+
+  const finalDocs = groupByGroupId(allData);
+
+  await db.collection('guests').insertMany(finalDocs);
+
+  console.log(`✅ Inserted ${finalDocs.length} documents`);
 
   await mongoose.disconnect();
-  console.log('🏁  Seed complete.');
+  console.log('🏁 Done');
 }
 
 seed().catch((err) => {
-  console.error('❌  Seed failed:', err);
+  console.error('❌ Seed failed:', err);
   process.exit(1);
 });
