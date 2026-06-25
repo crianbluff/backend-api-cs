@@ -41,7 +41,7 @@ function humanMessage(issue: ZodIssue): string {
     case 'invalid_literal':
       return `"${field}" must be exactly ${JSON.stringify(issue.expected)}`;
     case 'invalid_union':
-      return `"${field}" did not match any allowed format. Ensure "wasACouple" is set correctly and all required fields are present`;
+      return `"${field}" did not match any allowed format. Check all required fields are present`;
     case 'invalid_union_discriminator':
       return `"${field}" must be one of: ${issue.options.map((o) => `"${String(o)}"`).join(', ')}`;
     case 'unrecognized_keys':

@@ -18,23 +18,20 @@ export type Region =
   | 'Oceania'
   | 'Africa';
 
-export type VisitedMonth =
-  | 'January'
-  | 'February'
-  | 'March'
-  | 'April'
-  | 'May'
-  | 'June'
-  | 'July'
-  | 'August'
-  | 'September'
-  | 'October'
-  | 'November'
-  | 'December';
-
 export type Gender = 'male' | 'female' | 'trans';
+export type GroupType = 'solo' | 'couple' | 'friends' | 'family';
 
-export interface IndividualInfo {
+export interface GuestDocument {
+  guestId: string;
+  groupId: string | null;
+  groupType: GroupType;
+  nights: number;
+  stayed: boolean;
+  hangOut: boolean;
+  visitedDate: string;
+  isFirstTime: boolean;
+  gift: string[] | null;
+  comments: string | null;
   rating: number | null;
   hometownCode: string;
   livingInCode: string | null;
@@ -46,82 +43,71 @@ export interface IndividualInfo {
   livingIn: string | null;
   birthDate: string | null;
   occupation: string[];
-  urlProfileCs: string | number | null;
+  urlProfileCs: string | null;
   gender: Gender;
   whatsapp: string | null;
   instagram: string | null;
-}
-
-interface GuestSharedFields {
-  guestId: string;
-  nights: number;
-  stayed: boolean;
-  hangOut: boolean;
-  visitedDate: string;
-  isFirstTime: boolean;
-  gift: string[] | null;
-  comments: string | null;
-  wasACouple: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface SoloGuest extends GuestSharedFields, IndividualInfo {
-  wasACouple: false;
-  coupleId: null;
-}
-
-export interface CoupleGuest extends GuestSharedFields {
-  wasACouple: true;
-  coupleId: string;
-  coupleInfo: [IndividualInfo, IndividualInfo];
-}
-
-export type Guest = SoloGuest | CoupleGuest;
-
-// ─── GET all list projection ──────────────────────────────────────────────────
-
-export interface GuestListItem {
+export interface SoloListItem {
   guestId: string;
-  wasACouple: boolean;
+  groupId: null;
+  groupType: 'solo';
   isFirstTime: boolean;
   nights: number;
   stayed: boolean;
   visitedDate: string;
   hangOut: boolean;
-  // Solo fields (null when couple)
-  fullName: string | null;
-  hometownCode: string | null;
+  fullName: string;
+  hometownCode: string;
   livingInCode: string | null;
   prefixCode: string | null;
-  continent: Continent | null;
-  region: Region | null;
-  age: number | null;
-  occupation: string[] | null;
+  continent: Continent;
+  region: Region;
+  birthDate: string | null;
+  occupation: string[];
   livingIn: string | null;
   hometown: string | null;
   rating: number | null;
-  gender: Gender | null;
+  gender: Gender;
   whatsapp: string | null;
-  // Couple fields
-  coupleInfo?: Array<{
-    fullName: string;
-    hometownCode: string;
-    livingInCode: string | null;
-    prefixCode: string | null;
-    continent: Continent;
-    region: Region;
-    age: number | null;
-    occupation: string[];
-    livingIn: string | null;
-    hometown: string | null;
-    rating: number | null;
-    gender: Gender;
-    whatsapp: string | null;
-  }>;
+  urlProfileCs: string | null;
 }
 
-// ─── Pagination ───────────────────────────────────────────────────────────────
+export interface GroupMemberListItem {
+  guestId: string;
+  isFirstTime: boolean;
+  fullName: string;
+  hometownCode: string;
+  livingInCode: string | null;
+  prefixCode: string | null;
+  continent: Continent;
+  region: Region;
+  birthDate: string | null;
+  occupation: string[];
+  livingIn: string | null;
+  hometown: string | null;
+  rating: number | null;
+  gender: Gender;
+  whatsapp: string | null;
+  urlProfileCs: string | null;
+}
+
+export interface GroupListItem {
+  groupId: string;
+  groupType: GroupType;
+  nights: number;
+  stayed: boolean;
+  visitedDate: string;
+  hangOut: boolean;
+  gift: string[] | null;
+  comments: string | null;
+  members: GroupMemberListItem[];
+}
+
+export type GuestListItem = SoloListItem | GroupListItem;
 
 export interface PaginatedResponse<T> {
   data: T[];
