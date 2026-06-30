@@ -97,6 +97,8 @@ export const guestQuerySchema = z.object({
   limit: z.string().regex(/^\d+$/).optional().default('10'),
   continent: continentEnum.optional(),
   region: regionEnum.optional(),
+  country: z.string().min(3).max(3).toUpperCase().optional(),
+  gender: genderEnum.optional(),
   groupType: z.enum(['couple', 'friends', 'family', 'solo']).optional(),
   isFirstTime: z.enum(['true', 'false']).optional(),
   from: z.string().regex(isoDateRegex, 'from must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),

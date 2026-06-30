@@ -13,6 +13,14 @@ const router = Router();
  *     summary: Get all guests (solos flat, groups aggregated — groups count as 1)
  *     parameters:
  *       - in: query
+ *         name: country
+ *         schema: { type: string }
+ *         description: "ISO 3166-1 alpha-3 country code (hometownCode)"
+ *         example: "COL"
+ *       - in: query
+ *         name: gender
+ *         schema: { type: string, enum: [male, female, trans] }
+ *       - in: query
  *         name: page
  *         schema: { type: integer, default: 1, minimum: 1 }
  *       - in: query

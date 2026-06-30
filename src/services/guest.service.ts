@@ -124,6 +124,8 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
 
   if (query.continent) filter.continent = query.continent;
   if (query.region) filter.region = query.region;
+  if (query.country) filter.hometownCode = query.country;
+  if (query.gender) filter.gender = query.gender;
 
   if (query.groupType === 'solo') {
     filter.groupId = null;
@@ -144,7 +146,7 @@ export class GuestService {
     const { page, limit, skip } = parsePagination(query);
     const filter = buildFilter(query);
 
-    const docs = await GuestModel.find(filter).sort({ createdAt: -1 }).lean<GuestLean[]>().exec();
+    const docs = await GuestModel.find(filter).sort({ visitedDate: -1 }).lean<GuestLean[]>().exec();
 
     const groups = new Map<string, GroupListItem>();
     const result: GuestListItem[] = [];
