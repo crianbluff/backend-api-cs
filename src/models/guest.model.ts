@@ -1,24 +1,24 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 import { Continent, Region, Gender, GroupType } from '../types/guest.types';
 
-const CONTINENTS: Continent[] = ['Africa', 'America', 'Europe', 'Asia', 'Oceania'];
+const CONTINENTS: Continent[] = ['africa', 'america', 'europe', 'asia', 'oceania'];
 const REGIONS: Region[] = [
-  'North America',
-  'Central America',
-  'South America',
-  'Caribbean',
-  'Middle East Asia',
-  'Southeast Asia',
-  'Eastern Asia',
-  'South Asia',
-  'Central Asia',
-  'West Europe',
-  'Scandinavia',
-  'Southern Europe',
-  'Northern Europe',
-  'Eastern Europe',
-  'Oceania',
-  'Africa',
+  'north_america',
+  'central_america',
+  'south_america',
+  'caribbean',
+  'middle_east_asia',
+  'southeast_asia',
+  'eastern_asia',
+  'south_asia',
+  'central_asia',
+  'west_europe',
+  'scandinavia',
+  'southern_europe',
+  'northern_europe',
+  'eastern_europe',
+  'oceania',
+  'africa',
 ];
 const GENDERS: Gender[] = ['male', 'female', 'trans'];
 const GROUP_TYPES: GroupType[] = ['solo', 'couple', 'friends', 'family'];
@@ -26,7 +26,7 @@ const GROUP_TYPES: GroupType[] = ['solo', 'couple', 'friends', 'family'];
 export interface IGuestDocument extends Document {
   guestId: string;
   groupId: string | null;
-  groupType: GroupType;
+  groupType: GroupType | null;
   // Shared visit fields
   nights: number;
   stayed: boolean;

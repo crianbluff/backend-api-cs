@@ -1,26 +1,30 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import { env } from './env';
 
-const CONTINENTS = ['Africa', 'America', 'Europe', 'Asia', 'Oceania'];
+const CONTINENTS = ['africa', 'america', 'europe', 'asia', 'oceania'];
+
 const REGIONS = [
-  'North America',
-  'Central America',
-  'South America',
-  'Caribbean',
-  'Middle East Asia',
-  'Southeast Asia',
-  'Eastern Asia',
-  'South Asia',
-  'Central Asia',
-  'West Europe',
-  'Scandinavia',
-  'Southern Europe',
-  'Northern Europe',
-  'Eastern Europe',
-  'Oceania',
-  'Africa',
+  'north_america',
+  'central_america',
+  'south_america',
+  'caribbean',
+  'middle_east_asia',
+  'southeast_asia',
+  'eastern_asia',
+  'south_asia',
+  'central_asia',
+  'west_europe',
+  'scandinavia',
+  'southern_europe',
+  'northern_europe',
+  'eastern_europe',
+  'oceania',
+  'africa',
 ];
+
 const GENDERS = ['male', 'female', 'trans'];
+
+// Sólo grupos reales
 const GROUP_TYPES = ['solo', 'couple', 'friends', 'family'];
 
 const options: swaggerJsdoc.Options = {
@@ -35,35 +39,139 @@ const options: swaggerJsdoc.Options = {
           type: 'object',
           required: ['hometownCode', 'continent', 'region', 'fullName', 'gender'],
           properties: {
-            rating: { type: 'number', nullable: true, minimum: 1, maximum: 5 },
-            hometownCode: { type: 'string', example: 'CHN' },
-            livingInCode: { type: 'string', nullable: true, example: 'DEU' },
-            prefixCode: { type: 'string', nullable: true },
-            continent: { type: 'string', enum: CONTINENTS },
-            region: { type: 'string', enum: REGIONS },
-            fullName: { type: 'string' },
-            hometown: { type: 'string', nullable: true },
-            livingIn: { type: 'string', nullable: true },
-            birthDate: { type: 'string', nullable: true, description: '"YYYY", "Month YYYY" or "DD Month YYYY"' },
-            occupation: { type: 'array', items: { type: 'string' } },
-            urlProfileCs: { nullable: true },
-            gender: { type: 'string', enum: GENDERS },
-            whatsapp: { type: 'string', nullable: true },
-            instagram: { type: 'string', nullable: true },
-            isFirstTime: { type: 'boolean', default: false },
+            rating: {
+              type: 'integer',
+              nullable: true,
+              minimum: 1,
+              maximum: 5,
+            },
+
+            hometownCode: {
+              type: 'string',
+              example: 'CHN',
+              description: 'ISO 3166-1 alpha-3 country code',
+            },
+
+            livingInCode: {
+              type: 'string',
+              nullable: true,
+              example: 'DEU',
+              description: 'ISO 3166-1 alpha-3 country code (optional)',
+            },
+
+            prefixCode: {
+              type: 'string',
+              nullable: true,
+            },
+
+            continent: {
+              type: 'string',
+              enum: CONTINENTS,
+            },
+
+            region: {
+              type: 'string',
+              enum: REGIONS,
+            },
+
+            fullName: {
+              type: 'string',
+              maxLength: 200,
+            },
+
+            hometown: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            livingIn: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            birthDate: {
+              type: 'string',
+              nullable: true,
+              example: '1995-08-15',
+              description: 'ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD',
+            },
+
+            occupation: {
+              type: 'array',
+              items: {
+                type: 'string',
+              },
+            },
+
+            urlProfileCs: {
+              nullable: true,
+              oneOf: [{ type: 'string' }, { type: 'number' }],
+            },
+
+            gender: {
+              type: 'string',
+              enum: GENDERS,
+            },
+
+            whatsapp: {
+              type: 'string',
+              nullable: true,
+            },
+
+            instagram: {
+              type: 'string',
+              nullable: true,
+            },
+
+            isFirstTime: {
+              type: 'boolean',
+              default: false,
+            },
           },
         },
         SharedVisitFields: {
           type: 'object',
           required: ['nights', 'stayed', 'hangOut', 'visitedDate'],
           properties: {
-            nights: { type: 'number', minimum: 1 },
-            stayed: { type: 'boolean' },
-            hangOut: { type: 'boolean' },
-            visitedDate: { type: 'string', example: 'January 2026', description: '"Month Year" or "DD Month Year"' },
-            isFirstTime: { type: 'boolean', default: false },
-            gift: { type: 'array', items: { type: 'string' }, nullable: true },
-            comments: { type: 'string', nullable: true },
+            nights: {
+              type: 'integer',
+              minimum: 1,
+            },
+
+            stayed: {
+              type: 'boolean',
+            },
+
+            hangOut: {
+              type: 'boolean',
+            },
+
+            visitedDate: {
+              type: 'string',
+              example: '2026-01',
+              description: 'ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD',
+            },
+
+            isFirstTime: {
+              type: 'boolean',
+              default: false,
+            },
+
+            gift: {
+              type: 'array',
+              nullable: true,
+              items: {
+                type: 'string',
+              },
+            },
+
+            comments: {
+              type: 'string',
+              nullable: true,
+              maxLength: 2000,
+            },
           },
         },
         GuestDocument: {
@@ -73,11 +181,31 @@ const options: swaggerJsdoc.Options = {
             {
               type: 'object',
               properties: {
-                guestId: { type: 'string', example: 'aT84plm2UiN' },
-                groupId: { type: 'string', nullable: true },
-                groupType: { type: 'string', enum: GROUP_TYPES },
-                createdAt: { type: 'string', format: 'date-time' },
-                updatedAt: { type: 'string', format: 'date-time' },
+                guestId: {
+                  type: 'string',
+                  example: 'aT84plm2UiN',
+                },
+
+                groupId: {
+                  type: 'string',
+                  nullable: true,
+                },
+
+                groupType: {
+                  type: 'string',
+                  enum: GROUP_TYPES,
+                  nullable: true,
+                },
+
+                createdAt: {
+                  type: 'string',
+                  format: 'date-time',
+                },
+
+                updatedAt: {
+                  type: 'string',
+                  format: 'date-time',
+                },
               },
             },
           ],
@@ -87,7 +215,7 @@ const options: swaggerJsdoc.Options = {
           properties: {
             guestId: { type: 'string' },
             groupId: { nullable: true, example: null },
-            groupType: { example: 'string' },
+            groupType: { nullable: true, example: null },
             isFirstTime: { type: 'boolean' },
             nights: { type: 'number' },
             stayed: { type: 'boolean' },
@@ -101,6 +229,7 @@ const options: swaggerJsdoc.Options = {
             region: { type: 'string', enum: REGIONS },
             birthDate: { type: 'string', nullable: true },
             occupation: { type: 'array', items: { type: 'string' } },
+            urlProfileCs: { nullable: true },
             livingIn: { type: 'string', nullable: true },
             hometown: { type: 'string', nullable: true },
             rating: { type: 'number', nullable: true },
@@ -121,6 +250,7 @@ const options: swaggerJsdoc.Options = {
             region: { type: 'string', enum: REGIONS },
             birthDate: { type: 'string', nullable: true },
             occupation: { type: 'array', items: { type: 'string' } },
+            urlProfileCs: { nullable: true },
             livingIn: { type: 'string', nullable: true },
             hometown: { type: 'string', nullable: true },
             rating: { type: 'number', nullable: true },
@@ -166,29 +296,102 @@ const options: swaggerJsdoc.Options = {
         },
         CreateGroupGuestDto: {
           type: 'object',
+
           required: ['nights', 'stayed', 'hangOut', 'visitedDate', 'groupType', 'members'],
+
           properties: {
-            nights: { type: 'number', minimum: 1 },
-            stayed: { type: 'boolean' },
-            hangOut: { type: 'boolean' },
-            visitedDate: { type: 'string' },
-            isFirstTime: { type: 'boolean', default: false },
-            gift: { type: 'array', items: { type: 'string' }, nullable: true },
-            comments: { type: 'string', nullable: true },
-            groupType: { type: 'string', enum: GROUP_TYPES },
-            members: { type: 'array', minItems: 2, items: { $ref: '#/components/schemas/IndividualFields' } },
+            nights: {
+              type: 'integer',
+              minimum: 1,
+            },
+
+            stayed: {
+              type: 'boolean',
+            },
+
+            hangOut: {
+              type: 'boolean',
+            },
+
+            visitedDate: {
+              type: 'string',
+              example: '2026-01',
+              description: 'ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD',
+            },
+
+            isFirstTime: {
+              type: 'boolean',
+              default: false,
+            },
+
+            gift: {
+              type: 'array',
+              nullable: true,
+              items: {
+                type: 'string',
+              },
+            },
+
+            comments: {
+              type: 'string',
+              nullable: true,
+            },
+
+            groupType: {
+              type: 'string',
+              enum: GROUP_TYPES,
+            },
+
+            members: {
+              type: 'array',
+              minItems: 2,
+              maxItems: 10,
+              items: {
+                $ref: '#/components/schemas/IndividualFields',
+              },
+            },
           },
         },
         ApiSuccess: {
           type: 'object',
-          properties: { success: { type: 'boolean', example: true }, message: { type: 'string' }, data: {} },
+          properties: {
+            success: {
+              type: 'boolean',
+              example: true,
+            },
+
+            message: {
+              type: 'string',
+              example: 'Operation completed successfully',
+            },
+
+            data: {
+              type: 'object',
+              nullable: true,
+              additionalProperties: true,
+            },
+          },
         },
         ApiError: {
           type: 'object',
           properties: {
-            success: { type: 'boolean', example: false },
-            message: { type: 'string' },
-            errors: { type: 'array', items: { type: 'object' } },
+            success: {
+              type: 'boolean',
+              example: false,
+            },
+
+            message: {
+              type: 'string',
+              example: 'Validation error',
+            },
+
+            errors: {
+              type: 'array',
+              items: {
+                type: 'object',
+                additionalProperties: true,
+              },
+            },
           },
         },
       },

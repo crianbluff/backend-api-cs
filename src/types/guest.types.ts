@@ -1,30 +1,32 @@
-export type Continent = 'Africa' | 'America' | 'Europe' | 'Asia' | 'Oceania';
+export type Continent = 'africa' | 'america' | 'europe' | 'asia' | 'oceania';
 
 export type Region =
-  | 'North America'
-  | 'Central America'
-  | 'South America'
-  | 'Caribbean'
-  | 'Middle East Asia'
-  | 'Southeast Asia'
-  | 'Eastern Asia'
-  | 'South Asia'
-  | 'Central Asia'
-  | 'West Europe'
-  | 'Scandinavia'
-  | 'Southern Europe'
-  | 'Northern Europe'
-  | 'Eastern Europe'
-  | 'Oceania'
-  | 'Africa';
+  | 'north_america'
+  | 'central_america'
+  | 'south_america'
+  | 'caribbean'
+  | 'middle_east_asia'
+  | 'southeast_asia'
+  | 'eastern_asia'
+  | 'south_asia'
+  | 'central_asia'
+  | 'west_europe'
+  | 'scandinavia'
+  | 'southern_europe'
+  | 'northern_europe'
+  | 'eastern_europe'
+  | 'oceania'
+  | 'africa';
 
 export type Gender = 'male' | 'female' | 'trans';
 export type GroupType = 'solo' | 'couple' | 'friends' | 'family';
 
+// ─── Flat MongoDB document ────────────────────────────────────────────────────
+
 export interface GuestDocument {
   guestId: string;
   groupId: string | null;
-  groupType: GroupType;
+  groupType: GroupType | null;
   nights: number;
   stayed: boolean;
   hangOut: boolean;
@@ -51,9 +53,10 @@ export interface GuestDocument {
   updatedAt: Date;
 }
 
+// ─── GET all list items ───────────────────────────────────────────────────────
+
 export interface SoloListItem {
   guestId: string;
-  groupId: null;
   groupType: 'solo';
   isFirstTime: boolean;
   nights: number;
@@ -108,6 +111,8 @@ export interface GroupListItem {
 }
 
 export type GuestListItem = SoloListItem | GroupListItem;
+
+// ─── Pagination ───────────────────────────────────────────────────────────────
 
 export interface PaginatedResponse<T> {
   data: T[];

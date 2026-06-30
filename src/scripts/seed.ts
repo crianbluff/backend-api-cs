@@ -3,10 +3,63 @@ import dotenv from 'dotenv';
 import { nanoid } from 'nanoid';
 import fs from 'fs';
 import path from 'path';
+import { isValidAlpha3 } from '../utils/iso3166';
 
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://localhost:27017/guests_db';
+
+const GROUP_TYPES = new Set(['solo', 'couple', 'family', 'friends']);
+
+const CONTINENTS = new Set(['africa', 'america', 'europe', 'asia', 'oceania']);
+
+const REGIONS = new Set([
+  'north_america',
+  'central_america',
+  'south_america',
+  'caribbean',
+  'middle_east_asia',
+  'southeast_asia',
+  'eastern_asia',
+  'south_asia',
+  'central_asia',
+  'west_europe',
+  'scandinavia',
+  'southern_europe',
+  'northern_europe',
+  'eastern_europe',
+  'oceania',
+  'africa',
+]);
+
+function validateGuest(raw: any) {
+  const continent = raw.continent ? String(raw.continent).trim().toLowerCase() : null;
+  const region = raw.region ? String(raw.region).trim().toLowerCase() : null;
+  const groupType = normalizeGroupType(raw.groupType);
+
+  const hometownCode = raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null;
+  const livingInCode = raw.livingInCode ? String(raw.livingInCode).trim().toUpperCase() : null;
+
+  if (!continent || !CONTINENTS.has(continent)) {
+    throw new Error(`Invalid continent "${raw.continent}" for "${raw.fullName}".`);
+  }
+
+  if (!region || !REGIONS.has(region)) {
+    throw new Error(`Invalid region "${raw.region}" for "${raw.fullName}".`);
+  }
+
+  if (hometownCode && !isValidAlpha3(hometownCode)) {
+    throw new Error(`Invalid hometownCode "${raw.hometownCode}" for "${raw.fullName}".`);
+  }
+
+  if (livingInCode && !isValidAlpha3(livingInCode)) {
+    throw new Error(`Invalid livingInCode "${raw.livingInCode}" for "${raw.fullName}".`);
+  }
+
+  if (!GROUP_TYPES.has(groupType)) {
+    throw new Error(`Invalid groupType "${raw.groupType}" for "${raw.fullName}".`);
+  }
+}
 
 /**
  * ----------------------------
@@ -22,6 +75,7 @@ function loadJSONFile(filePath: string): any[] {
   }
 
   const data = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
+
   return Array.isArray(data) ? data : [data];
 }
 
@@ -42,6 +96,10 @@ const GROUP_FILES = [
 /**
  * ----------------------------
  * DATE NORMALIZATION
+ * Preserva:
+ * YYYY
+ * YYYY-MM
+ * YYYY-MM-DD
  * ----------------------------
  */
 function parseDateToISO(value: string | null | undefined): string | null {
@@ -49,18 +107,29 @@ function parseDateToISO(value: string | null | undefined): string | null {
 
   const s = String(value).trim();
 
-  if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
-    return new Date(s).toISOString().split('T')[0];
+  if (/^\d{4}$/.test(s)) {
+    return s;
+  }
+
+  if (/^\d{4}-\d{2}$/.test(s)) {
+    return s;
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    return s;
   }
 
   const d = new Date(s);
-  if (!isNaN(d.getTime()) && isNaN(Number(s))) {
+
+  if (!isNaN(d.getTime())) {
     return d.toISOString().split('T')[0];
   }
 
-  if (/^\d{4}$/.test(s)) return s;
-
   return null;
+}
+
+function normalizeGroupType(value: unknown): string {
+  return String(value).trim().toLowerCase();
 }
 
 /**
@@ -70,25 +139,57 @@ function parseDateToISO(value: string | null | undefined): string | null {
  */
 function nullify(v: unknown): string | null {
   if (v === null || v === undefined) return null;
+
   const s = String(v).trim();
+
   return s === '' ? null : s;
 }
+
+/**
+ * ----------------------------
+ * GROUP ID MAP
+ * Reemplaza los groupId originales
+ * por un nanoid compartido.
+ * ----------------------------
+ */
+const groupIdMap = new Map<string, string>();
 
 /**
  * ----------------------------
  * BUILD DOCUMENT
  * ----------------------------
  */
-function buildGuest(raw: any, groupId?: string) {
+function buildGuest(raw: any) {
+  validateGuest(raw);
+
+  const groupType = normalizeGroupType(raw.groupType);
+  let generatedGroupId: string | undefined;
+
+  const hometownCode = raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null;
+  const livingInCode = raw.livingInCode ? String(raw.livingInCode).trim().toUpperCase() : null;
+
+  if (groupType !== 'solo' && raw.groupId != null) {
+    const originalGroupId = String(raw.groupId);
+
+    if (!groupIdMap.has(originalGroupId)) {
+      groupIdMap.set(originalGroupId, nanoid(11));
+    }
+
+    generatedGroupId = groupIdMap.get(originalGroupId)!;
+  }
+
   return {
     guestId: nanoid(11),
 
-    groupId,
-    groupType: raw.groupType,
+    ...(generatedGroupId && {
+      groupId: generatedGroupId,
+    }),
 
-    nights: raw.nights,
-    stayed: raw.stayed,
-    hangOut: raw.hangOut ?? raw.didWeHangOut ?? false,
+    groupType,
+
+    nights: raw.nights ?? 0,
+    stayed: raw.stayed ?? false,
+    hangOut: raw.hangOut ?? false,
 
     visitedDate: parseDateToISO(raw.visitedDate),
 
@@ -100,60 +201,28 @@ function buildGuest(raw: any, groupId?: string) {
 
     rating: raw.rating ?? null,
 
-    hometownCode: raw.hometownCode,
-    livingInCode: raw.livingInCode ?? null,
+    hometownCode,
+    livingInCode,
     prefixCode: raw.prefixCode ?? null,
 
-    continent: raw.continent,
-    region: raw.region,
+    continent: nullify(raw.continent),
+    region: nullify(raw.region),
 
     fullName: raw.fullName ?? 'Unknown',
-    hometown: raw.hometown ?? null,
-    livingIn: raw.livingIn ?? null,
+    hometown: nullify(raw.hometown),
+    livingIn: nullify(raw.livingIn),
 
-    birthDate: parseDateToISO(raw.birthDate),
+    birthDate: nullify(raw.birthDate),
 
-    occupation: Array.isArray(raw.occupation) ? raw.occupation : [],
+    occupation: Array.isArray(raw.occupation) && raw.occupation.length > 0 ? raw.occupation : null,
 
-    urlProfileCs: raw.urlProfileCs ?? null,
+    urlProfileCs: nullify(raw.urlProfileCs),
 
     gender: raw.gender ?? 'unknown',
 
     whatsapp: nullify(raw.whatsapp),
     instagram: nullify(raw.instagram),
   };
-}
-
-/**
- * ----------------------------
- * GROUP BY groupId
- * ----------------------------
- */
-function groupByGroupId(all: any[]) {
-  const map = new Map<string, any[]>();
-  const singles: any[] = [];
-
-  for (const item of all) {
-    if (!item.groupId) {
-      singles.push(buildGuest(item));
-      continue;
-    }
-
-    const gid = String(item.groupId);
-
-    if (!map.has(gid)) map.set(gid, []);
-    map.get(gid)!.push(item);
-  }
-
-  const result: any[] = [...singles];
-
-  for (const [groupId, members] of map.entries()) {
-    for (const member of members) {
-      result.push(buildGuest(member, groupId));
-    }
-  }
-
-  return result;
 }
 
 /**
@@ -174,18 +243,23 @@ async function seed() {
   await mongoose.connect(MONGO_URI);
 
   const db = mongoose.connection.db;
-  if (!db) throw new Error('No DB connection');
+
+  if (!db) {
+    throw new Error('No DB connection');
+  }
 
   await db.collection('guests').deleteMany({});
+
   console.log('🗑️ Cleared collection');
 
-  const finalDocs = groupByGroupId(allData);
+  const finalDocs = allData.map(buildGuest);
 
   await db.collection('guests').insertMany(finalDocs);
 
   console.log(`✅ Inserted ${finalDocs.length} documents`);
 
   await mongoose.disconnect();
+
   console.log('🏁 Done');
 }
 

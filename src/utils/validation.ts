@@ -1,34 +1,46 @@
 import { z } from 'zod';
+import { isValidAlpha3 } from './iso3166';
 
-const continentEnum = z.enum(['Africa', 'America', 'Europe', 'Asia', 'Oceania']);
+const continentEnum = z.enum(['africa', 'america', 'europe', 'asia', 'oceania']);
+
 const regionEnum = z.enum([
-  'North America',
-  'Central America',
-  'South America',
-  'Caribbean',
-  'Middle East Asia',
-  'Southeast Asia',
-  'Eastern Asia',
-  'South Asia',
-  'Central Asia',
-  'West Europe',
-  'Scandinavia',
-  'Southern Europe',
-  'Northern Europe',
-  'Eastern Europe',
-  'Oceania',
-  'Africa',
+  'north_america',
+  'central_america',
+  'south_america',
+  'caribbean',
+  'middle_east_asia',
+  'southeast_asia',
+  'eastern_asia',
+  'south_asia',
+  'central_asia',
+  'west_europe',
+  'scandinavia',
+  'southern_europe',
+  'northern_europe',
+  'eastern_europe',
+  'oceania',
+  'africa',
 ]);
+
 const genderEnum = z.enum(['male', 'female', 'trans']);
 const groupTypeEnum = z.enum(['solo', 'couple', 'friends', 'family']);
 
 // ISO 8601 flexible: "2026" | "2026-01" | "2026-01-05"
 const isoDateRegex = /^\d{4}(-\d{2}(-\d{2})?)?$/;
 
+const alpha3Schema = z
+  .string()
+  .min(3)
+  .max(3)
+  .toUpperCase()
+  .refine((code) => isValidAlpha3(code), {
+    message: 'Must be a valid ISO 3166-1 alpha-3 country code (e.g. "COL", "DEU", "JPN")',
+  });
+
 const individualSchema = z.object({
   rating: z.number().int().min(1).max(5).nullable().optional().default(null),
-  hometownCode: z.string().min(2).max(4).toUpperCase(),
-  livingInCode: z.string().min(2).max(4).toUpperCase().nullable().optional().default(null),
+  hometownCode: alpha3Schema,
+  livingInCode: alpha3Schema.nullable().optional().default(null),
   prefixCode: z.string().nullable().optional().default(null),
   continent: continentEnum,
   region: regionEnum,
@@ -67,7 +79,10 @@ export const createSoloGuestSchema = z.object({
 export const createGroupGuestSchema = z.object({
   ...sharedVisitFields,
   groupType: groupTypeEnum,
-  members: z.array(individualSchema).min(2, 'A group must have at least 2 members').max(10),
+  members: z
+    .array(individualSchema)
+    .min(2, 'A group must have at least 2 members')
+    .max(10, 'A group cannot have more than 10 members'),
 });
 
 export const createGuestSchema = z.union([createGroupGuestSchema, createSoloGuestSchema]);
@@ -84,14 +99,8 @@ export const guestQuerySchema = z.object({
   region: regionEnum.optional(),
   groupType: z.enum(['couple', 'friends', 'family', 'solo']).optional(),
   isFirstTime: z.enum(['true', 'false']).optional(),
-  from: z
-    .string()
-    .regex(/^\d{4}(-\d{2}(-\d{2})?)?$/, 'from must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD')
-    .optional(),
-  to: z
-    .string()
-    .regex(/^\d{4}(-\d{2}(-\d{2})?)?$/, 'to must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD')
-    .optional(),
+  from: z.string().regex(isoDateRegex, 'from must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
+  to: z.string().regex(isoDateRegex, 'to must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
 });
 
 export type CreateSoloGuestInput = z.infer<typeof createSoloGuestSchema>;

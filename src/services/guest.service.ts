@@ -1,7 +1,7 @@
 const MAX_LIMIT_PER_PAG = 170;
 
 import { FilterQuery, HydratedDocument } from 'mongoose';
-import { GuestModel } from '../models/guest.model';
+import { GuestModel, IGuestDocument } from '../models/guest.model';
 import { generateGuestId, generateCoupleId } from '../utils/nanoid';
 import {
   PaginatedResponse,
@@ -81,7 +81,6 @@ function toMember(doc: GuestLean): GroupMemberListItem {
 function toSolo(doc: GuestLean): SoloListItem {
   return {
     guestId: doc.guestId,
-    groupId: null,
     groupType: 'solo',
     isFirstTime: doc.isFirstTime ?? false,
     nights: doc.nights,
@@ -111,15 +110,31 @@ function parsePagination(query: GuestQueryInput) {
   return { page, limit, skip: (page - 1) * limit };
 }
 
-function buildFilter(query: GuestQueryInput): FilterQuery<Guest> {
-  const filter: FilterQuery<Guest> = {};
+function buildVisitedDateFilter(from?: string, to?: string): Record<string, unknown> {
+  if (!from && !to) return {};
+  // ISO 8601 string comparison works lexicographically for YYYY, YYYY-MM, YYYY-MM-DD
+  const conditions: Record<string, string> = {};
+  if (from) conditions['$gte'] = from;
+  if (to) conditions['$lte'] = to;
+  return { visitedDate: conditions };
+}
+
+function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
+  const filter: FilterQuery<IGuestDocument> = {};
 
   if (query.continent) filter.continent = query.continent;
   if (query.region) filter.region = query.region;
-  if (query.groupType) filter.groupType = query.groupType;
-  if (query.isFirstTime !== undefined) {
-    filter.isFirstTime = query.isFirstTime === 'true';
+
+  if (query.groupType === 'solo') {
+    filter.groupId = null;
+  } else if (query.groupType) {
+    filter.groupType = query.groupType;
   }
+
+  if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';
+
+  const dateFilter = buildVisitedDateFilter(query.from, query.to);
+  Object.assign(filter, dateFilter);
 
   return filter;
 }
@@ -181,38 +196,47 @@ export class GuestService {
     };
   }
 
-  async findById(guestId: string): Promise<GuestDoc | null> {
-    return GuestModel.findOne({ guestId }).exec();
+  async findById(guestId: string): Promise<IGuestDocument | null> {
+    return GuestModel.findOne({ guestId }).lean() as Promise<IGuestDocument | null>;
   }
 
   async findByGroupId(groupId: string): Promise<GuestLean[]> {
     return GuestModel.find({ groupId }).lean<GuestLean[]>().exec();
   }
 
-  async createSolo(input: Partial<Guest>): Promise<GuestDoc> {
-    return GuestModel.create({
+  async createSolo(input: Record<string, unknown>): Promise<Omit<IGuestDocument, 'groupId'>> {
+    const doc = await GuestModel.create({
       guestId: generateGuestId(),
       groupId: null,
       groupType: 'solo',
-      isFirstTime: false,
+      gift: (input['gift'] as string[] | null | undefined) ?? null,
+      comments: (input['comments'] as string | null | undefined) ?? null,
+      isFirstTime: (input['isFirstTime'] as boolean | undefined) ?? false,
       ...input,
     });
+
+    const raw = doc.toJSON() as Record<string, unknown>;
+    // Remove groupId from solo response
+    delete raw['groupId'];
+    // delete raw['groupType'];
+    return raw as unknown as Omit<IGuestDocument, 'groupId'>;
   }
 
   async createGroup(input: CreateGroupGuestInput): Promise<GuestLean[]> {
     const groupId = generateCoupleId();
+    const { members, groupType, nights, stayed, hangOut, visitedDate, gift, comments } = input;
 
     const docs = await GuestModel.insertMany(
-      input.members.map((m) => ({
+      members.map((m) => ({
         guestId: generateGuestId(),
         groupId,
-        groupType: input.groupType,
-        nights: input.nights,
-        stayed: input.stayed,
-        hangOut: input.hangOut,
-        visitedDate: input.visitedDate,
-        gift: input.gift ?? null,
-        comments: input.comments ?? null,
+        groupType,
+        nights,
+        stayed,
+        hangOut,
+        visitedDate,
+        gift,
+        comments,
         ...m,
         isFirstTime: m.isFirstTime ?? input.isFirstTime ?? false,
       }))

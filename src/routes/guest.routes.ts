@@ -20,26 +20,44 @@ const router = Router();
  *         schema: { type: integer, default: 10, minimum: 1, maximum: 100 }
  *       - in: query
  *         name: continent
- *         schema: { type: string, enum: [Africa, America, Europe, Asia, Oceania] }
+ *         schema: { type: string, enum: [africa, america, europe, asia, oceania] }
  *       - in: query
  *         name: region
  *         schema:
  *           type: string
- *           enum: [North America, Central America, South America, Caribbean, Middle East Asia, Southeast Asia, Eastern Asia, South Asia, Central Asia, West Europe, Scandinavia, Southern Europe, Northern Europe, Eastern Europe, Oceania, Africa]
+ *           enum:
+ *             [
+ *               north_america,
+ *               central_america,
+ *               south_america,
+ *               caribbean,
+ *               middle_east_asia,
+ *               southeast_asia,
+ *               eastern_asia,
+ *               south_asia,
+ *               central_asia,
+ *               western_europe,
+ *               scandinavia,
+ *               southern_europe,
+ *               northern_europe,
+ *               eastern_europe,
+ *               oceania,
+ *               africa
+ *             ]
  *       - in: query
  *         name: groupType
- *         schema: { type: string, enum: [couple, friends, family] }
+ *         schema: { type: string, enum: [solo, couple, friends, family] }
  *       - in: query
  *         name: isFirstTime
  *         schema: { type: string, enum: [true, false] }
  *       - in: query
  *         name: from
  *         schema: { type: string }
- *         example: november-2022
+ *         example: 2022-11
  *       - in: query
  *         name: to
  *         schema: { type: string }
- *         example: august-2025
+ *         example: 2025-08
  *     responses:
  *       200:
  *         description: Guests retrieved successfully
@@ -129,11 +147,11 @@ router.get('/:id', guestController.getById.bind(guestController));
  *                 nights: 2
  *                 stayed: true
  *                 hangOut: true
- *                 visitedDate: "November 2025"
+ *                 visitedDate: "2025-11"
  *                 hometownCode: MAR
  *                 prefixCode: "+212"
- *                 continent: Africa
- *                 region: Africa
+ *                 continent: africa
+ *                 region: africa
  *                 fullName: Simo Amri
  *                 gender: male
  *                 rating: 3
@@ -144,18 +162,18 @@ router.get('/:id', guestController.getById.bind(guestController));
  *                 nights: 2
  *                 stayed: true
  *                 hangOut: true
- *                 visitedDate: "February 2024"
+ *                 visitedDate: "2024-02"
  *                 gift: ["card", "bracelets"]
  *                 members:
  *                   - hometownCode: ARG
- *                     continent: America
- *                     region: South America
+ *                     continent: america
+ *                     region: south_america
  *                     fullName: Aylen Rivarola
  *                     gender: female
  *                     rating: 4
  *                   - hometownCode: ARG
- *                     continent: America
- *                     region: South America
+ *                     continent: america
+ *                     region: south_america
  *                     fullName: Manu Sabanés
  *                     gender: male
  *                     rating: 4
