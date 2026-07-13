@@ -45,24 +45,19 @@ export class GuestController {
     try {
       const { id } = req.params;
       const input = req.body as UpdateGuestInput;
+
       if (!input || Object.keys(input).length === 0) {
         sendBadRequest(res, 'Request body is empty. Please provide at least one field to update.');
         return;
       }
-      let updated;
-      try {
-        updated = await guestService.update(id, input);
-      } catch (serviceError) {
-        if (serviceError instanceof Error) {
-          sendBadRequest(res, serviceError.message);
-          return;
-        }
-        throw serviceError;
-      }
+
+      const updated = await guestService.update(id, input);
+
       if (!updated) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
+
       sendSuccess(res, updated, 'Guest updated successfully');
     } catch (error) {
       logger.error('[update]', error);

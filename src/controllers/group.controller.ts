@@ -31,6 +31,24 @@ export class GroupController {
     }
   }
 
+  async updateGroup(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { groupId } = req.params;
+
+      const updated = await groupService.updateGroup(groupId, req.body);
+
+      if (!updated.length) {
+        sendNotFound(res, `No group found with groupId "${groupId}"`);
+        return;
+      }
+
+      sendSuccess(res, updated, 'Group updated successfully');
+    } catch (error) {
+      logger.error('[updateGroup]', error);
+      next(error);
+    }
+  }
+
   async deleteGroup(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { groupId } = req.params;

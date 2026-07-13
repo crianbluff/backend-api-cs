@@ -226,7 +226,16 @@ export class GuestService {
   }
 
   async update(guestId: string, input: UpdateGuestInput): Promise<GuestLean | null> {
-    return GuestModel.findOneAndUpdate({ guestId }, { $set: input }, { new: true }).lean<GuestLean>().exec();
+    return GuestModel.findOneAndUpdate(
+      { guestId },
+      { $set: input },
+      {
+        new: true,
+        runValidators: true,
+      }
+    )
+      .lean<GuestLean>()
+      .exec();
   }
 
   async delete(guestId: string): Promise<boolean> {

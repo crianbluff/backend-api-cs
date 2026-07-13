@@ -90,7 +90,7 @@ export const createGroupGuestSchema = z.object({
 
 export const updateSoloGuestSchema = createSoloGuestSchema.partial();
 export const updateGroupGuestSchema = createGroupGuestSchema.partial();
-export const updateGuestSchema = z.union([updateSoloGuestSchema, updateGroupGuestSchema]);
+export const updateGuestSchema = createSoloGuestSchema.partial();
 
 // ─── Query params ─────────────────────────────────────────────────────────────
 
