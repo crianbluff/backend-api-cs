@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { guestService } from '../services/guest.service';
 import { sendSuccess, sendCreated, sendNotFound, sendBadRequest, sendPaginated } from '../utils/response';
-import { CreateGroupGuestInput, GuestQueryInput, UpdateGuestInput } from '../utils/validation';
+import { GuestQueryInput, UpdateGuestInput } from '../utils/validation';
 import { logger } from '../utils/logger';
 
 export class GuestController {
@@ -30,30 +30,10 @@ export class GuestController {
     }
   }
 
-  async getByGroupId(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const { groupId } = req.params;
-      const members = await guestService.findByGroupId(groupId);
-      if (!members.length) {
-        sendNotFound(res, `No group found with groupId "${groupId}"`);
-        return;
-      }
-      sendSuccess(res, members, 'Group retrieved successfully');
-    } catch (error) {
-      logger.error('[getByGroupId]', error);
-      next(error);
-    }
-  }
-
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const body = req.body;
-      if ('members' in body && Array.isArray(body.members)) {
-        const members = await guestService.createGroup(body as CreateGroupGuestInput);
-        sendCreated(res, members, `Group of ${members.length} guests created successfully`);
-        return;
-      }
-      const guest = await guestService.createSolo(body as Record<string, unknown>);
+      const guest = await guestService.createSolo(req.body);
+
       sendCreated(res, guest, 'Guest created successfully');
     } catch (error) {
       logger.error('[create]', error);
@@ -101,21 +81,6 @@ export class GuestController {
       sendSuccess(res, null, `Guest "${id}" deleted successfully`);
     } catch (error) {
       logger.error('[delete]', error);
-      next(error);
-    }
-  }
-
-  async deleteGroup(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const { groupId } = req.params;
-      const count = await guestService.deleteGroup(groupId);
-      if (!count) {
-        sendNotFound(res, `No group found with groupId "${groupId}"`);
-        return;
-      }
-      sendSuccess(res, null, `Group "${groupId}" deleted (${count} members removed)`);
-    } catch (error) {
-      logger.error('[deleteGroup]', error);
       next(error);
     }
   }

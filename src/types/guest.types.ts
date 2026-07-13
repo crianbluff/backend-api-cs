@@ -81,7 +81,12 @@ export interface SoloListItem {
 
 export interface GroupMemberListItem {
   guestId: string;
+
+  hangOut: boolean;
+  gift: string[] | null;
+  comments: string | null;
   isFirstTime: boolean;
+
   fullName: string;
   hometownCode: string;
   livingInCode: string | null;
@@ -90,11 +95,12 @@ export interface GroupMemberListItem {
   region: Region;
   birthDate: string | null;
   occupation: string[];
-  livingIn: string | null;
   hometown: string | null;
+  livingIn: string | null;
   rating: number | null;
   gender: Gender;
   whatsapp: string | null;
+  instagram: string | null;
   urlProfileCs: string | null;
 }
 
@@ -104,9 +110,6 @@ export interface GroupListItem {
   nights: number;
   stayed: boolean;
   visitedDate: string;
-  hangOut: boolean;
-  gift: string[] | null;
-  comments: string | null;
   members: GroupMemberListItem[];
 }
 

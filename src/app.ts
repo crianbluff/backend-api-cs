@@ -9,6 +9,7 @@ import { swaggerSpec } from './config/swagger';
 import { rateLimiter } from './middlewares/rateLimiter.middleware';
 import { globalErrorHandler, notFoundHandler } from './middlewares/error.middleware';
 import guestRoutes from './routes/guest.routes';
+import groupRoutes from './routes/group.routes';
 
 export function createApp(): Application {
   const app = express();
@@ -38,6 +39,7 @@ export function createApp(): Application {
   // ─── API routes ───────────────────────────────────────────────────────────
   const BASE = `/api/${env.API_VERSION}`;
   app.use(`${BASE}/guests`, guestRoutes);
+  app.use(`${BASE}/groups`, groupRoutes);
 
   // ─── 404 & error handlers ─────────────────────────────────────────────────
   app.use(notFoundHandler);

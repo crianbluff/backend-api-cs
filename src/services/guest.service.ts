@@ -2,7 +2,7 @@ const MAX_LIMIT_PER_PAG = 170;
 
 import { FilterQuery, HydratedDocument } from 'mongoose';
 import { GuestModel, IGuestDocument } from '../models/guest.model';
-import { generateGuestId, generateCoupleId } from '../utils/nanoid';
+import { generateGuestId } from '../utils/nanoid';
 import {
   PaginatedResponse,
   GuestListItem,
@@ -14,7 +14,7 @@ import {
   Region,
   GroupType,
 } from '../types/guest.types';
-import { CreateGroupGuestInput, GuestQueryInput, UpdateGuestInput } from '../utils/validation';
+import { GuestQueryInput, UpdateGuestInput } from '../utils/validation';
 
 /**
  * Base domain type (lo que realmente guardas en Mongo)
@@ -60,7 +60,14 @@ export type GuestLean = Guest;
 function toMember(doc: GuestLean): GroupMemberListItem {
   return {
     guestId: doc.guestId,
+
+    // Visit info (individual)
+    hangOut: doc.hangOut,
+    gift: doc.gift,
+    comments: doc.comments,
     isFirstTime: doc.isFirstTime ?? false,
+
+    // Personal info
     fullName: doc.fullName ?? '',
     hometownCode: doc.hometownCode,
     livingInCode: doc.livingInCode,
@@ -69,11 +76,12 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     region: doc.region,
     birthDate: doc.birthDate,
     occupation: doc.occupation ?? [],
-    livingIn: doc.livingIn,
     hometown: doc.hometown,
+    livingIn: doc.livingIn,
     rating: doc.rating,
     gender: doc.gender,
     whatsapp: doc.whatsapp,
+    instagram: doc.instagram,
     urlProfileCs: doc.urlProfileCs,
   };
 }
@@ -169,9 +177,6 @@ export class GuestService {
           nights: doc.nights,
           stayed: doc.stayed,
           visitedDate: doc.visitedDate,
-          hangOut: doc.hangOut,
-          gift: doc.gift,
-          comments: doc.comments,
           members: [],
         });
       }
@@ -202,10 +207,6 @@ export class GuestService {
     return GuestModel.findOne({ guestId }).lean() as Promise<IGuestDocument | null>;
   }
 
-  async findByGroupId(groupId: string): Promise<GuestLean[]> {
-    return GuestModel.find({ groupId }).lean<GuestLean[]>().exec();
-  }
-
   async createSolo(input: Record<string, unknown>): Promise<Omit<IGuestDocument, 'groupId'>> {
     const doc = await GuestModel.create({
       guestId: generateGuestId(),
@@ -224,29 +225,6 @@ export class GuestService {
     return raw as unknown as Omit<IGuestDocument, 'groupId'>;
   }
 
-  async createGroup(input: CreateGroupGuestInput): Promise<GuestLean[]> {
-    const groupId = generateCoupleId();
-    const { members, groupType, nights, stayed, hangOut, visitedDate, gift, comments } = input;
-
-    const docs = await GuestModel.insertMany(
-      members.map((m) => ({
-        guestId: generateGuestId(),
-        groupId,
-        groupType,
-        nights,
-        stayed,
-        hangOut,
-        visitedDate,
-        gift,
-        comments,
-        ...m,
-        isFirstTime: m.isFirstTime ?? input.isFirstTime ?? false,
-      }))
-    );
-
-    return docs.map((d) => d.toObject() as GuestLean);
-  }
-
   async update(guestId: string, input: UpdateGuestInput): Promise<GuestLean | null> {
     return GuestModel.findOneAndUpdate({ guestId }, { $set: input }, { new: true }).lean<GuestLean>().exec();
   }
@@ -254,11 +232,6 @@ export class GuestService {
   async delete(guestId: string): Promise<boolean> {
     const res = await GuestModel.deleteOne({ guestId });
     return res.deletedCount === 1;
-  }
-
-  async deleteGroup(groupId: string): Promise<number> {
-    const res = await GuestModel.deleteMany({ groupId });
-    return res.deletedCount ?? 0;
   }
 }
 

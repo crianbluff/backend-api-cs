@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { guestController } from '../controllers/guest.controller';
 import { validate } from '../middlewares/validate.middleware';
-import { createGuestSchema, updateGuestSchema, guestQuerySchema } from '../utils/validation';
+import { updateGuestSchema, guestQuerySchema, createSoloGuestSchema } from '../utils/validation';
 
 const router = Router();
 
@@ -14,21 +14,33 @@ const router = Router();
  *     parameters:
  *       - in: query
  *         name: country
- *         schema: { type: string }
- *         description: "ISO 3166-1 alpha-3 country code (hometownCode)"
- *         example: "COL"
+ *         schema:
+ *           type: string
+ *         description: ISO 3166-1 alpha-3 country code (hometownCode)
+ *         example: COL
  *       - in: query
  *         name: gender
- *         schema: { type: string, enum: [male, female, trans] }
+ *         schema:
+ *           type: string
+ *           enum: [male, female, trans]
  *       - in: query
  *         name: page
- *         schema: { type: integer, default: 1, minimum: 1 }
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *           minimum: 1
  *       - in: query
  *         name: limit
- *         schema: { type: integer, default: 10, minimum: 1, maximum: 100 }
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *           minimum: 1
+ *           maximum: 100
  *       - in: query
  *         name: continent
- *         schema: { type: string, enum: [africa, america, europe, asia, oceania] }
+ *         schema:
+ *           type: string
+ *           enum: [africa, america, europe, asia, oceania]
  *       - in: query
  *         name: region
  *         schema:
@@ -44,7 +56,7 @@ const router = Router();
  *               eastern_asia,
  *               south_asia,
  *               central_asia,
- *               western_europe,
+ *               west_europe,
  *               scandinavia,
  *               southern_europe,
  *               northern_europe,
@@ -54,80 +66,66 @@ const router = Router();
  *             ]
  *       - in: query
  *         name: groupType
- *         schema: { type: string, enum: [solo, couple, friends, family] }
+ *         schema:
+ *           type: string
+ *           enum: [solo, couple, friends, family]
  *       - in: query
  *         name: isFirstTime
- *         schema: { type: string, enum: [true, false] }
+ *         schema:
+ *           type: string
+ *           enum: [true, false]
  *       - in: query
  *         name: from
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *         example: 2022-11
  *       - in: query
  *         name: to
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *         example: 2025-08
  *     responses:
  *       200:
  *         description: Guests retrieved successfully
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/PaginatedGuests' }
+ *             schema:
+ *               $ref: '#/components/schemas/PaginatedGuests'
  *       400:
  *         description: Invalid query parameters
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiError'
  */
 router.get('/', validate(guestQuerySchema, 'query'), guestController.getAll.bind(guestController));
-
-/**
- * @openapi
- * /guests/group/{groupId}:
- *   get:
- *     tags: [Guests]
- *     summary: Get all members of a group by groupId
- *     parameters:
- *       - in: path
- *         name: groupId
- *         required: true
- *         schema: { type: string }
- *     responses:
- *       200:
- *         description: Group members retrieved
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiSuccess' }
- *       404:
- *         description: Group not found
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
- */
-router.get('/group/:groupId', guestController.getByGroupId.bind(guestController));
 
 /**
  * @openapi
  * /guests/{id}:
  *   get:
  *     tags: [Guests]
- *     summary: Get a single guest by guestId (full document)
+ *     summary: Get a single guest by guestId
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *         example: aT84plm2UiN
  *     responses:
  *       200:
  *         description: Guest retrieved successfully
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiSuccess' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  *       404:
  *         description: Guest not found
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiError'
  */
 router.get('/:id', guestController.getById.bind(guestController));
 
@@ -136,68 +134,40 @@ router.get('/:id', guestController.getById.bind(guestController));
  * /guests:
  *   post:
  *     tags: [Guests]
- *     summary: Create a solo guest or a group
- *     description: >
- *       Include `members` array for group creation. The backend generates a shared `groupId`
- *       and creates one document per member. Omit `members` for a solo guest.
+ *     summary: Create a solo guest
+ *     description: Creates a single guest document.
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             oneOf:
- *               - $ref: '#/components/schemas/CreateSoloGuestDto'
- *               - $ref: '#/components/schemas/CreateGroupGuestDto'
- *           examples:
- *             solo:
- *               summary: Solo guest
- *               value:
- *                 nights: 2
- *                 stayed: true
- *                 hangOut: true
- *                 visitedDate: "2025-11"
- *                 hometownCode: MAR
- *                 prefixCode: "+212"
- *                 continent: africa
- *                 region: africa
- *                 fullName: Simo Amri
- *                 gender: male
- *                 rating: 3
- *             group:
- *               summary: Couple
- *               value:
- *                 groupType: couple
- *                 nights: 2
- *                 stayed: true
- *                 hangOut: true
- *                 visitedDate: "2024-02"
- *                 gift: ["card", "bracelets"]
- *                 members:
- *                   - hometownCode: ARG
- *                     continent: america
- *                     region: south_america
- *                     fullName: Aylen Rivarola
- *                     gender: female
- *                     rating: 4
- *                   - hometownCode: ARG
- *                     continent: america
- *                     region: south_america
- *                     fullName: Manu Sabanés
- *                     gender: male
- *                     rating: 4
+ *             $ref: '#/components/schemas/CreateSoloGuestDto'
+ *           example:
+ *             nights: 2
+ *             stayed: true
+ *             visitedDate: "2025-11"
+ *             hometownCode: MAR
+ *             prefixCode: "+212"
+ *             continent: africa
+ *             region: africa
+ *             fullName: Simo Amri
+ *             gender: male
+ *             rating: 3
  *     responses:
  *       201:
- *         description: Guest(s) created successfully
+ *         description: Guest created successfully
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiSuccess' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  *       400:
  *         description: Validation error
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiError'
  */
-router.post('/', validate(createGuestSchema), guestController.create.bind(guestController));
+router.post('/', validate(createSoloGuestSchema), guestController.create.bind(guestController));
 
 /**
  * @openapi
@@ -209,28 +179,33 @@ router.post('/', validate(createGuestSchema), guestController.create.bind(guestC
  *       - in: path
  *         name: id
  *         required: true
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
- *           schema: { $ref: '#/components/schemas/CreateSoloGuestDto' }
+ *           schema:
+ *             $ref: '#/components/schemas/CreateSoloGuestDto'
  *     responses:
  *       200:
  *         description: Guest updated successfully
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiSuccess' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  *       400:
  *         description: Validation error
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiError'
  *       404:
  *         description: Guest not found
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiError'
  */
 router.put('/:id', validate(updateGuestSchema), guestController.update.bind(guestController));
 
@@ -244,44 +219,22 @@ router.put('/:id', validate(updateGuestSchema), guestController.update.bind(gues
  *       - in: path
  *         name: id
  *         required: true
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Guest deleted successfully
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiSuccess' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  *       404:
  *         description: Guest not found
  *         content:
  *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
+ *             schema:
+ *               $ref: '#/components/schemas/ApiError'
  */
 router.delete('/:id', guestController.delete.bind(guestController));
-
-/**
- * @openapi
- * /guests/group/{groupId}:
- *   delete:
- *     tags: [Guests]
- *     summary: Delete all members of a group by groupId
- *     parameters:
- *       - in: path
- *         name: groupId
- *         required: true
- *         schema: { type: string }
- *     responses:
- *       200:
- *         description: Group deleted successfully
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiSuccess' }
- *       404:
- *         description: Group not found
- *         content:
- *           application/json:
- *             schema: { $ref: '#/components/schemas/ApiError' }
- */
-router.delete('/group/:groupId', guestController.deleteGroup.bind(guestController));
 
 export default router;

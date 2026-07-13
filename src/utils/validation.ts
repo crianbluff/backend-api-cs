@@ -37,6 +37,8 @@ const alpha3Schema = z
     message: 'Must be a valid ISO 3166-1 alpha-3 country code (e.g. "COL", "DEU", "JPN")',
   });
 
+// ─── Individual fields (used for both solo and group members) ─────────────────
+
 const individualSchema = z.object({
   rating: z.number().int().min(1).max(5).nullable().optional().default(null),
   hometownCode: alpha3Schema,
@@ -58,40 +60,40 @@ const individualSchema = z.object({
   gender: genderEnum,
   whatsapp: z.string().max(20).nullable().optional().default(null),
   instagram: z.string().max(100).nullable().optional().default(null),
+  // Per-member fields (also individual in groups)
   isFirstTime: z.boolean().optional().default(false),
-});
-
-const sharedVisitFields = {
-  nights: z.number().int().min(1, 'nights must be at least 1'),
-  stayed: z.boolean(),
-  hangOut: z.boolean(),
-  visitedDate: z.string().regex(isoDateRegex, 'visitedDate must be ISO 8601: "YYYY", "YYYY-MM" or "YYYY-MM-DD"'),
-  isFirstTime: z.boolean().optional().default(false),
+  hangOut: z.boolean().optional().default(false),
   gift: z.array(z.string().max(200)).nullable().optional().default(null),
   comments: z.string().max(2000).nullable().optional().default(null),
-};
+});
+
+// ─── Solo guest ───────────────────────────────────────────────────────────────
 
 export const createSoloGuestSchema = z.object({
-  ...sharedVisitFields,
+  nights: z.number().int().min(1, 'nights must be at least 1'),
+  stayed: z.boolean(),
+  visitedDate: z.string().regex(isoDateRegex, 'visitedDate must be ISO 8601: "YYYY", "YYYY-MM" or "YYYY-MM-DD"'),
   ...individualSchema.shape,
 });
 
+// ─── Group guest — shared fields + members array ──────────────────────────────
+
 export const createGroupGuestSchema = z.object({
-  ...sharedVisitFields,
+  nights: z.number().int().min(1, 'nights must be at least 1'),
+  stayed: z.boolean(),
+  visitedDate: z.string().regex(isoDateRegex, 'visitedDate must be ISO 8601: "YYYY", "YYYY-MM" or "YYYY-MM-DD"'),
   groupType: groupTypeEnum,
-  members: z
-    .array(individualSchema)
-    .min(2, 'A group must have at least 2 members')
-    .max(10, 'A group cannot have more than 10 members'),
+  members: z.array(individualSchema).min(2, 'A group must have at least 2 members').max(5),
 });
 
-export const createGuestSchema = z.union([createGroupGuestSchema, createSoloGuestSchema]);
+// ─── Update schemas ───────────────────────────────────────────────────────────
 
 export const updateSoloGuestSchema = createSoloGuestSchema.partial();
 export const updateGroupGuestSchema = createGroupGuestSchema.partial();
 export const updateGuestSchema = z.union([updateSoloGuestSchema, updateGroupGuestSchema]);
 
-// groupType in query now includes 'solo' to filter solo guests
+// ─── Query params ─────────────────────────────────────────────────────────────
+
 export const guestQuerySchema = z.object({
   page: z.string().regex(/^\d+$/).optional().default('1'),
   limit: z.string().regex(/^\d+$/).optional().default('10'),
@@ -107,6 +109,5 @@ export const guestQuerySchema = z.object({
 
 export type CreateSoloGuestInput = z.infer<typeof createSoloGuestSchema>;
 export type CreateGroupGuestInput = z.infer<typeof createGroupGuestSchema>;
-export type CreateGuestInput = z.infer<typeof createGuestSchema>;
 export type UpdateGuestInput = z.infer<typeof updateGuestSchema>;
 export type GuestQueryInput = z.infer<typeof guestQuerySchema>;
