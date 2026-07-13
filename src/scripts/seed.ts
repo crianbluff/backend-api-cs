@@ -80,17 +80,17 @@ function loadJSONFile(filePath: string): any[] {
 }
 
 const SOLO_FILES = [
-  'src/scripts/solo/solo-africa.json',
-  'src/scripts/solo/solo-america.json',
-  'src/scripts/solo/solo-asia.json',
-  'src/scripts/solo/solo-europe.json',
-  'src/scripts/solo/solo-oceania.json',
+  'src/scripts/guests/solo/africa-solo.json',
+  'src/scripts/guests/solo/america-solo.json',
+  'src/scripts/guests/solo/asia-solo.json',
+  'src/scripts/guests/solo/europe-solo.json',
+  'src/scripts/guests/solo/oceania-solo.json',
 ];
 
 const GROUP_FILES = [
-  'src/scripts/group/america-group.json',
-  'src/scripts/group/asia-group.json',
-  'src/scripts/group/europe-group.json',
+  'src/scripts/guests/group/america-group.json',
+  'src/scripts/guests/group/asia-group.json',
+  'src/scripts/guests/group/europe-group.json',
 ];
 
 /**
