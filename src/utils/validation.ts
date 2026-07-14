@@ -40,6 +40,7 @@ const alpha3Schema = z
 // ─── Individual fields (used for both solo and group members) ─────────────────
 
 const individualSchema = z.object({
+  guestId: z.string().optional(),
   rating: z.number().int().min(1).max(5).nullable().optional().default(null),
   hometownCode: alpha3Schema,
   livingInCode: alpha3Schema.nullable().optional().default(null),
@@ -58,6 +59,9 @@ const individualSchema = z.object({
   occupation: z.array(z.string().max(100)).optional().default([]),
   urlProfileCs: z.union([z.string(), z.number()]).nullable().optional().default(null),
   gender: genderEnum,
+  isGay: z.boolean().default(false),
+  theirReference: z.string().max(500, 'theirReference cannot exceed 500 characters').nullable().optional(),
+  myReference: z.string().max(500, 'myReference cannot exceed 500 characters').nullable().optional(),
   whatsapp: z.string().max(20).nullable().optional().default(null),
   instagram: z.string().max(100).nullable().optional().default(null),
   // Per-member fields (also individual in groups)

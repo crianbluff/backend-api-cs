@@ -162,6 +162,22 @@ const options: swaggerJsdoc.Options = {
               default: false,
             },
 
+            isGay: {
+              type: 'boolean',
+              default: false,
+            },
+
+            theirReference: {
+              type: 'string',
+              nullable: true,
+              maxLength: 500,
+            },
+
+            myReference: {
+              type: 'string',
+              nullable: true,
+              maxLength: 500,
+            },
             hangOut: {
               type: 'boolean',
               default: false,
@@ -268,6 +284,20 @@ const options: swaggerJsdoc.Options = {
 
             isFirstTime: {
               type: 'boolean',
+            },
+
+            isGay: {
+              type: 'boolean',
+            },
+
+            theirReference: {
+              type: 'string',
+              nullable: true,
+            },
+
+            myReference: {
+              type: 'string',
+              nullable: true,
             },
 
             nights: {
@@ -378,6 +408,22 @@ const options: swaggerJsdoc.Options = {
 
             isFirstTime: {
               type: 'boolean',
+            },
+
+            isGay: {
+              type: 'boolean',
+            },
+
+            theirReference: {
+              type: 'string',
+              nullable: true,
+              maxLength: 500,
+            },
+
+            myReference: {
+              type: 'string',
+              nullable: true,
+              maxLength: 500,
             },
 
             hangOut: {

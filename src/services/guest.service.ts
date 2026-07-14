@@ -25,6 +25,9 @@ export interface Guest {
   continent: Continent;
   fullName: string;
   gender: Gender;
+  isGay: boolean;
+  theirReference: string | null;
+  myReference: string | null;
   gift: string[] | null;
   groupId: string | null;
   groupType: GroupType;
@@ -80,6 +83,9 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     livingIn: doc.livingIn,
     rating: doc.rating,
     gender: doc.gender,
+    isGay: doc.isGay,
+    theirReference: doc.theirReference,
+    myReference: doc.myReference,
     whatsapp: doc.whatsapp,
     instagram: doc.instagram,
     urlProfileCs: doc.urlProfileCs,
@@ -107,6 +113,9 @@ function toSolo(doc: GuestLean): SoloListItem {
     hometown: doc.hometown,
     rating: doc.rating,
     gender: doc.gender,
+    isGay: doc.isGay,
+    theirReference: doc.theirReference,
+    myReference: doc.myReference,
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
   };
@@ -154,7 +163,11 @@ export class GuestService {
     const { page, limit, skip } = parsePagination(query);
     const filter = buildFilter(query);
 
-    const docs = await GuestModel.find(filter).sort({ visitedDate: -1 }).lean<GuestLean[]>().exec();
+    const docs = await GuestModel.find(filter)
+      .select('-theirReference -myReference')
+      .sort({ visitedDate: -1 })
+      .lean<GuestLean[]>()
+      .exec();
 
     const groups = new Map<string, GroupListItem>();
     const result: GuestListItem[] = [];

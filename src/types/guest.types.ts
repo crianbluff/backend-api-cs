@@ -75,6 +75,9 @@ export interface SoloListItem {
   hometown: string | null;
   rating: number | null;
   gender: Gender;
+  isGay: boolean;
+  theirReference: string | null;
+  myReference: string | null;
   whatsapp: string | null;
   urlProfileCs: string | null;
 }
@@ -99,6 +102,9 @@ export interface GroupMemberListItem {
   livingIn: string | null;
   rating: number | null;
   gender: Gender;
+  isGay: boolean;
+  theirReference: string | null;
+  myReference: string | null;
   whatsapp: string | null;
   instagram: string | null;
   urlProfileCs: string | null;

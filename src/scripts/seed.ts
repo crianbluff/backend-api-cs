@@ -219,9 +219,13 @@ function buildGuest(raw: any) {
     urlProfileCs: nullify(raw.urlProfileCs),
 
     gender: raw.gender ?? 'unknown',
+    isGay: raw.isGay ?? false,
 
     whatsapp: nullify(raw.whatsapp),
     instagram: nullify(raw.instagram),
+
+    theirReference: nullify(raw.theirReference),
+    myReference: nullify(raw.myReference),
   };
 }
 

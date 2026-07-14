@@ -35,6 +35,9 @@ export interface IGuestDocument extends Document {
   isFirstTime: boolean;
   gift: string[] | null;
   comments: string | null;
+  // References
+  theirReference: string | null;
+  myReference: string | null;
   // Individual fields
   rating: number | null;
   hometownCode: string;
@@ -49,6 +52,7 @@ export interface IGuestDocument extends Document {
   occupation: string[];
   urlProfileCs: string | null;
   gender: Gender;
+  isGay: boolean;
   whatsapp: string | null;
   instagram: string | null;
   createdAt: Date;
@@ -68,6 +72,13 @@ const guestSchema = new Schema<IGuestDocument>(
     isFirstTime: { type: Boolean, default: false },
     gift: { type: [String], default: null },
     comments: { type: String, default: null, trim: true },
+    theirReference: {
+      type: String,
+      default: null,
+      trim: true,
+      maxlength: [500, 'theirReference cannot exceed 500 characters'],
+    },
+    myReference: { type: String, default: null, trim: true, maxlength: [500, 'myReference cannot exceed 500 characters'] },
     // Individual fields
     rating: { type: Number, min: 1, max: 5, default: null },
     hometownCode: { type: String, required: true, uppercase: true, trim: true },
@@ -82,6 +93,7 @@ const guestSchema = new Schema<IGuestDocument>(
     occupation: { type: [String], default: [] },
     urlProfileCs: { type: Schema.Types.Mixed, default: null },
     gender: { type: String, required: true, enum: GENDERS },
+    isGay: { type: Boolean, default: false },
     whatsapp: { type: String, default: null },
     instagram: { type: String, default: null },
   },
