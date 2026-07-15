@@ -1,11 +1,14 @@
-import { GuestModel } from '../models/guest.model';
+import { Model } from 'mongoose';
+import { GuestModel, IGuestDocument } from '../models/guest.model';
 import { generateCoupleId, generateGuestId } from '../utils/nanoid';
 import { CreateGroupGuestInput } from '../utils/validation';
 import { GuestLean } from './guest.service';
 
 export class GroupService {
+  constructor(protected readonly model: Model<IGuestDocument>) {}
+
   async findByGroupId(groupId: string): Promise<GuestLean[]> {
-    return GuestModel.find({ groupId }).lean<GuestLean[]>().exec();
+    return this.model.find({ groupId }).lean<GuestLean[]>().exec();
   }
 
   async createGroup(input: CreateGroupGuestInput): Promise<GuestLean[]> {
@@ -30,7 +33,7 @@ export class GroupService {
   }
 
   async updateGroup(groupId: string, input: Partial<CreateGroupGuestInput>): Promise<GuestLean[]> {
-    const existing = await GuestModel.find({ groupId });
+    const existing = await this.model.find({ groupId });
 
     if (!existing.length) {
       return [];
@@ -46,9 +49,9 @@ export class GroupService {
     };
 
     if (members) {
-      await GuestModel.deleteMany({ groupId });
+      await this.model.deleteMany({ groupId });
 
-      await GuestModel.insertMany(
+      await this.model.insertMany(
         members.map((member) => ({
           ...member,
           guestId: generateGuestId(),
@@ -57,7 +60,7 @@ export class GroupService {
         }))
       );
     } else {
-      await GuestModel.updateMany(
+      await this.model.updateMany(
         { groupId },
         {
           $set: sharedUpdates,
@@ -65,13 +68,13 @@ export class GroupService {
       );
     }
 
-    return GuestModel.find({ groupId }).lean<GuestLean[]>().exec();
+    return this.model.find({ groupId }).lean<GuestLean[]>().exec();
   }
 
   async deleteGroup(groupId: string): Promise<number> {
-    const res = await GuestModel.deleteMany({ groupId });
+    const res = await this.model.deleteMany({ groupId });
     return res.deletedCount ?? 0;
   }
 }
 
-export const groupService = new GroupService();
+export const groupService = new GroupService(GuestModel);

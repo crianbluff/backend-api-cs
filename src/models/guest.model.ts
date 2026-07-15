@@ -59,7 +59,7 @@ export interface IGuestDocument extends Document {
   updatedAt: Date;
 }
 
-const guestSchema = new Schema<IGuestDocument>(
+export const guestSchema = new Schema<IGuestDocument>(
   {
     guestId: { type: String, required: true, unique: true, index: true },
     groupId: { type: String, default: null },

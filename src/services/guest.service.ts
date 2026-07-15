@@ -1,6 +1,7 @@
 const MAX_LIMIT_PER_PAG = 170;
 
 import { FilterQuery, HydratedDocument } from 'mongoose';
+import { Model } from 'mongoose';
 import { GuestModel, IGuestDocument } from '../models/guest.model';
 import { generateGuestId } from '../utils/nanoid';
 import {
@@ -159,11 +160,14 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
 }
 
 export class GuestService {
+  constructor(protected readonly model: Model<IGuestDocument>) {}
+
   async findAll(query: GuestQueryInput): Promise<PaginatedResponse<GuestListItem>> {
     const { page, limit, skip } = parsePagination(query);
     const filter = buildFilter(query);
 
-    const docs = await GuestModel.find(filter)
+    const docs = await this.model
+      .find(filter)
       .select('-theirReference -myReference')
       .sort({ visitedDate: -1 })
       .lean<GuestLean[]>()
@@ -217,11 +221,11 @@ export class GuestService {
   }
 
   async findById(guestId: string): Promise<IGuestDocument | null> {
-    return GuestModel.findOne({ guestId }).lean() as Promise<IGuestDocument | null>;
+    return this.model.findOne({ guestId }).lean() as Promise<IGuestDocument | null>;
   }
 
   async createSolo(input: Record<string, unknown>): Promise<Omit<IGuestDocument, 'groupId'>> {
-    const doc = await GuestModel.create({
+    const doc = await this.model.create({
       guestId: generateGuestId(),
       groupId: null,
       groupType: 'solo',
@@ -239,22 +243,23 @@ export class GuestService {
   }
 
   async update(guestId: string, input: UpdateGuestInput): Promise<GuestLean | null> {
-    return GuestModel.findOneAndUpdate(
-      { guestId },
-      { $set: input },
-      {
-        new: true,
-        runValidators: true,
-      }
-    )
+    return this.model
+      .findOneAndUpdate(
+        { guestId },
+        { $set: input },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
       .lean<GuestLean>()
       .exec();
   }
 
   async delete(guestId: string): Promise<boolean> {
-    const res = await GuestModel.deleteOne({ guestId });
+    const res = await this.model.deleteOne({ guestId });
     return res.deletedCount === 1;
   }
 }
 
-export const guestService = new GuestService();
+export const guestService = new GuestService(GuestModel);

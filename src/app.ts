@@ -10,6 +10,8 @@ import { rateLimiter } from './middlewares/rateLimiter.middleware';
 import { globalErrorHandler, notFoundHandler } from './middlewares/error.middleware';
 import guestRoutes from './routes/guest.routes';
 import groupRoutes from './routes/group.routes';
+import hostedGroupRoutes from './routes/hosted-group.routes';
+import hostedRoutes from './routes/hosted.routes';
 
 export function createApp(): Application {
   const app = express();
@@ -40,6 +42,9 @@ export function createApp(): Application {
   const BASE = `/api/${env.API_VERSION}`;
   app.use(`${BASE}/guests`, guestRoutes);
   app.use(`${BASE}/groups`, groupRoutes);
+
+  app.use(`${BASE}/hosted`, hostedRoutes);
+  app.use(`${BASE}/hosted/groups`, hostedGroupRoutes);
 
   // ─── 404 & error handlers ─────────────────────────────────────────────────
   app.use(notFoundHandler);

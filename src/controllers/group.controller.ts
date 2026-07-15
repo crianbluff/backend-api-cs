@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import { groupService } from '../services/group.service';
+import { GroupService, groupService } from '../services/group.service';
 import { CreateGroupGuestInput } from '../utils/validation';
 import { sendCreated, sendNotFound, sendSuccess } from '../utils/response';
 import { logger } from '../utils/logger';
 
 export class GroupController {
+  constructor(protected readonly service: GroupService) {}
+
   async getByGroupId(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { groupId } = req.params;
-      const members = await groupService.findByGroupId(groupId);
+      const members = await this.service.findByGroupId(groupId);
       if (!members.length) {
         sendNotFound(res, `No group found with groupId "${groupId}"`);
         return;
@@ -22,7 +24,7 @@ export class GroupController {
 
   async createGroup(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const group = await groupService.createGroup(req.body as CreateGroupGuestInput);
+      const group = await this.service.createGroup(req.body as CreateGroupGuestInput);
 
       sendCreated(res, group, `Group of ${group.length} guests created successfully`);
     } catch (error) {
@@ -35,7 +37,7 @@ export class GroupController {
     try {
       const { groupId } = req.params;
 
-      const updated = await groupService.updateGroup(groupId, req.body);
+      const updated = await this.service.updateGroup(groupId, req.body);
 
       if (!updated.length) {
         sendNotFound(res, `No group found with groupId "${groupId}"`);
@@ -53,7 +55,7 @@ export class GroupController {
     try {
       const { groupId } = req.params;
 
-      const count = await groupService.deleteGroup(groupId);
+      const count = await this.service.deleteGroup(groupId);
 
       if (!count) {
         sendNotFound(res, `No group found with groupId "${groupId}"`);
@@ -68,4 +70,4 @@ export class GroupController {
   }
 }
 
-export const groupController = new GroupController();
+export const groupController = new GroupController(groupService);

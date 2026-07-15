@@ -1,13 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-import { guestService } from '../services/guest.service';
+import { GuestService, guestService } from '../services/guest.service';
 import { sendSuccess, sendCreated, sendNotFound, sendBadRequest, sendPaginated } from '../utils/response';
 import { GuestQueryInput, UpdateGuestInput } from '../utils/validation';
 import { logger } from '../utils/logger';
 
 export class GuestController {
+  constructor(protected readonly service: GuestService) {}
+
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await guestService.findAll(req.query as unknown as GuestQueryInput);
+      const result = await this.service.findAll(req.query as unknown as GuestQueryInput);
       sendPaginated(res, result, 'Guests retrieved successfully');
     } catch (error) {
       logger.error('[getAll]', error);
@@ -18,7 +20,7 @@ export class GuestController {
   async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
-      const guest = await guestService.findById(id);
+      const guest = await this.service.findById(id);
       if (!guest) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
@@ -32,7 +34,7 @@ export class GuestController {
 
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const guest = await guestService.createSolo(req.body);
+      const guest = await this.service.createSolo(req.body);
 
       sendCreated(res, guest, 'Guest created successfully');
     } catch (error) {
@@ -51,7 +53,7 @@ export class GuestController {
         return;
       }
 
-      const updated = await guestService.update(id, input);
+      const updated = await this.service.update(id, input);
 
       if (!updated) {
         sendNotFound(res, `No guest found with ID "${id}"`);
@@ -68,7 +70,7 @@ export class GuestController {
   async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
-      const deleted = await guestService.delete(id);
+      const deleted = await this.service.delete(id);
       if (!deleted) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
@@ -81,4 +83,4 @@ export class GuestController {
   }
 }
 
-export const guestController = new GuestController();
+export const guestController = new GuestController(guestService);

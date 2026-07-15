@@ -32,40 +32,42 @@ const REGIONS = new Set([
   'africa',
 ]);
 
+function normalizeGroupType(value: unknown): string {
+  return String(value ?? '')
+    .trim()
+    .toLowerCase();
+}
+
 function validateGuest(raw: any) {
   const continent = raw.continent ? String(raw.continent).trim().toLowerCase() : null;
   const region = raw.region ? String(raw.region).trim().toLowerCase() : null;
   const groupType = normalizeGroupType(raw.groupType);
 
   const hometownCode = raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null;
+
   const livingInCode = raw.livingInCode ? String(raw.livingInCode).trim().toUpperCase() : null;
 
   if (!continent || !CONTINENTS.has(continent)) {
-    throw new Error(`Invalid continent "${raw.continent}" for "${raw.fullName}".`);
+    throw new Error(`Invalid continent "${raw.continent}" for "${raw.fullName}"`);
   }
 
   if (!region || !REGIONS.has(region)) {
-    throw new Error(`Invalid region "${raw.region}" for "${raw.fullName}".`);
+    throw new Error(`Invalid region "${raw.region}" for "${raw.fullName}"`);
   }
 
   if (hometownCode && !isValidAlpha3(hometownCode)) {
-    throw new Error(`Invalid hometownCode "${raw.hometownCode}" for "${raw.fullName}".`);
+    throw new Error(`Invalid hometownCode "${hometownCode}"`);
   }
 
   if (livingInCode && !isValidAlpha3(livingInCode)) {
-    throw new Error(`Invalid livingInCode "${raw.livingInCode}" for "${raw.fullName}".`);
+    throw new Error(`Invalid livingInCode "${livingInCode}"`);
   }
 
   if (!GROUP_TYPES.has(groupType)) {
-    throw new Error(`Invalid groupType "${raw.groupType}" for "${raw.fullName}".`);
+    throw new Error(`Invalid groupType "${raw.groupType}"`);
   }
 }
 
-/**
- * ----------------------------
- * LOAD FILES SAFE
- * ----------------------------
- */
 function loadJSONFile(filePath: string): any[] {
   const fullPath = path.resolve(filePath);
 
@@ -79,47 +81,20 @@ function loadJSONFile(filePath: string): any[] {
   return Array.isArray(data) ? data : [data];
 }
 
-const SOLO_FILES = [
-  'src/scripts/guests/solo/africa-solo.json',
-  'src/scripts/guests/solo/america-solo.json',
-  'src/scripts/guests/solo/asia-solo.json',
-  'src/scripts/guests/solo/europe-solo.json',
-  'src/scripts/guests/solo/oceania-solo.json',
-];
+const SOLO_FILES = ['src/scripts/hosted/solo/america-hosted-solo.json'];
 
-const GROUP_FILES = [
-  'src/scripts/guests/group/america-group.json',
-  'src/scripts/guests/group/asia-group.json',
-  'src/scripts/guests/group/europe-group.json',
-  // 'src/scripts/guests/group/oceania-group.json',
-  // 'src/scripts/guests/group/africa-group.json',
-];
+const GROUP_FILES = ['src/scripts/hosted/group/america-hosted-group.json'];
 
-/**
- * ----------------------------
- * DATE NORMALIZATION
- * Preserva:
- * YYYY
- * YYYY-MM
- * YYYY-MM-DD
- * ----------------------------
- */
 function parseDateToISO(value: string | null | undefined): string | null {
   if (!value) return null;
 
   const s = String(value).trim();
 
-  if (/^\d{4}$/.test(s)) {
-    return s;
-  }
+  if (/^\d{4}$/.test(s)) return s;
 
-  if (/^\d{4}-\d{2}$/.test(s)) {
-    return s;
-  }
+  if (/^\d{4}-\d{2}$/.test(s)) return s;
 
-  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
-    return s;
-  }
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
 
   const d = new Date(s);
 
@@ -130,62 +105,37 @@ function parseDateToISO(value: string | null | undefined): string | null {
   return null;
 }
 
-function normalizeGroupType(value: unknown): string {
-  return String(value).trim().toLowerCase();
+function nullify(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+
+  const result = String(value).trim();
+
+  return result === '' ? null : result;
 }
 
-/**
- * ----------------------------
- * HELPERS
- * ----------------------------
- */
-function nullify(v: unknown): string | null {
-  if (v === null || v === undefined) return null;
-
-  const s = String(v).trim();
-
-  return s === '' ? null : s;
-}
-
-/**
- * ----------------------------
- * GROUP ID MAP
- * Reemplaza los groupId originales
- * por un nanoid compartido.
- * ----------------------------
- */
 const groupIdMap = new Map<string, string>();
 
-/**
- * ----------------------------
- * BUILD DOCUMENT
- * ----------------------------
- */
 function buildGuest(raw: any) {
   validateGuest(raw);
 
   const groupType = normalizeGroupType(raw.groupType);
-  let generatedGroupId: string | undefined;
 
-  const hometownCode = raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null;
-  const livingInCode = raw.livingInCode ? String(raw.livingInCode).trim().toUpperCase() : null;
+  let groupId: string | null = null;
 
   if (groupType !== 'solo' && raw.groupId != null) {
     const originalGroupId = String(raw.groupId);
 
     if (!groupIdMap.has(originalGroupId)) {
-      groupIdMap.set(originalGroupId, nanoid(11));
+      groupIdMap.set(originalGroupId, `hosted_${nanoid(11)}`);
     }
 
-    generatedGroupId = groupIdMap.get(originalGroupId)!;
+    groupId = groupIdMap.get(originalGroupId)!;
   }
 
   return {
     guestId: nanoid(11),
 
-    ...(generatedGroupId && {
-      groupId: generatedGroupId,
-    }),
+    groupId,
 
     groupType,
 
@@ -203,48 +153,49 @@ function buildGuest(raw: any) {
 
     rating: raw.rating ?? null,
 
-    hometownCode,
-    livingInCode,
+    hometownCode: raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null,
+
+    livingInCode: raw.livingInCode ? String(raw.livingInCode).trim().toUpperCase() : null,
+
     prefixCode: raw.prefixCode ?? null,
 
     continent: nullify(raw.continent),
     region: nullify(raw.region),
 
     fullName: raw.fullName ?? 'Unknown',
+
     hometown: nullify(raw.hometown),
     livingIn: nullify(raw.livingIn),
 
     birthDate: nullify(raw.birthDate),
 
-    occupation: Array.isArray(raw.occupation) && raw.occupation.length > 0 ? raw.occupation : null,
+    occupation: Array.isArray(raw.occupation) && raw.occupation.length ? raw.occupation : [],
 
     urlProfileCs: nullify(raw.urlProfileCs),
 
-    gender: raw.gender ?? 'unknown',
+    gender: raw.gender ?? 'male',
+
     isGay: raw.isGay ?? false,
 
     whatsapp: nullify(raw.whatsapp),
+
     instagram: nullify(raw.instagram),
 
     theirReference: nullify(raw.theirReference),
+
     myReference: nullify(raw.myReference),
   };
 }
 
-/**
- * ----------------------------
- * SEED
- * ----------------------------
- */
 async function seed() {
-  console.log('🌱 Loading data...');
+  console.log('🌱 Loading hosted data...');
 
   const soloData = SOLO_FILES.flatMap(loadJSONFile);
   const groupData = GROUP_FILES.flatMap(loadJSONFile);
 
   const allData = [...soloData, ...groupData];
 
-  console.log(`📦 Loaded ${allData.length} records`);
+  console.log(`📦 Loaded ${allData.length} hosted records`);
 
   await mongoose.connect(MONGO_URI);
 
@@ -254,22 +205,22 @@ async function seed() {
     throw new Error('No DB connection');
   }
 
-  await db.collection('guests').deleteMany({});
+  await db.collection('hosted').deleteMany({});
 
-  console.log('🗑️ Cleared collection');
+  console.log('🗑️ Cleared hosted collection');
 
-  const finalDocs = allData.map(buildGuest);
+  const documents = allData.map(buildGuest);
 
-  await db.collection('guests').insertMany(finalDocs);
+  await db.collection('hosted').insertMany(documents);
 
-  console.log(`✅ Inserted ${finalDocs.length} documents`);
+  console.log(`✅ Inserted ${documents.length} hosted documents`);
 
   await mongoose.disconnect();
 
-  console.log('🏁 Done');
+  console.log('🏁 Hosted seed completed');
 }
 
-seed().catch((err) => {
-  console.error('❌ Seed failed:', err);
+seed().catch((error) => {
+  console.error('❌ Hosted seed failed:', error);
   process.exit(1);
 });
