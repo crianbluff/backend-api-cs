@@ -12,6 +12,7 @@ import guestRoutes from './routes/guest.routes';
 import groupRoutes from './routes/group.routes';
 import hostedGroupRoutes from './routes/hosted-group.routes';
 import hostedRoutes from './routes/hosted.routes';
+import personalRoutes from './routes/personal.routes';
 
 export function createApp(): Application {
   const app = express();
@@ -45,6 +46,8 @@ export function createApp(): Application {
 
   app.use(`${BASE}/hosted`, hostedRoutes);
   app.use(`${BASE}/hosted/groups`, hostedGroupRoutes);
+
+  app.use(`${BASE}/personal`, personalRoutes);
 
   // ─── 404 & error handlers ─────────────────────────────────────────────────
   app.use(notFoundHandler);

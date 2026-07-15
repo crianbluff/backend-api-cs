@@ -8,7 +8,6 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "seed": "ts-node --files src/scripts/seed.ts",
-    "seedh": "ts-node --files src/scripts/seed-hosted.ts",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "dev:docker": "docker compose -f docker-compose.dev.yml up --build",
@@ -16,8 +15,7 @@
     "cloud": "cloudflared tunnel --url http://localhost:3001",
     "down": "docker compose -f docker-compose.dev.yml down && docker compose -f docker-compose.yml down",
     "down:v": "docker compose -f docker-compose.dev.yml down -v && docker compose -f docker-compose.yml down -v",
-    "seed:docker": "docker exec -it guests_api_dev npm run seed",
-    "seedh:docker": "docker exec -it guests_api_dev npm run seedh"
+    "seed:docker": "docker exec -it guests_api_dev npm run seed"
   },
   "dependencies": {
     "compression": "^1.7.4",
