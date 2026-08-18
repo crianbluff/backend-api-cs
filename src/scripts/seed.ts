@@ -204,7 +204,7 @@ const GUESTS_GROUP_FILES = [
   'src/scripts/guests/group/america-group.json',
   'src/scripts/guests/group/asia-group.json',
   'src/scripts/guests/group/europe-group.json',
-  // 'src/scripts/guests/group/oceania-group.json',
+  'src/scripts/guests/group/oceania-group.json',
 ];
 
 const HOSTED_SOLO_FILES = [
@@ -224,7 +224,7 @@ const HOSTED_GROUP_FILES = [
 ];
 
 const PERSONAL_FILES = [
-  'src/scripts/personal/africa-personal.json',
+  // 'src/scripts/personal/africa-personal.json',
   'src/scripts/personal/america-personal.json',
   'src/scripts/personal/asia-personal.json',
   'src/scripts/personal/europe-personal.json',
