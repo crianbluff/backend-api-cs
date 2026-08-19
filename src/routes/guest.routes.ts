@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { guestController } from '../controllers/guest.controller';
 import { validate } from '../middlewares/validate.middleware';
 import { updateGuestSchema, guestQuerySchema, createSoloGuestSchema } from '../utils/validation';
+import { statsGuestController } from '../controllers/stats-guest.controller';
 
 const router = Router();
 
@@ -99,6 +100,30 @@ const router = Router();
  *               $ref: '#/components/schemas/ApiError'
  */
 router.get('/', validate(guestQuerySchema, 'query'), guestController.getAll.bind(guestController));
+
+/**
+ * @openapi
+ * /guests/stats:
+ *   get:
+ *     tags:
+ *       - Guests
+ *     summary: Get guests statistics
+ *     description: Returns statistics about guests.
+ *     responses:
+ *       200:
+ *         description: Guest statistics retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiError'
+ */
+router.get('/stats', statsGuestController.getStats.bind(statsGuestController));
 
 /**
  * @openapi

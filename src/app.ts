@@ -13,7 +13,6 @@ import groupRoutes from './routes/group.routes';
 import hostedGroupRoutes from './routes/hosted-group.routes';
 import hostedRoutes from './routes/hosted.routes';
 import personalRoutes from './routes/personal.routes';
-import statsGuestRoutes from './routes/stats-guest.routes';
 
 export function createApp(): Application {
   const app = express();
@@ -49,8 +48,6 @@ export function createApp(): Application {
   app.use(`${BASE}/hosted/groups`, hostedGroupRoutes);
 
   app.use(`${BASE}/personal`, personalRoutes);
-
-  app.use(`${BASE}/stats-guests`, statsGuestRoutes);
 
   // ─── 404 & error handlers ─────────────────────────────────────────────────
   app.use(notFoundHandler);
