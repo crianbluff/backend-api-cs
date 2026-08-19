@@ -1,25 +1,30 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
-import { Continent, Region, Gender, GroupType } from '../types/guest.types';
+import {
+  Continent,
+  Region,
+  Gender,
+  GroupType,
+  RegionOceania,
+  RegionAsia,
+  RegionAfrica,
+  RegionAmerica,
+} from '../types/guest.types';
 
 const CONTINENTS: Continent[] = ['africa', 'america', 'europe', 'asia', 'oceania'];
-const REGIONS: Region[] = [
-  'north_america',
-  'central_america',
-  'south_america',
-  'caribbean',
-  'middle_east_asia',
-  'southeast_asia',
-  'eastern_asia',
-  'south_asia',
-  'central_asia',
-  'west_europe',
-  'scandinavia',
-  'southern_europe',
-  'northern_europe',
-  'eastern_europe',
-  'oceania',
-  'africa',
+const REGION_OCEANIA: RegionOceania[] = ['oceania', 'melanesia', 'micronesia', 'polinesia'];
+const REGION_ASIA: RegionAsia[] = ['central_asia', 'east_asia', 'south_asia', 'southeast_asia', 'west_asia'];
+
+const REGION_AFRICA: RegionAfrica[] = [
+  'northern_africa',
+  'western_africa',
+  'central_africa',
+  'eastern_africa',
+  'southern_africa',
 ];
+
+const REGION_AMERICA: RegionAmerica[] = ['south_america', 'north_america', 'central_america', 'caribbean'];
+const REGIONS: Region[] = [...REGION_OCEANIA, ...REGION_ASIA, ...REGION_AFRICA, ...REGION_AMERICA];
+
 const GENDERS: Gender[] = ['male', 'female', 'trans'];
 const GROUP_TYPES: GroupType[] = ['solo', 'couple', 'friends', 'family'];
 

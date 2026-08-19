@@ -48,22 +48,31 @@ const router = Router();
  *           type: string
  *           enum:
  *             [
- *               north_america,
- *               central_america,
- *               south_america,
- *               caribbean,
- *               middle_east_asia,
- *               southeast_asia,
- *               eastern_asia,
- *               south_asia,
- *               central_asia,
- *               west_europe,
- *               scandinavia,
- *               southern_europe,
- *               northern_europe,
- *               eastern_europe,
- *               oceania,
- *               africa
+ *               oceania
+ *               melanesia
+ *               micronesia
+ *               polinesia
+ *               central_asia
+ *               east_asia
+ *               south_asia
+ *               southeast_asia
+ *               west_asia
+ *               northern_africa
+ *               western_africa
+ *               central_africa
+ *               eastern_africa
+ *               southern_africa
+ *               south_america
+ *               north_america
+ *               central_america
+ *               caribbean
+ *               northern_europe
+ *               central_europe
+ *               western_europe
+ *               eastern_europe
+ *               southern_europe
+ *               scandinavia
+ *               baltics
  *             ]
  *       - in: query
  *         name: groupType
