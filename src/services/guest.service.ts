@@ -27,6 +27,7 @@ export interface Guest {
   fullName: string;
   gender: Gender;
   isGay: boolean;
+  ambassador: boolean;
   theirReference: string | null;
   myReference: string | null;
   gift: string[] | null;
@@ -72,6 +73,7 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     gift: doc.gift,
     comments: doc.comments,
     isFirstTime: doc.isFirstTime ?? false,
+    ambassador: doc.ambassador,
 
     // Personal info
     fullName: doc.fullName ?? '',
@@ -102,6 +104,7 @@ function toSolo(doc: GuestLean): SoloListItem {
     guestId: doc.guestId,
     groupType: 'solo',
     isFirstTime: doc.isFirstTime ?? false,
+    ambassador: doc.ambassador ?? false,
     nights: doc.nights,
     stayed: doc.stayed,
     visitedDate: doc.visitedDate,
@@ -158,6 +161,7 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   }
 
   if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';
+  if (query.ambassador !== undefined) filter.ambassador = query.ambassador === 'true';
 
   const dateFilter = buildVisitedDateFilter(query.from, query.to);
   Object.assign(filter, dateFilter);
@@ -237,9 +241,6 @@ export class GuestService {
       guestId: generateGuestId(),
       groupId: null,
       groupType: 'solo',
-      gift: (input['gift'] as string[] | null | undefined) ?? null,
-      comments: (input['comments'] as string | null | undefined) ?? null,
-      isFirstTime: (input['isFirstTime'] as boolean | undefined) ?? false,
       ...input,
     });
 

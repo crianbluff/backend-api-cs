@@ -28,6 +28,7 @@ export interface GuestDocument {
   hangOut: boolean;
   visitedDate: string;
   isFirstTime: boolean;
+  ambassador: boolean;
   gift: string[] | null;
   comments: string | null;
   rating: number | null;
@@ -55,6 +56,7 @@ export interface SoloListItem {
   guestId: string;
   groupType: 'solo';
   isFirstTime: boolean;
+  ambassador: boolean;
   nights: number;
   stayed: boolean;
   visitedDate: string;
@@ -87,6 +89,7 @@ export interface GroupMemberListItem {
   gift: string[] | null;
   comments: string | null;
   isFirstTime: boolean;
+  ambassador: boolean;
 
   fullName: string;
   hometownCode: string;

@@ -152,6 +152,8 @@ function buildGuest(raw: any, groupIdMap: Map<string, string>, groupPrefix = '')
 
     isFirstTime: raw.isFirstTime ?? false,
 
+    ambassador: raw.ambassador ?? false,
+
     gift: Array.isArray(raw.gift) && raw.gift.length ? raw.gift : null,
 
     comments: nullify(raw.comments),

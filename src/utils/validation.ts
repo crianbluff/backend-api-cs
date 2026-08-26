@@ -75,6 +75,7 @@ const individualSchema = z.object({
   instagram: z.string().max(100).nullable().optional().default(null),
   // Per-member fields (also individual in groups)
   isFirstTime: z.boolean().optional().default(false),
+  ambassador: z.boolean().optional().default(false),
   hangOut: z.boolean().optional().default(false),
   gift: z.array(z.string().max(200)).nullable().optional().default(null),
   comments: z.string().max(2000).nullable().optional().default(null),
@@ -112,10 +113,11 @@ export const guestQuerySchema = z.object({
   limit: z.string().regex(/^\d+$/).optional().default('10'),
   continent: continentEnum.optional(),
   region: regionEnum.optional(),
-  country: z.string().min(3).max(3).toUpperCase().optional(),
+  country: alpha3Schema.optional(),
   gender: genderEnum.optional(),
   groupType: z.enum(['couple', 'friends', 'family', 'solo']).optional(),
   isFirstTime: z.enum(['true', 'false']).optional(),
+  ambassador: z.enum(['true', 'false']).optional(),
   from: z.string().regex(isoDateRegex, 'from must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
   to: z.string().regex(isoDateRegex, 'to must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
 });

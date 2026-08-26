@@ -85,6 +85,11 @@ const router = Router();
  *           type: string
  *           enum: [true, false]
  *       - in: query
+ *         name: ambassador
+ *         schema:
+ *           type: string
+ *           enum: [true, false]
+ *       - in: query
  *         name: from
  *         schema:
  *           type: string

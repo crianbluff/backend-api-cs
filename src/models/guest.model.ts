@@ -49,6 +49,7 @@ export interface IGuestDocument extends Document {
   hangOut: boolean;
   visitedDate: string;
   isFirstTime: boolean;
+  ambassador: boolean;
   gift: string[] | null;
   comments: string | null;
   // References
@@ -86,6 +87,7 @@ export const guestSchema = new Schema<IGuestDocument>(
     hangOut: { type: Boolean, required: true },
     visitedDate: { type: String, required: true, trim: true },
     isFirstTime: { type: Boolean, default: false },
+    ambassador: { type: Boolean, default: false },
     gift: { type: [String], default: null },
     comments: { type: String, default: null, trim: true },
     theirReference: {
@@ -130,5 +132,6 @@ guestSchema.index({ visitedDate: 1 });
 guestSchema.index({ continent: 1 });
 guestSchema.index({ region: 1 });
 guestSchema.index({ isFirstTime: 1 });
+guestSchema.index({ ambassador: 1 });
 
 export const GuestModel: Model<IGuestDocument> = mongoose.model<IGuestDocument>('Guest', guestSchema, 'guests');
