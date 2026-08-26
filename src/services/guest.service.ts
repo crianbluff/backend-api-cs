@@ -166,6 +166,7 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';
   if (query.ambassador !== undefined) filter.ambassador = query.ambassador === 'true';
   if (query.didTheyReq !== undefined) filter.didTheyReq = query.didTheyReq === 'true';
+  if (query.rating !== undefined) filter.rating = Number(query.rating);
 
   const dateFilter = buildVisitedDateFilter(query.from, query.to);
   Object.assign(filter, dateFilter);

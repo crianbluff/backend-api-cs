@@ -120,6 +120,10 @@ export const guestQuerySchema = z.object({
   isFirstTime: z.enum(['true', 'false']).optional(),
   ambassador: z.enum(['true', 'false']).optional(),
   didTheyReq: z.enum(['true', 'false']).optional(),
+  rating: z
+    .string()
+    .regex(/^[1-5]$/, 'rating must be between 1 and 5')
+    .optional(),
   from: z.string().regex(isoDateRegex, 'from must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
   to: z.string().regex(isoDateRegex, 'to must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
 });

@@ -19,17 +19,20 @@ const router = Router();
  *           type: string
  *         description: ISO 3166-1 alpha-3 country code (hometownCode)
  *         example: COL
+
  *       - in: query
  *         name: gender
  *         schema:
  *           type: string
  *           enum: [male, female, trans]
+
  *       - in: query
  *         name: page
  *         schema:
  *           type: integer
  *           default: 1
  *           minimum: 1
+
  *       - in: query
  *         name: limit
  *         schema:
@@ -37,68 +40,85 @@ const router = Router();
  *           default: 10
  *           minimum: 1
  *           maximum: 100
+
+ *       - in: query
+ *         name: rating
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 5
+ *         description: Filter guests by exact rating
+ *         example: 4
+
  *       - in: query
  *         name: continent
  *         schema:
  *           type: string
  *           enum: [africa, america, europe, asia, oceania]
+
  *       - in: query
  *         name: region
  *         schema:
  *           type: string
  *           enum:
  *             [
- *               oceania
- *               melanesia
- *               micronesia
- *               polinesia
- *               central_asia
- *               east_asia
- *               south_asia
- *               southeast_asia
- *               west_asia
- *               northern_africa
- *               western_africa
- *               central_africa
- *               eastern_africa
- *               southern_africa
- *               south_america
- *               north_america
- *               central_america
- *               caribbean
- *               northern_europe
- *               central_europe
- *               western_europe
- *               eastern_europe
- *               southern_europe
- *               scandinavia
+ *               oceania,
+ *               melanesia,
+ *               micronesia,
+ *               polinesia,
+ *               central_asia,
+ *               east_asia,
+ *               south_asia,
+ *               southeast_asia,
+ *               west_asia,
+ *               northern_africa,
+ *               western_africa,
+ *               central_africa,
+ *               eastern_africa,
+ *               southern_africa,
+ *               south_america,
+ *               north_america,
+ *               central_america,
+ *               caribbean,
+ *               northern_europe,
+ *               central_europe,
+ *               western_europe,
+ *               eastern_europe,
+ *               southern_europe,
+ *               scandinavia,
  *               baltics
  *             ]
+
  *       - in: query
  *         name: groupType
  *         schema:
  *           type: string
  *           enum: [solo, couple, friends, family]
+
  *       - in: query
  *         name: isFirstTime
  *         schema:
  *           type: string
  *           enum: [true, false]
+
  *       - in: query
  *         name: ambassador
  *         schema:
  *           type: string
  *           enum: [true, false]
+
  *       - in: query
  *         name: didTheyReq
  *         schema:
  *           type: string
  *           enum: [true, false]
+
  *       - in: query
  *         name: from
  *         schema:
  *           type: string
  *         example: 2022-11
+
  *       - in: query
  *         name: to
  *         schema:
