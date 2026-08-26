@@ -76,6 +76,8 @@ export interface SoloListItem {
   myReference: string | null;
   whatsapp: string | null;
   urlProfileCs: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface GroupMemberListItem {
@@ -104,6 +106,8 @@ export interface GroupMemberListItem {
   whatsapp: string | null;
   instagram: string | null;
   urlProfileCs: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface GroupListItem {
@@ -112,6 +116,8 @@ export interface GroupListItem {
   nights: number;
   stayed: boolean;
   visitedDate: string;
+  createdAt: Date;
+  updatedAt: Date;
   members: GroupMemberListItem[];
 }
 

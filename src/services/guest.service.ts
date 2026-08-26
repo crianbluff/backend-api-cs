@@ -49,6 +49,8 @@ export interface Guest {
   urlProfileCs: string | null;
   visitedDate: string;
   whatsapp: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 /**
@@ -90,6 +92,8 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     whatsapp: doc.whatsapp,
     instagram: doc.instagram,
     urlProfileCs: doc.urlProfileCs,
+    createdAt: doc.createdAt,
+    updatedAt: doc.updatedAt,
   };
 }
 
@@ -119,6 +123,8 @@ function toSolo(doc: GuestLean): SoloListItem {
     myReference: doc.myReference,
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
+    createdAt: doc.createdAt,
+    updatedAt: doc.updatedAt,
   };
 }
 
@@ -194,6 +200,8 @@ export class GuestService {
           nights: doc.nights,
           stayed: doc.stayed,
           visitedDate: doc.visitedDate,
+          createdAt: doc.createdAt,
+          updatedAt: doc.updatedAt,
           members: [],
         });
       }
