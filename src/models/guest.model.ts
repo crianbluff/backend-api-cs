@@ -8,6 +8,7 @@ import {
   RegionAsia,
   RegionAfrica,
   RegionAmerica,
+  RegionEurope,
 } from '../types/guest.types';
 
 const CONTINENTS: Continent[] = ['africa', 'america', 'europe', 'asia', 'oceania'];
@@ -22,8 +23,18 @@ const REGION_AFRICA: RegionAfrica[] = [
   'southern_africa',
 ];
 
+const REGION_EUROPE: RegionEurope[] = [
+  'northern_europe',
+  'central_europe',
+  'western_europe',
+  'eastern_europe',
+  'southern_europe',
+  'scandinavia',
+  'baltics',
+];
+
 const REGION_AMERICA: RegionAmerica[] = ['south_america', 'north_america', 'central_america', 'caribbean'];
-const REGIONS: Region[] = [...REGION_OCEANIA, ...REGION_ASIA, ...REGION_AFRICA, ...REGION_AMERICA];
+const REGIONS: Region[] = [...REGION_OCEANIA, ...REGION_ASIA, ...REGION_AFRICA, ...REGION_AMERICA, ...REGION_EUROPE];
 
 const GENDERS: Gender[] = ['male', 'female', 'trans'];
 const GROUP_TYPES: GroupType[] = ['solo', 'couple', 'friends', 'family'];
