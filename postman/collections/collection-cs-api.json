@@ -1,0 +1,813 @@
+{
+  "info": {
+    "_postman_id": "b0c03770-7c02-4201-bc5a-2b49689fad5a",
+    "name": "Couchsurfing",
+    "description": "Full collection for Guests API (Couchsurfing system)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "7501180"
+  },
+  "item": [
+    {
+      "name": "Guests",
+      "item": [
+        {
+          "name": "Groups",
+          "item": [
+            {
+              "name": "Group Guests Members By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/groups/{{groupId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "groups",
+                    "{{groupId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Group Guests",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"groupType\": \"family\",\n  \"nights\": 5,\n  \"stayed\": true,\n  \"visitedDate\": \"2026-08-01\",\n  \"members\": [\n    {\n      \"theirReference\": \"their ref buena 1\",\n      \"myReference\": \"my ref buena 1\",\n      \"hangOut\": true,\n      \"isGay\": false,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"SCT\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"1999-07-03\",\n      \"occupation\": [\n            \"programmer\"\n          ],\n      \"livingIn\": \"Edhimburg, Edhimburg\",\n      \"hometown\": \"Bogotá, Bogotá D.C.\",\n      \"instagram\": \"crianbluff\",\n      \"whatsapp\": \"3108098793\",\n      \"urlProfileCs\": \"crianbluff\",\n      \"fullName\": \"Cristian Castillo\",\n      \"isFirstTime\": false,\n      \"gender\": \"male\",\n      \"rating\": 5,\n      \"gift\": [\"cop coins\"],\n      \"comments\": \"smart\"\n    },\n    {\n      \"theirReference\": \"their ref buena 2\",\n      \"myReference\": \"my ref buena 2\",\n      \"hangOut\": true,\n      \"isGay\": false,\n      \"hometownCode\": \"MEX\",\n      \"livingInCode\": \"ESP\",\n      \"prefixCode\": \"+52\",\n      \"continent\": \"america\",\n      \"region\": \"north_america\",\n      \"birthDate\": \"2002-04-08\",\n      \"occupation\": [\n            \"languages teacher\"\n          ],\n      \"livingIn\": \"Madrid, Madrid\",\n      \"hometown\": \"Acambay, State Of México\",\n      \"instagram\": \"alobuuls\",\n      \"whatsapp\": \"17291541114\",\n      \"urlProfileCs\": \"alobuuls\",\n      \"fullName\": \"Alondra Francisco\",\n      \"isFirstTime\": true,\n      \"gender\": \"female\",\n      \"rating\": 4,\n      \"gift\": [\"tacos\"],\n      \"comments\": \"cute girl\"\n    },\n    {\n      \"theirReference\": \"their ref buena 3\",\n      \"myReference\": \"my ref buena 3\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"BRA\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"2010-10-15\",\n      \"occupation\": [\n            \"ufc fighter\"\n          ],\n      \"livingIn\": \"Sao Paulo, Sao Paulo\",\n      \"hometown\": \"Bogotá, Bogotá D.C.\",\n      \"instagram\": \"ryancastillo1511\",\n      \"whatsapp\": \"3196501884\",\n      \"urlProfileCs\": \"ryancastillo\",\n      \"fullName\": \"Ryan Castillo\",\n      \"isFirstTime\": true,\n      \"gender\": \"male\",\n      \"rating\": 1,\n      \"gift\": [\"candies\"],\n      \"comments\": \"good boy\"\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/groups",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "groups"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Group Guests",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"groupType\": \"friends\",\n  \"nights\": 1,\n  \"stayed\": false,\n  \"visitedDate\": \"2026-08-02\",\n  \"members\": [\n    {\n      \"theirReference\": \"their ref buena 1updated\",\n      \"myReference\": \"my ref buena 1updated\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"MEX\",\n      \"livingInCode\": \"MEX\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"central_america\",\n      \"birthDate\": \"1999-07-04\",\n      \"occupation\": [\n            \"soccer player update\"\n          ],\n      \"livingIn\": \"Aguascalientes, update\",\n      \"hometown\": \"Aguascalientes, update\",\n      \"instagram\": \"crianbluffupdate\",\n      \"whatsapp\": \"310809879300\",\n      \"urlProfileCs\": \"crianbluffupdate\",\n      \"fullName\": \"Cristian Castillo update\",\n      \"isFirstTime\": true,\n      \"gender\": \"male\",\n      \"rating\": 4,\n      \"gift\": [\"cop coinsupdate\"],\n      \"comments\": \"smart update\"\n    },\n    {\n      \"theirReference\": \"their ref buena 2updated\",\n      \"myReference\": \"my ref buena 2updated\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"COL\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"2002-04-09\",\n      \"occupation\": [\n            \"languages teacherupdate\"\n          ],\n      \"livingIn\": \"Bogotá, update\",\n      \"hometown\": \"Acambay, State Of México update\",\n      \"instagram\": \"alobuulsupdate\",\n      \"whatsapp\": \"1729154111400\",\n      \"urlProfileCs\": \"alobuulsupdate\",\n      \"fullName\": \"Alondra Franciscoupdate\",\n      \"isFirstTime\": false,\n      \"gender\": \"male\",\n      \"rating\": 3,\n      \"gift\": [\"tacosupdate\"],\n      \"comments\": \"cute girl update\"\n    },\n    {\n      \"theirReference\": \"their ref buena 3updated\",\n      \"myReference\": \"my ref buena 3updated\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"ESP\",\n      \"livingInCode\": \"CHN\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"1910-10-15\",\n      \"occupation\": [\n            \"ufc fighterupdate\"\n          ],\n      \"livingIn\": \"Xian, Xianupdate\",\n      \"hometown\": \"Madrid, Madrid\",\n      \"instagram\": \"ryancastillo1511update\",\n      \"whatsapp\": \"319650188400\",\n      \"urlProfileCs\": \"ryancastilloupdate\",\n      \"fullName\": \"Ryan Castilloupdate\",\n      \"isFirstTime\": false,\n      \"gender\": \"female\",\n      \"rating\": 2,\n      \"gift\": [\"candiesupdate\"],\n      \"comments\": \"good boyupdate\"\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/groups/{{groupId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "groups",
+                    "{{groupId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Group Guests",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/groups/{{groupId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "groups",
+                    "{{groupId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "All Guests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/guests?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "guests"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "All Guests (full filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/guests?page=1&rating=4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "guests"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "continent",
+                  "value": "africa",
+                  "disabled": true
+                },
+                {
+                  "key": "region",
+                  "value": "northern_africa",
+                  "disabled": true
+                },
+                {
+                  "key": "groupType",
+                  "value": "solo",
+                  "disabled": true
+                },
+                {
+                  "key": "isFirstTime",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "to",
+                  "value": "2026-01",
+                  "disabled": true
+                },
+                {
+                  "key": "from",
+                  "value": "2024-05",
+                  "disabled": true
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "country",
+                  "value": "MAR",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "ambassador",
+                  "value": "true",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "rating",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Guest By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/guests/{{guestId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "guests",
+                "{{guestId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Stats Guests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/guests/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "guests",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Solo Guest",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nights\": 10,\n  \"stayed\": true,\n  \"hangOut\": true,\n  \"visitedDate\": \"2026-07-02\",\n  \"isFirstTime\": true,\n  \"isGay\": true,\n  \"theirReference\": \"their ref buena\",\n  \"myReference\": \"my ref buena\",\n  \"gift\": [\"superman\"],\n  \"comments\": \"Amazing host experience\",\n  \"rating\": 1,\n  \"hometownCode\": \"COL\",\n  \"livingInCode\": \"ESP\",\n  \"prefixCode\": \"+1\",\n  \"continent\": \"america\",\n  \"region\": \"south_america\",\n  \"fullName\": \"Carlos Ramirez\",\n  \"hometown\": \"Bogota\",\n  \"livingIn\": \"Madrid\",\n  \"birthDate\": \"1999-07-04\",\n  \"occupation\": [\"Engineer\"],\n  \"urlProfileCs\": \"crianbluff\",\n  \"gender\": \"male\",\n  \"whatsapp\": \"3108098793\",\n  \"instagram\": \"carlangas\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/guests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "guests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Guest",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theirReference\": \"their ref buena 1updated\",\n  \"myReference\": \"my ref buena 1updated\",\n  \"nights\": 15,\n  \"comments\": \"updated\",\n  \"gift\": [\"barbieupdated\"],\n  \"visitedDate\": \"2028-02-24\",\n  \"hangOut\": false,\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"stayed\": false,\n  \"birthDate\": \"1900-04-08\",\n  \"fullName\": \"Amandapdated\",\n  \"gender\": \"male\",\n  \"continent\": \"europe\",\n  \"region\": \"west_europe\",\n  \"urlProfileCs\": \"amanda-cspdated\",\n  \"instagram\": \"amandaaaa1234pdated\",\n  \"occupation\": [\"lawyerpdated\"],\n  \"whatsapp\": \"9090909000\",\n  \"rating\": 1,\n  \"hometownCode\": \"DEU\",\n  \"livingInCode\": \"CHN\",\n  \"livingIn\": \"Xian\",\n  \"hometown\": \"Munich\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/guests/{{guestId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "guests",
+                "{{guestId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Guest",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/guests/{{guestId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "guests",
+                "{{guestId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Hosted",
+      "item": [
+        {
+          "name": "All Hosted",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/hosted",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hosted"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "All Hosted (full filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/hosted?rating=4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hosted"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "continent",
+                  "value": "america",
+                  "disabled": true
+                },
+                {
+                  "key": "region",
+                  "value": "north_america",
+                  "disabled": true
+                },
+                {
+                  "key": "groupType",
+                  "value": "solo",
+                  "disabled": true
+                },
+                {
+                  "key": "isFirstTime",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "to",
+                  "value": "2026-01",
+                  "disabled": true
+                },
+                {
+                  "key": "from",
+                  "value": "2024-05",
+                  "disabled": true
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "disabled": true
+                },
+                {
+                  "key": "country",
+                  "value": "MEX",
+                  "disabled": true
+                },
+                {
+                  "key": "ambassador",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "rating",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hosted By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/hosted/{{hostedId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hosted",
+                "{{hostedId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Stats Hosted",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/hosted/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hosted",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Solo Hosted",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nights\": 10,\n  \"stayed\": true,\n  \"hangOut\": true,\n  \"visitedDate\": \"2026-07-02\",\n  \"isFirstTime\": true,\n  \"isGay\": true,\n  \"theirReference\": \"their ref buena\",\n  \"myReference\": \"my ref buena\",\n  \"gift\": [\"superman\"],\n  \"comments\": \"Amazing host experience\",\n  \"rating\": 1,\n  \"hometownCode\": \"COL\",\n  \"livingInCode\": \"ESP\",\n  \"prefixCode\": \"+1\",\n  \"continent\": \"america\",\n  \"region\": \"south_america\",\n  \"fullName\": \"Carlos Ramirez\",\n  \"hometown\": \"Bogota\",\n  \"livingIn\": \"Madrid\",\n  \"birthDate\": \"1999-07-04\",\n  \"occupation\": [\"Engineer\"],\n  \"urlProfileCs\": \"crianbluff\",\n  \"gender\": \"male\",\n  \"whatsapp\": \"3108098793\",\n  \"instagram\": \"carlangas\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/hosted",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hosted"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Hosted",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theirReference\": \"their ref buena 1updated\",\n  \"myReference\": \"my ref buena 1updated\",\n  \"nights\": 15,\n  \"comments\": \"updated\",\n  \"gift\": [\"barbieupdated\"],\n  \"visitedDate\": \"2028-02-24\",\n  \"hangOut\": false,\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"stayed\": false,\n  \"birthDate\": \"1900-04-08\",\n  \"fullName\": \"Amandapdated\",\n  \"gender\": \"male\",\n  \"continent\": \"europe\",\n  \"region\": \"west_europe\",\n  \"urlProfileCs\": \"amanda-cspdated\",\n  \"instagram\": \"amandaaaa1234pdated\",\n  \"occupation\": [\"lawyerpdated\"],\n  \"whatsapp\": \"9090909000\",\n  \"rating\": 1,\n  \"hometownCode\": \"DEU\",\n  \"livingInCode\": \"CHN\",\n  \"livingIn\": \"Xian\",\n  \"hometown\": \"Munich\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/hosted/{{hostedId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hosted",
+                "{{hostedId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Hosted",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/hosted/{{hostedId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hosted",
+                "{{hostedId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Personal",
+      "item": [
+        {
+          "name": "All Personal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/personal?limit=10&page=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "All Personal (full filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/personal?rating=4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "continent",
+                  "value": "america",
+                  "disabled": true
+                },
+                {
+                  "key": "region",
+                  "value": "south_america",
+                  "disabled": true
+                },
+                {
+                  "key": "groupType",
+                  "value": "solo",
+                  "disabled": true
+                },
+                {
+                  "key": "isFirstTime",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "to",
+                  "value": "2026-01",
+                  "disabled": true
+                },
+                {
+                  "key": "from",
+                  "value": "2024-05",
+                  "disabled": true
+                },
+                {
+                  "key": "gender",
+                  "value": "female",
+                  "disabled": true
+                },
+                {
+                  "key": "country",
+                  "value": "COL",
+                  "disabled": true
+                },
+                {
+                  "key": "ambassador",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "rating",
+                  "value": "4",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Personal By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/personal/{{personald}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "{{personald}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Stats Personal",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/personal/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Personal Hosted",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nights\": 10,\n  \"stayed\": true,\n  \"hangOut\": true,\n  \"visitedDate\": \"2026-07-02\",\n  \"isFirstTime\": true,\n  \"isGay\": true,\n  \"theirReference\": \"their ref buena\",\n  \"myReference\": \"my ref buena\",\n  \"gift\": [\"superman\"],\n  \"comments\": \"Amazing host experience\",\n  \"rating\": 1,\n  \"hometownCode\": \"COL\",\n  \"livingInCode\": \"ESP\",\n  \"prefixCode\": \"+1\",\n  \"continent\": \"america\",\n  \"region\": \"south_america\",\n  \"fullName\": \"Carlos Ramirez\",\n  \"hometown\": \"Bogota\",\n  \"livingIn\": \"Madrid\",\n  \"birthDate\": \"1999-07-04\",\n  \"occupation\": [\"Engineer\"],\n  \"urlProfileCs\": \"crianbluff\",\n  \"gender\": \"male\",\n  \"whatsapp\": \"3108098793\",\n  \"instagram\": \"carlangas\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/personal",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Personal",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theirReference\": \"their ref buena 1updated\",\n  \"myReference\": \"my ref buena 1updated\",\n  \"nights\": 15,\n  \"comments\": \"updated\",\n  \"gift\": [\"barbieupdated\"],\n  \"visitedDate\": \"2028-02-24\",\n  \"hangOut\": false,\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"stayed\": false,\n  \"birthDate\": \"1900-04-08\",\n  \"fullName\": \"Amandapdated\",\n  \"gender\": \"male\",\n  \"continent\": \"europe\",\n  \"region\": \"west_europe\",\n  \"urlProfileCs\": \"amanda-cspdated\",\n  \"instagram\": \"amandaaaa1234pdated\",\n  \"occupation\": [\"lawyerpdated\"],\n  \"whatsapp\": \"9090909000\",\n  \"rating\": 1,\n  \"hometownCode\": \"DEU\",\n  \"livingInCode\": \"CHN\",\n  \"livingIn\": \"Xian\",\n  \"hometown\": \"Munich\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/personal/{{personald}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "{{personald}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Personal",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/personal/{{personald}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "{{personald}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001/api/v1"
+    },
+    {
+      "key": "guestId",
+      "value": "REPLACE_ME"
+    },
+    {
+      "key": "groupId",
+      "value": "REPLACE_ME"
+    },
+    {
+      "key": "hostedId",
+      "value": ""
+    },
+    {
+      "key": "personald",
+      "value": ""
+    }
+  ]
+}
