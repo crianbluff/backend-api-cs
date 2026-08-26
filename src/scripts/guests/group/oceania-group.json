@@ -1,6 +1,7 @@
 [
   {
     "nights": 5,
+    "didTheyReq": false,
     "theirReference": "We had a wonderful time with Cristian and his family in Bogotá! From the moment Cristian reached out to welcome us to his home we felt at ease with him. Upon our arrival, he took us to our room and we made plans to hang out later that evening so he can show us around some of the nice spots. His place is nearby Candelaria and Chorro de Quevedo, and it’s walkable depending on how comfortable you feel. We had a great time exploring and we learned a lot about the area and Cristian. He was truly generous with his time and knowledge. We met and befriended other couch surfers staying there at the same time as us and also bonded with Cristian’s mum who was so lovely and welcoming! We miss her delicious fruit juices. After many months of travel and being away from our families, it was really nice being around a family dynamic and we felt at home. We hope to see Cristian, his family and Pancho the dog and the cats too one day soon. Thanks again Cristian!",
     "myReference": "Farah and Manya were wonderful guests. They are both kind, respectful, and genuinely interested in learning about the local culture, which made hosting them a truly enjoyable experience. ⭐️⭐️⭐️⭐️⭐️ During their stay, we shared many great moments together. We went for a walk around the city at night, had interesting conversations, and exchanged travel stories and Couchsurfing experiences. Another day, we visited a park with other Couchsurfers, where we spent a great time together sharing laughs, experiences, and meeting new people. 👌 Throughout their stay, they had excellent communication, always showed a positive attitude, and followed all the house rules without any issues. They were thoughtful, considerate, and brought a wonderful energy into my home. 🤗 It was definitely a great experience hosting Farah and Manya. I highly recommend them to any host and would be very happy to welcome them back anytime. 💯 خلي بالك من نفسك، ونشوفك تاني! 😊🇪🇬",
     "stayed": true,
@@ -37,6 +38,7 @@
   },
   {
     "nights": 5,
+    "didTheyReq": false,
     "theirReference": null,
     "myReference": null,
     "stayed": true,

@@ -176,6 +176,11 @@ const options: swaggerJsdoc.Options = {
               default: false,
             },
 
+            didTheyreq: {
+              type: 'boolean',
+              default: false,
+            },
+
             isGay: {
               type: 'boolean',
               default: false,
@@ -304,6 +309,10 @@ const options: swaggerJsdoc.Options = {
               type: 'boolean',
             },
 
+            didTheyReq: {
+              type: 'boolean',
+            },
+
             isGay: {
               type: 'boolean',
             },
@@ -429,6 +438,10 @@ const options: swaggerJsdoc.Options = {
             },
 
             ambassador: {
+              type: 'boolean',
+            },
+
+            didTheyReq: {
               type: 'boolean',
             },
 

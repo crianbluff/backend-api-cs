@@ -1,6 +1,7 @@
 [
   {
     "groupType": "solo",
+    "didTheyReq": true,
     "theirReference": "Cristian and his dear mother, Bianca, were such wonderful hosts. Their house has an exceptional view over all of Bogota's suburb lights and I adored Santa Fe because it was a true, no-frills neighbourhood ungentrified. Cristian's an exceptionally bright young man with much initiative. He has true passion for his neighbourhood and Candelaria and took me on a personal scooter private tour around town ! He gave me so many suggestions for museums and was very knowledgable on pricing. Even when we had miscomms, he was so understanding ! We shared lovely breakfast and coffee, and walked around to get local arepas for dinner. His mother is a starburst spirit and just so vibrant and kind to the core. They live a short walk to Candelaria and I love that it's not too close to the horrific bustle and traffic and in a neighbourhood tranquil. I hope any CouchSurfers reading this make sure to visit Cristian and his mother !",
     "myReference": "Anica was an amazing guest — incredibly kind, intelligent, and truly interested in experiencing the local culture. She has such a positive energy and a wonderful vibe that fills any space she’s in. She was very understanding, clean, and respectful, and even shared arepa with cheese with my mom, which we really appreciated. 💫 We walked around the city together, visited some of the local art around town, went out for coffee, and had very interesting and enriching conversations filled with great anecdotes. Every moment with her was meaningful and fun. 🤩 Hosting her was a fantastic experience. I totally recommend her 😁",
     "nights": 1,
@@ -26,6 +27,7 @@
   },
   {
     "groupType": "solo",
+    "didTheyReq": true,
     "theirReference": "Cristian was such great fun! I stayed with Cristian and Alondra for one night and felt so welcomed. Cristian gave me a historical walk around La Candelaria and got to see so many beautiful murals and tried some local food. I sense a potential future tour guide persona in him! He also gave me the run down of free museums to visit and they were really wonderful! I took a liking to their dog, Pancho and their two cats. One of the cats, Snow, even slept in my bed and was over the moon (I love cats)! Even though my Spanish was non-existent, Cristian and his family made me feel really welcome. Thank you so much for the juice and the Columbian peso coins for collecting. I highly recommend Cristian and Alondra to everyone as a host. They are super wonderful!",
     "myReference": "Ilin was an excellent guest. She is a very kind and respectful person, genuinely interested in learning about the local culture. During her stay, she was very clean, organized, and always considerate of the space, which made the experience very pleasant. ⭐️⭐️⭐️⭐️⭐️ We had the opportunity to walk around the city together, and we had very interesting conversations where she shared some of her travel experiences. She is very easygoing, fun, intelligent, and always brings such positive energy. 💫 She also had the lovely gesture of giving me some coins for my collection, which I truly appreciate and am very grateful for. 😁 Throughout her stay, she had great communication, a very positive attitude, and followed all the house rules without any issues. 🤗 It was definitely a great experience hosting her, and I highly recommend her. 💯 Catch ya later! Safe travels and see ya soon 🇦🇺✨",
     "nights": 1,
@@ -48,5 +50,31 @@
     "whatsapp": "406850186",
     "instagram": "inner._.baby",
     "gift": ["coin 2X1 australian dollar", "coin 2X2 australian dollar", "bill 1x5 AUD"]
+  },
+  {
+    "groupType": "solo",
+    "didTheyReq": false,
+    "theirReference": null,
+    "myReference": "",
+    "nights": 3,
+    "stayed": true,
+    "rating": 4,
+    "hometownCode": "AUS",
+    "prefixCode": "+52",
+    "continent": "oceania",
+    "region": "oceania",
+    "fullName": "Federica Schneider",
+    "hometown": "Delft",
+    "livingIn": "Melbourne, Victoria",
+    "livingInCode": "AUS",
+    "birthDate": "2000-08-23",
+    "hangOut": true,
+    "visitedDate": "2026-08-25",
+    "urlProfileCs": "fed-s-1",
+    "occupation": ["english teacher"],
+    "gender": "female",
+    "whatsapp": "3318052175",
+    "instagram": "",
+    "gift": []
   }
 ]

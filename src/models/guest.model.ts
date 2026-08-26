@@ -50,6 +50,7 @@ export interface IGuestDocument extends Document {
   visitedDate: string;
   isFirstTime: boolean;
   ambassador: boolean;
+  didTheyReq: boolean;
   gift: string[] | null;
   comments: string | null;
   // References
@@ -88,6 +89,7 @@ export const guestSchema = new Schema<IGuestDocument>(
     visitedDate: { type: String, required: true, trim: true },
     isFirstTime: { type: Boolean, default: false },
     ambassador: { type: Boolean, default: false },
+    didTheyReq: { type: Boolean, default: false },
     gift: { type: [String], default: null },
     comments: { type: String, default: null, trim: true },
     theirReference: {
@@ -133,5 +135,6 @@ guestSchema.index({ continent: 1 });
 guestSchema.index({ region: 1 });
 guestSchema.index({ isFirstTime: 1 });
 guestSchema.index({ ambassador: 1 });
+guestSchema.index({ didTheyReq: 1 });
 
 export const GuestModel: Model<IGuestDocument> = mongoose.model<IGuestDocument>('Guest', guestSchema, 'guests');

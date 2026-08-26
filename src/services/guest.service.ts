@@ -28,6 +28,7 @@ export interface Guest {
   gender: Gender;
   isGay: boolean;
   ambassador: boolean;
+  didTheyReq: boolean;
   theirReference: string | null;
   myReference: string | null;
   gift: string[] | null;
@@ -73,7 +74,8 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     gift: doc.gift,
     comments: doc.comments,
     isFirstTime: doc.isFirstTime ?? false,
-    ambassador: doc.ambassador,
+    ambassador: doc.ambassador ?? false,
+    didTheyReq: doc.didTheyReq ?? false,
 
     // Personal info
     fullName: doc.fullName ?? '',
@@ -105,6 +107,7 @@ function toSolo(doc: GuestLean): SoloListItem {
     groupType: 'solo',
     isFirstTime: doc.isFirstTime ?? false,
     ambassador: doc.ambassador ?? false,
+    didTheyReq: doc.didTheyReq ?? false,
     nights: doc.nights,
     stayed: doc.stayed,
     visitedDate: doc.visitedDate,
@@ -162,6 +165,7 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
 
   if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';
   if (query.ambassador !== undefined) filter.ambassador = query.ambassador === 'true';
+  if (query.didTheyReq !== undefined) filter.didTheyReq = query.didTheyReq === 'true';
 
   const dateFilter = buildVisitedDateFilter(query.from, query.to);
   Object.assign(filter, dateFilter);

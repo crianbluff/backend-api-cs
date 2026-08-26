@@ -1,6 +1,7 @@
 [
   {
     "groupType": "solo",
+    "didTheyReq": false,
     "theirReference": "Cristian was an incredible host and truly made my stay in Bogotá unforgettable. From the very beginning, he was extremely helpful he accompanied me to buy a SIM card, helped me exchange money, and even lent me some cash when I needed it. I will never forget that kindness. He showed me a great local spot to eat for a cheap price and gave me so many helpful recommendations. Whenever I had a question, he was always available and patient. Staying with him felt easy, safe, and comfortable. Cristian is kind, generous, and truly enjoys helping travelers discover his city. I’m really grateful I got to meet him, and I totally recommend him to anyone who has the chance to stay with him. Thank you for everything, Cristian. See you soon in Morocco 🇲🇦",
     "myReference": "Simo from Morocco 🇲🇦 stayed with me, and it was a great experience. I joined him for lunch and recommended several places here im Bogotá 🇨🇴 for him to visit during his stay. He was very warm, easygoing, and genuinely interested in getting to know the city and its culture. He is also considerate, organized, and respectful. 😇 I totally recommend hosting him — anyone would have a positive experience with him as a guest. 😁",
     "nights": 2,
@@ -23,10 +24,11 @@
     "whatsapp": "663852898",
     "instagram": "couchsurfing__morocco",
     "gift": ["handcrafted aromatic soap", "2 morocco magnets", "5 quipitos", "big doritos"],
-    "comments": "It is an ambassador ⭐"
+    "ambassador": true
   },
   {
     "groupType": "solo",
+    "didTheyReq": false,
     "theirReference": "I had an amazing experience staying with Cristian in Bogotá. Even before I arrived, he was incredibly helpful and sent me a lot of useful information that really helped me understand the country better. When I arrived, he was there waiting for me, very attentive and welcoming. He is extremely kind, always ready to help, and communication with him was smooth and easy. He truly has a very positive energy that makes you feel comfortable right away. He even took the time to show me around in the evening , we went for a walk, and shared a drink, which made the experience even more special. The next day, we explored the area together, had breakfast, and he introduced me to a traditional Colombian breakfast, which I really appreciated. I’m very grateful for his warm hospitality and kindness. Thank you so much for everything I Highly recommend him! Waiting for you in Algeria 🇩🇿",
     "myReference": "Laalia was an excellent guest and it was a truly pleasant experience hosting her. ⭐️⭐️⭐️⭐️⭐️ She is a very kind and gentle person with a genuine interest in different cultures. She was respectful, clean, and always followed the house rules. Her communication was clear and proactive from the start. 🤗 We enjoyed a lovely dinner near La Candelaria with great conversations about her travels and culture. Laalia is cheerful, fun, full of positive energy, and very intelligent. She even brought me a thoughtful gift, which I really appreciated. 🫶 The next day we had breakfast together, she loved the Colombian hot chocolate with cheese! and took a nice walk around the city. She was enthusiastic and had a great attitude the whole time. 💫 Hosting Laalia was a definitely positive experience. I would happily host her again and highly recommend her to any host. 💯 Ce fut un vrai plaisir de te rencontrer. Je te souhaite le meilleur pour la suite. À la prochaine!",
     "nights": 1,
@@ -56,6 +58,7 @@
   },
   {
     "groupType": "solo",
+    "didTheyReq": false,
     "theirReference": null,
     "myReference": "Ghassen was an excellent guest. He is a very kind, respectful, and open-minded person with a genuine interest in learning about the local culture, which made the experience very enjoyable. ⭐️⭐️⭐️⭐️⭐️ We had a great time together sharing interesting conversations about travel, Couchsurfing experiences, and life. We walked around the city, visited Plaza Bolívar, and even watched a World Cup match together, which made his stay even more memorable. ✨ Throughout his stay, he had great communication, a positive attitude, and followed all the house rules without any issues. He was respectful, easygoing, and a pleasure to host. 😁 It was definitely a great experience hosting Ghassen, and I highly recommend him as a guest. I would be happy to host him again anytime. 💯 يعيشك، وإن شاء الله نشوفك مرة أخرى! 😊🇹🇳",
     "nights": 3,
@@ -82,6 +85,7 @@
   },
   {
     "groupType": "solo",
+    "didTheyReq": false,
     "theirReference": "Chris made me feel comfortable and welcome from the first moment. He was respectful, friendly, and easy to communicate with, and made sure everything was clear during my stay. His home is beautiful, especially the rooftop with an amazing view😮. The room was comfortable, and the place felt warm with his lovely dog Pancho and his cats. I also met his mother she is very kind and lovely. Even though the weather was very rainy, he helped me a lot and kindly lent me his umbrella and a rain jacket, which I really appreciated. He is a creative, talented, and intelligent person. I truly felt at home and free, without any pressure. It was a great experience, and I highly recommend him. 😊",
     "myReference": "Yaya is a very kind person and truly interested in learning about the local culture. She was clean, respectful, and it was a pleasant experience to host her. We didn’t have much time together, but even in the short time we shared she was always friendly, helpful, and had great communication. She also followed all the house rules. 💫 Hosting her was definitely a good experience, and I’m happy to recommend her. :) مع السلامة، أتمنى لك رحلة موفقة",
     "nights": 2,
@@ -108,6 +112,7 @@
   },
   {
     "groupType": "solo",
+    "didTheyReq": false,
     "theirReference": "Staying with Christian was a wonderful experience. Even before I arrived in Bogotá, he was incredibly helpful, answering my questions and giving me tips about the city. When I got there, his whole family welcomed me warmly; I had the chance to meet his mom, brother, girlfriend, and their pets, which made me feel right at home. Christian and his girlfriend showed me around their city and recommended great places to eat, visit, and even shop for souvenirs. They truly went out of their way to make my stay memorable. I absolutely recommend Christian to anyone traveling to Colombia. You’ll feel safe, welcomed, and very well taken care of!",
     "myReference": "I had the chance to host Esther and it was a truly great experience. She is very easygoing, friendly, respectful, and has a wonderful positive vibe. We spent some time exploring together — we walked around La Candelaria, shared stories, and enjoyed some local food like empanadas and almojábanas. Esther was always open to learning, discovering new places, and experiencing the city with a positive attitude. She was very easy to live with and left a genuinely good impression. 😁 I fully recommend her to any future host — she’s reliable, fun, and very considerate. Always welcome 🤗",
     "nights": 1,

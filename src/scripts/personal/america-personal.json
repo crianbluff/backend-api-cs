@@ -47,7 +47,8 @@
     "gender": "female",
     "whatsapp": "4331039426",
     "instagram": "kar_mar14",
-    "gift": []
+    "gift": [],
+    "isFirstTime": true
   },
   {
     "groupType": "solo",
@@ -97,7 +98,33 @@
     "whatsapp": "2491111759",
     "instagram": "zeferinogabi",
     "gift": ["me invito el funicular ida y vuelta monserrate y uber de monserrate a zona t"],
+    "isFirstTime": true,
     "comments": "se enojó pq no la acompañé a teatron y dijo que si es que era que no conocia bogota cuando ibamos en el uber, fuimos a la taqueria con 2 cs mas uno de georgia (kibrdgl) y otro de guatemala (kenneth)"
+  },
+  {
+    "groupType": "solo",
+    "theirReference": null,
+    "myReference": "Endy es una persona maravillosa y de esas personas que hacen que Couchsurfing valga la pena. Es muy agradable, amable y tiene una energía increíble que se contagia fácilmente. 🤩 Tuvo el lindo detalle de traerme chiles poblanos y guajillos, algo que disfruté muchísimo y que aprecié de verdad. 🌶️❤️ También salimos a caminar por la ciudad junto a su amiga y pasamos muy buenos momentos, con conversaciones interesantes y muchas risas. 😁 Endy es de esas personas con las que es muy fácil sentirse en confianza. Definitivamente recomendaría compartir tiempo con ella; estoy seguro de que las risas y los buenos momentos no van a faltar. 🤗 Fue una experiencia muy bonita conocerla y compartir un poco de tiempo juntos. ¡La recomiendo totalmente como huésped y espero que nuestros caminos se vuelvan a cruzar! ❣️",
+    "stayed": false,
+    "rating": 4,
+    "hometownCode": "MEX",
+    "prefixCode": "+52",
+    "continent": "america",
+    "region": "north_america",
+    "fullName": "Eréndira Morales",
+    "hometown": "Puebla City, Puebla",
+    "livingIn": "Puebla City, Puebla",
+    "livingInCode": "MEX",
+    "birthDate": "2001-03-23",
+    "hangOut": true,
+    "visitedDate": "2026-07-22",
+    "urlProfileCs": "endy",
+    "occupation": [],
+    "gender": "female",
+    "whatsapp": "2282188953",
+    "instagram": "endy_morales_",
+    "gift": ["2 kilos de chile poblano", "2 kilos de chile guajillo", "chamoy"],
+    "comments": "fui cerca al movistar arena 19-jul-2026 ahí me entrego el chamoy y una bolsa con chiles, otro día le regalé una coca de café para ella y su amiga ahí me dió el resto de chiles y ese día se me daño la scooter"
   },
   {
     "groupType": "solo",
@@ -173,6 +200,7 @@
     "instagram": "abeelcastillo",
     "gift": ["1X5 centimos de balboa", "1x1 centimo de balboa"],
     "isGay": true,
+    "isFirstTime": true,
     "comments": "Cuando estuvo en bogotá antes de yo ir a panamá le ofrecí hospedaje, me recogió en su camioneta en el aeropuerto de panamá y me llevo a caminar por el casco historico, cinta costera, plaza de francia, y tomamos fotos en el edificio el tornillo, nos tomamos un café y me contó la historia de panamá"
   },
   {
@@ -198,6 +226,7 @@
     "whatsapp": "64441039",
     "instagram": "cal.el14",
     "gift": ["guitarra plumilla", "chocolate copa airlines"],
+    "isFirstTime": true,
     "comments": "nos invitaron a comer y pasar navidad junto a la familia de su novia, tocó guitarra, fuimos a la playa taboga, incluso grabó un video para alo y yo en su dron, fuimos a la cinta costera junto a su novia en plan de kayak, fuimos al westland mall, a lo ult se puso odioso pq no fuimos con el para la casa si no nos fuimos a panama city para quedarnos con victor incluso insinuaba que nos fuesemos antes de la casa"
   },
   {
@@ -217,13 +246,14 @@
     "birthDate": "05-05",
     "hangOut": true,
     "visitedDate": "2025-08-08",
-    "urlProfileCs": "ange-cruz",
+    "urlProfileCs": "angecruz2016",
     "occupation": ["ventas", "tecnico en administracion"],
     "gender": "female",
     "whatsapp": "3204947283",
     "instagram": null,
     "gift": [],
-    "comments": "It is an ambassador ⭐, we have seen 3 times (board games, free teather bogotá, board games in la candelaria a restaurant)"
+    "comments": "we have seen 3 times (board games, free teather bogotá, board games in la candelaria a restaurant)",
+    "ambassador": true
   },
   {
     "groupType": "solo",
@@ -296,6 +326,7 @@
     "whatsapp": "3138904798",
     "instagram": "valenacerob",
     "gift": [],
+    "isFirstTime": true,
     "comments": "platicamos de viajes me contó que junto a su novio fueron en bici de bogotá hasta argentina y que tenía familia en islas canarias, tambn fue a hacer trekking en un volcan en colombia quedo de pasarme el dato de la agencia"
   }
 ]

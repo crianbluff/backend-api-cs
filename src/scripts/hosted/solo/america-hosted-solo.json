@@ -22,7 +22,8 @@
     "whatsapp": "650741421",
     "instagram": "ilo_desource",
     "gift": ["desayuno en su casa"],
-    "comments": "Nos hospedamos junto a alondra y matteo ya que el otro que me iba hospedar se veía con sucias intenciones hacia mi, luego en 12 may 2025 me volvio a dejar quedar dos noches"
+    "comments": "Nos hospedamos junto a alondra y matteo ya que el otro que me iba hospedar se veía con sucias intenciones hacia mi, luego en 12 may 2025 me volvio a dejar quedar dos noches",
+    "isFirstTime": true
   },
   {
     "groupType": "solo",
@@ -46,7 +47,8 @@
     "gender": "female",
     "whatsapp": "+528130996613",
     "instagram": null,
-    "gift": ["tostada siberiana"]
+    "gift": ["tostada siberiana"],
+    "isFirstTime": true
   },
   {
     "groupType": "solo",
@@ -72,7 +74,8 @@
     "instagram": "carlosrosalesmty",
     "gift": ["taco cecina", "tacos de carne asada"],
     "isGay": true,
-    "comments": "It is an amabassador ⭐, su amiga me gastó lo que pedí en el super salads"
+    "comments": "su amiga me gastó lo que pedí en el super salads",
+    "ambassador": true
   },
   {
     "groupType": "solo",

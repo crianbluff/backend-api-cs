@@ -76,6 +76,7 @@ const individualSchema = z.object({
   // Per-member fields (also individual in groups)
   isFirstTime: z.boolean().optional().default(false),
   ambassador: z.boolean().optional().default(false),
+  didTheyReq: z.boolean().optional().default(false),
   hangOut: z.boolean().optional().default(false),
   gift: z.array(z.string().max(200)).nullable().optional().default(null),
   comments: z.string().max(2000).nullable().optional().default(null),
@@ -118,6 +119,7 @@ export const guestQuerySchema = z.object({
   groupType: z.enum(['couple', 'friends', 'family', 'solo']).optional(),
   isFirstTime: z.enum(['true', 'false']).optional(),
   ambassador: z.enum(['true', 'false']).optional(),
+  didTheyReq: z.enum(['true', 'false']).optional(),
   from: z.string().regex(isoDateRegex, 'from must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
   to: z.string().regex(isoDateRegex, 'to must be ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD').optional(),
 });

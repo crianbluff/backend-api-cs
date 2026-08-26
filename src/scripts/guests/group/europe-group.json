@@ -1,32 +1,7 @@
 [
   {
     "nights": 3,
-    "theirReference": null,
-    "myReference": null,
-    "stayed": true,
-    "hangOut": true,
-    "visitedDate": "2025-06-20",
-    "groupType": "couple",
-    "gift": ["1/2 wings in wiki"],
-    "groupId": "2",
-    "livingIn": "Germany - Baden-Württemberg",
-    "livingInCode": "DEU",
-    "rating": 4,
-    "hometownCode": "KGZ",
-    "prefixCode": null,
-    "continent": "asia",
-    "region": "central_asia",
-    "fullName": "Alice",
-    "hometown": null,
-    "birthDate": null,
-    "urlProfileCs": null,
-    "occupation": [],
-    "gender": "female",
-    "whatsapp": null,
-    "instagram": "flameshine"
-  },
-  {
-    "nights": 3,
+    "didTheyReq": true,
     "theirReference": "Christian and his wonderful family were unbelievably amazing. We had an amazing stay, Christina and his girlfriend were up on manzerate hike wis us and he gave me like 10000000000000x Infos about kolumbia food places and everything. They made us feel really home, this experience is making the real difference by traveling. A pleasure and 10000 thanks for hosting uns. We had a vender full time, hope you get the opportunity to meet Christian. Cristian is a realy awesome person to have with you. At the beginning he is little shy , but after short time you see how funny , smart and amazing person he realy is. He traveled allot and now so many good spots and helpful information all about tham. We stayed at his place with his family. They really let us feel like home. Oh and its Cristian - not Christian 😅 sorry for that 😅",
     "myReference": "Tuve el placer de hospedar a esta maravillosa pareja y fue una experiencia excelente. Son personas muy inteligentes, interesantes y siempre amables. Compartimos tiempo subiendo a Monserrate, disfrutamos de una buena caminata, también cenamos juntos, lo cual fue una gran oportunidad para conocernos mejor. Además, fueron muy respetuosos y atentos en todo momento. Es sorprendente el nivel de español que tienen teniendo en cuenta que no es un lenguaje fácil de aprender 👏 ¡Los recomiendo totalmente como huéspedes, sería un gusto volver a coincidir! No olviden que tienen a un amigo aquí en Bogotá 😉🫂 espero verlos pronto 🤍",
     "stayed": true,
@@ -35,7 +10,7 @@
     "groupType": "couple",
     "gift": ["1/2 wings in wiki"],
     "groupId": "2",
-    "livingIn": "Germany - Baden-Württemberg",
+    "livingIn": "Wangen, Baden-Wurttemberg",
     "livingInCode": "DEU",
     "rating": 3,
     "hometownCode": "GRC",
@@ -52,7 +27,35 @@
     "instagram": "gringo_intothewild"
   },
   {
+    "nights": 3,
+    "didTheyReq": true,
+    "theirReference": null,
+    "myReference": null,
+    "stayed": true,
+    "hangOut": true,
+    "visitedDate": "2025-06-20",
+    "groupType": "couple",
+    "gift": ["1/2 wings in wiki"],
+    "groupId": "2",
+    "livingIn": "Wangen, Baden-Wurttemberg",
+    "livingInCode": "DEU",
+    "rating": 4,
+    "hometownCode": "KGZ",
+    "prefixCode": null,
+    "continent": "asia",
+    "region": "central_asia",
+    "fullName": "Alice",
+    "hometown": null,
+    "birthDate": null,
+    "urlProfileCs": null,
+    "occupation": [],
+    "gender": "female",
+    "whatsapp": null,
+    "instagram": "flameshine"
+  },
+  {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": "Cristian is an amazing guy who have a heart as big as is knowledge of his city and all the good spot to hang out : huge ! Him and his mama welcomed us like we were a part of the familly and share meal and stories. For 3 days we felt like home and in loving familly ! Could not hoped better for a 1st experience ❤",
     "myReference": "Gautier y su novia son dos personas increíbles, ellos nos compartieron sobre su cultura, incluso prepararon unas crepas súper deliciosas 👌 cenamos juntos dos noches y compartimos pensamientos, surgieron platicas muy enriquecedoras e interesantes. Gautier es un chico super divertido, alegre, siempre dispuesto a ayudar al igual que su novia, ella es muy inteligente, y siempre con ganas de aprender sobre nuestra cultura, jerga, vocabulario, español, etc. Ultramega recomendados ambos. Tengan un feliz viaje, fue siempre y será un placer verlos y compartir tiempo 😇",
     "stayed": true,
@@ -80,6 +83,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -107,6 +111,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": "Pasemos una noche en la casa de Cristián La verdad fue muy corto el tiempo que pasemos juntos pero Cristian fue muy simpático, nos ha dado muchas recomendaciones ! No teníamos la oportunidad de dormir en la habitación que tiene usualmente para couchsurfing porque no estaba lista pero para una noche estuvo suficiente :)",
     "myReference": "Loréna y Théodore son una pareja de Francia muy amables y respetuosos. Siempre mostraron una actitud positiva y un gran interés por conocer más de Colombia. Se quedaron conmigo una noche, ya que tenían una escala larga antes de su vuelo al día siguiente. La convivencia fue muy agradable, además tuvieron un lindo detalle al regalarme un chocolate de Ecuador que estaba delicioso. Los recomiendo totalmente como huéspedes, fue una experiencia muy grata recibirlos.",
     "stayed": true,
@@ -116,8 +121,8 @@
     "gift": [],
     "groupId": "6",
     "isFirstTime": true,
-    "hometown": "Lille",
-    "livingIn": "Lille",
+    "hometown": "La Rochelle, New Aquitaine",
+    "livingIn": "La Rochelle, New Aquitaine",
     "livingInCode": "FRA",
     "rating": 3,
     "hometownCode": "FRA",
@@ -134,6 +139,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -161,6 +167,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": false,
     "theirReference": "Cristian is a very experienced host, he offered to host us from our public trip on couchsurfing. On our arrival we were welcomed by his mum Blanca who is super sweet, and Cristian explained the house rules and gave some tips on where to eat for the night. On the following day, he gave us and another couchsurfer staying here a really nice and interesting tour of the city, he is really knowledgeable and likes to share what he knows ! The couchsurfing room was already taken, so we stayed on the 'rooftop', a living room at the top of the house, a bit loud and chilly at night because it's quite open to the outside, but with incredible views over Bogotá. We could use the small shower in the kitchen with cold water. We ended up staying only one night because I had allergies in the rooftop, but I would have loved to spend more time with Cristian and his lovely family, who very really welcoming. Thank you Cristian for a nice experience and great tour of Bogotá! 👋🏼",
     "myReference": "Raphaëlle and her partner were wonderful guests. They are both kind, respectful, and genuinely interested in learning about the local culture, which made hosting them a truly enjoyable experience. ⭐️⭐️⭐️⭐️⭐️ During their stay, we shared many great moments together. We walked around Parkway and explored the city, enjoying great conversations, exchanging travel stories, and sharing many interesting experiences. They are friendly, easygoing, and brought a wonderful positive energy that made the time we spent together even more enjoyable. 🤗 Throughout their stay, they had excellent communication, always showed a positive attitude, and followed all the house rules without any issues. They were thoughtful, considerate, and a pleasure to host. 😁 It was definitely a great experience hosting Raphaëlle and her partner. I highly recommend them to any host and would be very happy to welcome them back anytime. 💯 Prends soin de toi, et à la prochaine ! 😊🇫🇷",
     "stayed": true,
@@ -189,6 +196,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": false,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -217,6 +225,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": "Gustave and Mathias were wonderful guests. They are both kind, respectful, and genuinely interested in learning about the local culture, which made hosting them a truly enjoyable experience. ⭐️⭐️⭐️⭐️⭐️ During their stay, we walked around the city together, shared many interesting conversations, and exchanged travel stories and experiences. They are both easygoing, friendly people with a great sense of humor, and their positive energy made spending time with them a lot of fun. 😁 Throughout their stay, they had excellent communication, always showed a positive attitude, and followed all the house rules without any issues. They were considerate, respectful, and a pleasure to host. 💫 It was definitely a great experience hosting Gustave and Mathias. I highly recommend them to any host and would be very happy to welcome them back anytime. 💯 Prenez soin de vous ! J’espère qu’on se reverra bientôt. 😊🇫🇷",
     "stayed": true,
@@ -244,6 +253,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -270,6 +280,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": "Cristian is very kind and welcoming, always receiving us with a smile, and good at replying to messages after little time. Completely flexible and open to our changes of schedule. Very nice to talk to too, he shared about his past and future travels, which are very interesting, and was genuinely interested in us and generally happy to receive guests and make them feel at home; we really felt at home. It was also nice to meet his mum and girlfriend. The neighbourhood feels a bit worrying at night, so we took an uber instead of walking around it. Cristian himself recommended us to do so. But he knows the area quite well, so a talk with him can help understand how to remain safe",
     "myReference": "Laura and Mattia were wonderful guests. They are both kind, respectful, and genuinely interested in learning about the local culture, which made hosting them a truly enjoyable experience. ⭐️⭐️⭐️⭐️⭐️ During their stay, we shared many great moments together. We walked around the city, had meaningful conversations, and exchanged travel stories and experiences. They also gave me a thoughtful gift, which I truly appreciated. It was a very kind gesture that made their visit even more special. 🤗 Throughout their stay, they had excellent communication, always showed a positive attitude, and followed all the house rules without any issues. They were considerate, easygoing, and a pleasure to host. 😇 It was definitely a great experience hosting Laura and Mattia. I highly recommend them to any host and would be very happy to welcome them back anytime. 💯 Cuida-te! Espero que nos voltemos a encontrar em breve. 😊🇵🇹",
     "stayed": true,
@@ -296,6 +307,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -323,6 +335,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": "Cristian is really great person. Very kind and helpful. He showed us some places nearby and gave us some recommendations. Gracias por todo!",
     "myReference": "Mateusz and his girlfriend were an absolute pleasure to host! They were kind, respectful, and very clean — the kind of guests every host hopes for. They brought such good energy and positive vibes to my home, and even surprised me with a delicious homemade breakfast. We spent some time walking around La Candelaria together, and I had the chance to show them a bit of the city — they were curious, easygoing, and great company. I highly recommend them to any future host. You’ll be lucky to have them!",
     "stayed": true,
@@ -349,6 +362,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -375,6 +389,7 @@
   },
   {
     "nights": 4,
+    "didTheyReq": false,
     "theirReference": "Christian es un anfitrión excelente, y su familia nos dio una cálida bienvenida, celebró mi cumpleaños e incluso me cantó una canción. Christian vive cerca del centro y tiene una vista espectacular desde su ventana. Christian es accesible y siempre está dispuesto a ayudar. En resumen, no queremos irnos; nos encanta este lugar.",
     "myReference": "Aleksei is a truly kind, intelligent, and respectful person with a genuine interest in learning about the local culture. 🤠 He arrived with his friend, and both were extremely clean, polite, and considerate from the beginning. 💫 They communicated well, followed all house rules, and were very easy to host. One of the nicest moments was the delicious dinner they prepared for us — a thoughtful gesture that led to great conversations and a very warm evening. We enjoyed 💚 петрушка (Pretrúska) 🌿 We also went for a walk together and visited the supermarket, simple activities that became enjoyable thanks to their friendly attitude. 😁 Overall, hosting Aleksei and his friend was a wonderful experience. They are exactly the type of guests any host would be happy to welcome. I totally recommend them 💯",
     "stayed": true,
@@ -402,6 +417,7 @@
   },
   {
     "nights": 4,
+    "didTheyReq": false,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -433,6 +449,7 @@
   },
   {
     "nights": 4,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -460,6 +477,7 @@
   },
   {
     "nights": 4,
+    "didTheyReq": true,
     "theirReference": "Estamos muy felices de haber conocido a Cristian y a su familia 🤍 Son personas increíblemente amables, abiertas y acogedoras. Inicialmente nos quedamos solo una noche, pero por circunstancias del viaje tuvimos que quedarnos más tiempo, y Cristian no tuvo ningún problema con eso. Estamos muy agradecidos por su comprensión y hospitalidad. Muchísimas gracias también por la lista de lugares interesantes, no solo en Bogotá, sino en toda Colombia — fue de gran ayuda para nuestro viaje. Y un agradecimiento especial por permitirnos dejar nuestras bicicletas en su casa durante una semana. Estaremos encantados de recibirte a ti y a tu novia en Rusia y en Kazajistán. ¡Siempre bienvenidos! 🌍",
     "myReference": "Tatyana and her partner were wonderful guests. Very kind, friendly, and genuinely interested in learning about the local culture. From the very beginning, they were easy to communicate with and always showed a great attitude and openness. 😁✨ They were extremely clean, respectful, and considerate at all times, which made hosting them very comfortable. They were also very appreciative of everything and always willing to share experiences and learn about local traditions. 🤩 Hosting them was definitely a great experience, and I truly enjoyed having them at home. I would happily host them again and strongly recommend them to any future host. 💫💯",
     "stayed": true,
@@ -487,6 +505,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": "Cristian was a very good host. The house is in a part of the city close to la candelaria, but it is not super safe to walk around alone. He was very nice with us, as well as his girlfriend and family who welcomed us very warmly. We slept in the roof because the guest room was already occupied by other two couchsurfer, we slept on two mattresses with a beautiful view, but not very clean environment. Overall the experience was nice and it’s definitely a good option if u come to Bogotà for few days.",
     "myReference": "Filippo stayed with his friend and was a wonderful guest, very kind and genuinely interested in learning about the local culture. He was very clean and respectful at all times. Communication was always good, and he followed all the house rules. 😇 We went for a walk around La Candelaria, and he is a very open-minded, intelligent, and interesting person. His Spanish is very good, which made conversations even more enjoyable. 🤩 I also truly appreciate the thoughtful detail of the cookies he brought from his hometown. 🤗 Hosting him was definitely a great experience, and I would happily recommend him to any future host. 💫 È stato un grande piacere conoscerti. Spero di rivederti presto. Un abbraccio :)",
     "stayed": true,
@@ -513,6 +532,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -539,6 +559,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": false,
     "theirReference": "We had a really great stay at Christian’s place. From the moment we arrived, he gave us a warm welcome, showed us around the house, and introduced us to his mom, girlfriend, and brother — everyone was incredibly kind and friendly, which made us feel comfortable right away. The house itself has a beautiful panoramic view that really made the whole experience even more special. Communication was easy and Christian was always available if we needed anything. Even though we didn’t spend much time together, the overall vibe was very relaxed and welcoming. Overall, a very positive experience and we would definitely stay here again. Would recommend to anyone visiting! ✨",
     "myReference": "Mirjana was a wonderful guest and it was a very pleasant experience hosting her and her friend. ⭐️⭐️⭐️⭐️⭐️ She is a kind and gentle person with a genuine interest in learning about the culture. Both Mirjana and her friend were clean, respectful, and mindful of the house rules. Their communication was always good and they followed all the guidelines without any issues. 💫 Even though we didn’t spend a lot of time together, Mirjana had a great attitude, was helpful and very friendly throughout their stay. 🤗 Overall, it was a definitely positive experience hosting Mirjana and her friend. I would happily host her again and highly recommend her as a guest. 💯 Drago mi je što smo se upoznali. Čuvaj se i srećan put!",
     "stayed": true,
@@ -565,6 +586,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": false,
     "theirReference": null,
     "myReference": "I had the pleasure of hosting Mina and her friend for one night, and it was a wonderful experience. They are both incredibly kind, intelligent, respectful, and easy to talk to. They were also very clean, considerate, and appreciative guests who left everything in perfect condition. ⭐⭐⭐⭐⭐ We had great conversations, and it was a pleasure getting to know them. They brought such positive energy and made hosting them a genuinely enjoyable experience. 😁🤩 I highly recommend Mina and her friend to any host in the Couchsurfing community. I would be happy to host them again anytime, and I'm sure they'll be amazing guests wherever they go. Safe travels! 💯 Srećan put! Nadam se da se ponovo vidimo jednog dana. Sve najbolje! 🇷🇸😊",
     "stayed": true,
@@ -591,6 +613,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": "Jelte fue un huésped excelente. Es una persona muy gentil, respetuosa y con un gran interés en conocer la cultura local. Fue muy limpio y siempre mostró consideración por el espacio. Vino junto a su pareja y su mascota Papaya, que es adorable y súper amigable; fue un gusto recibirlos a los tres. ⭐️⭐️⭐️⭐️⭐️ Tuvimos pláticas muy interesantes, y me compartió varias de sus experiencias viajando. Es alegre, divertido y siempre transmite buena energía, lo que hizo la convivencia muy agradable. 💫 Durante toda su estancia tuvo muy buena disposición y comunicación, y siguió sin problema las reglas de la casa. 😁 Definitivamente ha sido una muy buena experiencia hospedarlo, y lo recomiendo completamente como huésped. 💯 Het was fijn je te ontmoeten. Goede reis en veel succes! :)",
     "stayed": true,
@@ -618,6 +641,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -645,6 +669,7 @@
   },
   {
     "nights": 3,
+    "didTheyReq": true,
     "theirReference": "Staying with Cristian and his family was a great experience, we loved the neighbourhood with an incredible view of the city. Also Cristian was super helpful in anything we needed. I totally recommend , thank you for everything! Be welcome anytime in Belgium ! Cuidate!",
     "myReference": "Alexandre was a wonderful guest and an absolute pleasure to host. He is a very energetic and funny person with a great sense of humor. He is also very kind, respectful, and genuinely interested in learning about the local culture, which made the experience even more enjoyable. ⭐️⭐️⭐️⭐️⭐️ We spent some time walking around the city together, and he even gave my mom a flower, a thoughtful gesture that I truly appreciated. We also had many interesting conversations, and he shared some of his travel experiences with me. He is easygoing, fun, intelligent, and always brings great energy wherever he goes. 😁 Throughout his stay, he was very clean, respectful, and considerate of the house. He always had a great attitude, communicated well, and followed all the house rules without any issues. He cooked some crepes, his skills on cooking are really good! 🧑‍🍳 It was definitely a great experience hosting him, and I highly recommend him as a guest. 💯 À bientôt, prends soin de toi et bon voyage ! 😊🇧🇪",
     "stayed": true,
@@ -668,6 +693,7 @@
     "whatsapp": null,
     "instagram": "blaimontalex",
     "gift": [
+      "1 flor para mi mamá en san victorino",
       "bocadillo, bocadillo de coco from cartagena",
       "1/2 prepared some crepas for me & alo",
       "2 belgium beers",
@@ -678,6 +704,7 @@
   },
   {
     "nights": 3,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -700,10 +727,12 @@
     "gender": "female",
     "whatsapp": "5148387580",
     "instagram": null,
-    "gift": ["1/2 prepared some crepas for me & alo"]
+    "gift": ["1/2 prepared some crepas for me & alo"],
+    "comments": "me escribió un mensaje para enviarme una postal card ya que su hijo se inaguro en la terraza jajajaja"
   },
   {
     "nights": 5,
+    "didTheyReq": false,
     "theirReference": "Cristian is a great guy, he invited me to stay at his house with his wonderful family. He showed us around the city centre and shared tips about what to visit, local food etc. The location is incredible with a beautiful view and even a private room. We loved the stay as well as all of his family and pets. Thank you so much and hope to see you in Prague one day!",
     "myReference": "Anna and her partner were excellent guests. They are very kind, respectful people with a genuine interest in learning about the local culture, which made the experience very enjoyable. ⭐️⭐️⭐️⭐️⭐️ It was a fun experience full of positive energy. We walked around the city and had many interesting conversations where they shared some of their travel experiences. They are easygoing, friendly, and always bring great vibes. ✌️ They also gave me a book by a Czech author as a gift, a thoughtful gesture that I truly appreciate and will remember. 😇 Throughout their stay, they had great communication, a very positive attitude, and followed all the house rules without any issues. It was definitely a great experience hosting them, and I highly recommend them as guests. 🤗 Měj se krásně a brzy na viděnou! 😊🇨🇿",
     "stayed": true,
@@ -730,6 +759,7 @@
   },
   {
     "nights": 5,
+    "didTheyReq": false,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -756,6 +786,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": "My stay at Christian's home in Bogotá was my first ever couchsurfing experience - and it definetly makes me wanting more! He, his girlfriend and mother were very welcoming and friendly. He has a own room with bath just for couchsurfers. He showed us around the city and explained a lot of the local architecture and culture. Together with his girlfriend and mother we enjoyed watching the opening game of the world cup 👌🍺 Thank you so much for everything! Hope to see you again - somewhere, somewhen🫶🇨🇴",
     "myReference": "Bojan and his girlfriend were excellent guests. They are very kind, respectful people with a genuine interest in learning about the local culture, which made the experience very enjoyable. ⭐️⭐️⭐️⭐️⭐️ It was a fun experience full of positive energy. They are easygoing and always bring great vibes, which made spending time together a pleasure. They shared stories about their travels, and we exchanged many travel experiences and perspectives. 😁 We walked around the city together, and they kindly invited me to breakfast, a thoughtful gesture that I really appreciated. We also watched the opening match of the World Cup at home, and they generously treated my family and me to some beers, which made for a fun and memorable evening. 🍻 Throughout their stay, they had great communication, a very positive attitude, and followed all the house rules without any issues. 😇 It was definitely a great experience hosting them, and I highly recommend them as guests. 💯 Es war schön, dich kennenzulernen! Pass auf dich auf und hoffentlich sehen wir uns bald wieder 😊🇩🇪",
     "stayed": true,
@@ -783,6 +814,7 @@
   },
   {
     "nights": 1,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -810,6 +842,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": "Me and my Friend spend two nights at Cristians house. His family is super kind and so is Cristian. He showed us around La Candelaria, which is just a 15 min walk from his home and had a coffee together. He also loves to travel😊",
     "myReference": "Elisia and her friend were wonderful guests. They are both very kind, respectful, and genuinely interested in learning about the local culture, which made hosting them a really enjoyable experience. ⭐️⭐️⭐️⭐️⭐️ During their stay, we went for a walk around the city and shared interesting conversations, travel stories, and experiences. They are both easygoing, friendly, and really good company, with a very positive energy. I also really appreciated their kind gesture of inviting me for a coffee it was a lovely moment we shared together. 😇 Throughout their stay, they had great communication, showed a very good attitude, and followed the house rules without any issues. They were considerate, respectful, and a pleasure to host. 🤗 It was definitely a great experience hosting Elisia and her friend. I highly recommend them to any host and would be very happy to welcome them back anytime. 💯 Pass gut auf dich auf und bis bald! 😊🇩🇪",
     "stayed": true,
@@ -817,7 +850,7 @@
     "visitedDate": "2026-08-07",
     "groupType": "friends",
     "groupId": "27",
-    "rating": 0,
+    "rating": 4,
     "continent": "europe",
     "region": "central_europe",
     "hometownCode": "DEU",
@@ -836,6 +869,7 @@
   },
   {
     "nights": 2,
+    "didTheyReq": true,
     "theirReference": null,
     "myReference": null,
     "stayed": true,
@@ -843,7 +877,7 @@
     "visitedDate": "2026-08-07",
     "groupType": "friends",
     "groupId": "27",
-    "rating": 0,
+    "rating": 3,
     "continent": "europe",
     "region": "central_europe",
     "hometownCode": "DEU",
