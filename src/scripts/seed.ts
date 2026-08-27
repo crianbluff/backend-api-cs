@@ -7,7 +7,11 @@ import { isValidAlpha3 } from '../utils/iso3166';
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://localhost:27017/guests_db';
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  throw new Error('MONGO_URI is required');
+}
 
 const GROUP_TYPES = new Set(['solo', 'couple', 'family', 'friends']);
 
@@ -154,7 +158,7 @@ function buildGuest(raw: any, groupIdMap: Map<string, string>, groupPrefix = '')
 
     ambassador: raw.ambassador ?? false,
 
-    didTheyReq: raw.isFirstTime ?? false,
+    didTheyReq: raw.didTheyReq ?? false,
 
     gift: Array.isArray(raw.gift) && raw.gift.length ? raw.gift : null,
 
