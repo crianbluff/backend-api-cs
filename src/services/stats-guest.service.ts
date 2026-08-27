@@ -79,7 +79,7 @@ export class StatsGuestService {
     return String(a.guestId ?? '').localeCompare(String(b.guestId ?? ''));
   }
 
-  private extractPositions(items: any[], positions = [20, 50, 100, 200]) {
+  private extractPositions(items: any[], positions = [1, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500, 1000]) {
     const sorted = [...items].sort(this.sortByVisitedDate);
 
     return positions
@@ -865,7 +865,7 @@ export class StatsGuestService {
       (g) => g.visitedDate,
       (g) => g.groupId,
       5,
-      3
+      5
     );
 
     const countries = this.buildCountries(
