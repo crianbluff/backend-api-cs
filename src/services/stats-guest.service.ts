@@ -27,6 +27,7 @@ import {
   TimelineStats,
 } from '../types/stats-guests.types';
 import { Continent, Gender } from '../types/guest.types';
+import { GuestLean } from './guest.service';
 
 export class StatsGuestService {
   constructor(private readonly model: Model<IGuestDocument>) {}
@@ -376,7 +377,7 @@ export class StatsGuestService {
     };
   }
 
-  private buildRatings(guests: Awaited<ReturnType<typeof this.model.find>> extends infer T ? any : never, limit = 5) {
+  private buildRatings(guests: GuestLean[], limit = 5) {
     const distribution: RatingDistribution = {
       '1': 0,
       '2': 0,
@@ -1459,7 +1460,7 @@ export class StatsGuestService {
       groupId?: string | null;
     },
   >(guests: T[]): MaxPeopleTogether {
-    const calculate = (items: T[], countGroupAsOne: boolean): MaxPeopleTogetherItem => {
+    const calculate = (items: T[]): MaxPeopleTogetherItem => {
       const processedGroups = new Set<string>();
 
       const stays: T[] = [];
@@ -1553,13 +1554,10 @@ export class StatsGuestService {
 
     return {
       // Únicamente huéspedes individuales
-      solo: calculate(
-        guests.filter((guest) => !guest.groupId),
-        false
-      ),
+      solo: calculate(guests.filter((guest) => !guest.groupId)),
 
       // Todos, contando cada grupo como 1
-      overall: calculate(guests, true),
+      overall: calculate(guests),
     };
   }
 

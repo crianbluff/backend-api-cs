@@ -8,7 +8,7 @@ async function bootstrap(): Promise<void> {
 
   const app = createApp();
 
-  const server = app.listen(env.PORT, () => {
+  const server = app.listen(env.PORT, '0.0.0.0', () => {
     logger.info(`🚀 Server running on port ${env.PORT} [${env.NODE_ENV}]`);
     logger.info(`📄 Swagger docs → http://localhost:${env.PORT}/docs`);
     logger.info(`🔌 API base     → http://localhost:${env.PORT}/api/${env.API_VERSION}/guests`);

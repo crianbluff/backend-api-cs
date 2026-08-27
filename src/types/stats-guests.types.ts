@@ -1,4 +1,4 @@
-import { Continent, Region, Gender, GroupType } from './guest.types';
+import { Continent, Gender } from './guest.types';
 
 export interface StatsGuestsResponse {
   summary: SummaryStats;

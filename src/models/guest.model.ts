@@ -42,7 +42,7 @@ const GROUP_TYPES: GroupType[] = ['solo', 'couple', 'friends', 'family'];
 export interface IGuestDocument extends Document {
   guestId: string;
   groupId: string | null;
-  groupType: GroupType | null;
+  groupType: GroupType;
   // Shared visit fields
   nights: number;
   stayed: boolean;
