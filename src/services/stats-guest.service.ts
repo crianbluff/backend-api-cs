@@ -272,7 +272,7 @@ export class StatsGuestService {
     const friendsOnly = guests.filter((g) => g.groupId && g.groupType === 'friends');
     const familyOnly = guests.filter((g) => g.groupId && g.groupType === 'family');
 
-    const oldestYoungestByFilter = (filter: (guest: (typeof guests)[number]) => boolean, limit = 3) => {
+    const oldestYoungestByFilter = (filter: (guest: (typeof guests)[number]) => boolean, limit = 5) => {
       const people = guests
         .filter(filter)
         .filter((guest) => guest.birthDate)
