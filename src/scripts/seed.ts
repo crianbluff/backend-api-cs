@@ -7,12 +7,6 @@ import { isValidAlpha3 } from '../utils/iso3166';
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  throw new Error('MONGO_URI is required');
-}
-
 const GROUP_TYPES = new Set(['solo', 'couple', 'family', 'friends']);
 
 const CONTINENTS = new Set(['africa', 'america', 'europe', 'asia', 'oceania']);
@@ -295,6 +289,18 @@ async function seedCollection(options: {
  * MAIN
  * ============================================================
  */
+
+function requireEnv(key: string): string {
+  const value = process.env[key];
+
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${key}`);
+  }
+
+  return value;
+}
+
+const MONGO_URI = requireEnv('MONGO_URI');
 
 async function seed() {
   console.log('🚀 Starting database seed...\n');
