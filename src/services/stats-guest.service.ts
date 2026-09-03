@@ -79,7 +79,12 @@ export class StatsGuestService {
     return String(a.guestId ?? '').localeCompare(String(b.guestId ?? ''));
   }
 
-  private extractPositions(items: any[], positions = [1, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500, 1000]) {
+  private extractPositions(
+    items: any[],
+    positions = [
+      1, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000,
+    ]
+  ) {
     const sorted = [...items].sort(this.sortByVisitedDate);
 
     return positions
@@ -170,51 +175,96 @@ export class StatsGuestService {
   private async getRankings() {
     const guests = await this.model.find().lean();
 
-    const peopleSolo = guests.filter((guest) => !guest.groupId);
-
+    // GROUPS AS ONE
     const groupMap = new Map<string, typeof guests>();
 
     for (const guest of guests) {
       if (!guest.groupId) continue;
-
-      if (!groupMap.has(guest.groupId)) {
-        groupMap.set(guest.groupId, []);
-      }
-
+      if (!groupMap.has(guest.groupId)) groupMap.set(guest.groupId, []);
       groupMap.get(guest.groupId)!.push(guest);
     }
 
+    // Cada grupo cuenta como 1
     const groupsAsOne = Array.from(groupMap.values()).map((members) => [...members].sort(this.sortByVisitedDate)[0]);
-    const womenSolo = peopleSolo.filter((guest) => guest.gender === 'female');
-    const womenOverall = guests.filter((guest) => guest.gender === 'female');
-    const menSolo = peopleSolo.filter((guest) => guest.gender === 'male');
-    const menOverall = guests.filter((guest) => guest.gender === 'male');
+
+    // GROUP TYPES
     const coupleGroups = groupsAsOne.filter((guest) => guest.groupType === 'couple');
     const friendsGroups = groupsAsOne.filter((guest) => guest.groupType === 'friends');
     const familyGroups = groupsAsOne.filter((guest) => guest.groupType === 'family');
-    const visitsOverall = [...peopleSolo, ...groupsAsOne].sort(this.sortByVisitedDate);
+
+    // PERSONAS SOLAS
+    const peopleSolo = guests.filter((guest) => !guest.groupId);
+
+    // WOMEN
+    const womenSolo = peopleSolo.filter((guest) => guest.gender === 'female');
+
+    // Todas las mujeres individualmente
+    // solo + couple + friends + family
+    const womenOverall = guests.filter((guest) => guest.gender === 'female');
+
+    // MEN
+    const menSolo = peopleSolo.filter((guest) => guest.gender === 'male');
+
+    // Todos los hombres individualmente
+    // solo + couple + friends + family
+    const menOverall = guests.filter((guest) => guest.gender === 'male');
+
+    // PEOPLE
+    // Todas las personas individualmente
+    const peopleOverall = [...guests].sort(this.sortByVisitedDate);
 
     return {
       women: {
+        // Mujeres que fueron solas
         solo: this.extractPositions(womenSolo),
+
+        // Todas las mujeres individualmente
+        // sin importar si fueron solas o en grupo
         overall: this.extractPositions(womenOverall),
       },
 
       men: {
+        // Hombres que fueron solos
         solo: this.extractPositions(menSolo),
+
+        // Todos los hombres individualmente
+        // sin importar si fueron solos o en grupo
         overall: this.extractPositions(menOverall),
       },
 
       people: {
+        // Personas que fueron solas
         solo: this.extractPositions(peopleSolo),
-        overall: this.extractPositions(visitsOverall),
+
+        // Todas las personas individualmente
+        overall: this.extractPositions(peopleOverall),
       },
 
       groups: {
-        overall: this.extractPositions(groupsAsOne),
-        couple: this.extractPositions(coupleGroups),
-        friends: this.extractPositions(friendsGroups),
-        family: this.extractPositions(familyGroups),
+        // Todos los grupos: couple + friends + family
+        // Cada grupo cuenta como 1
+        overall: this.extractPositions(
+          groupsAsOne,
+          [1, 10, 20, 30, 40, 50, 75, 100, 125, 150, 175, 200, 250, 300, 400, 500, 600, 700, 800, 900, 10000]
+        ),
+
+        // Cada grupo couple cuenta como 1
+        couple: this.extractPositions(
+          coupleGroups,
+          [1, 10, 20, 30, 40, 50, 75, 100, 125, 150, 175, 200, 250, 300, 400, 500, 600, 700, 800, 900, 10000]
+        ),
+
+        // Cada grupo friends cuenta como 1
+        friends: this.extractPositions(
+          friendsGroups,
+          [1, 10, 20, 30, 40, 50, 75, 100, 125, 150, 175, 200, 250, 300, 400, 500, 600, 700, 800, 900, 10000]
+        ),
+
+        // Cada grupo family cuenta como 1
+        family: this.extractPositions(
+          familyGroups,
+          [1, 10, 20, 30, 40, 50, 75, 100, 125, 150, 175, 200, 250, 300, 400, 500, 600, 700, 800, 900, 10000]
+        ),
       },
     };
   }
@@ -272,7 +322,7 @@ export class StatsGuestService {
     const friendsOnly = guests.filter((g) => g.groupId && g.groupType === 'friends');
     const familyOnly = guests.filter((g) => g.groupId && g.groupType === 'family');
 
-    const oldestYoungestByFilter = (filter: (guest: (typeof guests)[number]) => boolean, limit = 5) => {
+    const oldestYoungestByFilter = (filter: (guest: (typeof guests)[number]) => boolean, limit = 10) => {
       const people = guests
         .filter(filter)
         .filter((guest) => guest.birthDate)
@@ -287,11 +337,11 @@ export class StatsGuestService {
       };
     };
 
-    const overallAge = oldestYoungestByFilter(() => true, 5);
+    const overallAge = oldestYoungestByFilter(() => true, 10);
 
-    const coupleAge = oldestYoungestByFilter((g) => !!g.groupId && g.groupType === 'couple', 1);
-    const friendsAge = oldestYoungestByFilter((g) => !!g.groupId && g.groupType === 'friends', 1);
-    const familyAge = oldestYoungestByFilter((g) => !!g.groupId && g.groupType === 'family', 1);
+    const coupleAge = oldestYoungestByFilter((g) => !!g.groupId && g.groupType === 'couple', 3);
+    const friendsAge = oldestYoungestByFilter((g) => !!g.groupId && g.groupType === 'friends', 3);
+    const familyAge = oldestYoungestByFilter((g) => !!g.groupId && g.groupType === 'family', 3);
 
     const soloMaleAge = oldestYoungestByFilter((g) => !g.groupId && g.gender === 'male');
     const soloFemaleAge = oldestYoungestByFilter((g) => !g.groupId && g.gender === 'female');
@@ -582,7 +632,7 @@ export class StatsGuestService {
 
         return a.code.localeCompare(b.code);
       })
-      .slice(0, 5);
+      .slice(0, 10);
 
     const topFemale = [...all]
       .filter((country) => country.female > 0)
@@ -593,7 +643,7 @@ export class StatsGuestService {
 
         return a.code.localeCompare(b.code);
       })
-      .slice(0, 5);
+      .slice(0, 10);
 
     return {
       all,
@@ -874,8 +924,8 @@ export class StatsGuestService {
       (g) => g.gender,
       (g) => g.visitedDate,
       (g) => g.groupId,
-      5,
-      5
+      10,
+      10
     );
 
     const livingIn = this.buildLocations(
@@ -1015,7 +1065,7 @@ export class StatsGuestService {
 
         return a.period.localeCompare(b.period);
       })
-      .slice(0, 3);
+      .slice(0, 5);
   }
 
   private getTimelineYears<T extends { visitedDate?: string; groupId?: string | null }>(guests: T[]): TimelineItem[] {
