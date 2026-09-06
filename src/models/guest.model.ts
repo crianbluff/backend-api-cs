@@ -59,6 +59,7 @@ export interface IGuestDocument extends Document {
   // Individual fields
   rating: number | null;
   hometownCode: string;
+  countryCodeWeMet: string;
   livingInCode: string | null;
   prefixCode: string | null;
   continent: Continent;
@@ -66,6 +67,8 @@ export interface IGuestDocument extends Document {
   fullName: string;
   hometown: string | null;
   livingIn: string | null;
+  cityWeMet: string | null;
+  locationWeMet: string | null;
   birthDate: string | null;
   occupation: string[];
   urlProfileCs: string | null;
@@ -102,6 +105,7 @@ export const guestSchema = new Schema<IGuestDocument>(
     // Individual fields
     rating: { type: Number, min: 1, max: 5, default: null },
     hometownCode: { type: String, required: true, uppercase: true, trim: true },
+    countryCodeWeMet: { type: String, required: true, uppercase: true, trim: true },
     livingInCode: { type: String, uppercase: true, trim: true, default: null },
     prefixCode: { type: String, default: null },
     continent: { type: String, required: true, enum: CONTINENTS },
@@ -109,6 +113,8 @@ export const guestSchema = new Schema<IGuestDocument>(
     fullName: { type: String, required: true, trim: true },
     hometown: { type: String, default: null },
     livingIn: { type: String, default: null },
+    cityWeMet: { type: String, default: null },
+    locationWeMet: { type: String, default: null },
     birthDate: { type: String, default: null },
     occupation: { type: [String], default: [] },
     urlProfileCs: { type: Schema.Types.Mixed, default: null },

@@ -68,7 +68,7 @@ const options: swaggerJsdoc.Options = {
          */
         IndividualFields: {
           type: 'object',
-          required: ['hometownCode', 'continent', 'region', 'fullName', 'gender'],
+          required: ['hometownCode', 'countryCodeWeMet', 'continent', 'region', 'fullName', 'gender'],
           properties: {
             rating: {
               type: 'integer',
@@ -78,6 +78,12 @@ const options: swaggerJsdoc.Options = {
             },
 
             hometownCode: {
+              type: 'string',
+              example: 'CHN',
+              description: 'ISO 3166-1 alpha-3 country code',
+            },
+
+            countryCodeWeMet: {
               type: 'string',
               example: 'CHN',
               description: 'ISO 3166-1 alpha-3 country code',
@@ -117,6 +123,18 @@ const options: swaggerJsdoc.Options = {
             },
 
             livingIn: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            cityWeMet: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            locationWeMet: {
               type: 'string',
               nullable: true,
               maxLength: 200,
@@ -364,6 +382,10 @@ const options: swaggerJsdoc.Options = {
               type: 'string',
             },
 
+            countryCodeWeMet: {
+              type: 'string',
+            },
+
             livingInCode: {
               type: 'string',
               nullable: true,
@@ -401,6 +423,16 @@ const options: swaggerJsdoc.Options = {
             },
 
             livingIn: {
+              type: 'string',
+              nullable: true,
+            },
+
+            cityWeMet: {
+              type: 'string',
+              nullable: true,
+            },
+
+            locationWeMet: {
               type: 'string',
               nullable: true,
             },
@@ -487,6 +519,10 @@ const options: swaggerJsdoc.Options = {
               type: 'string',
             },
 
+            countryCodeWeMet: {
+              type: 'string',
+            },
+
             livingInCode: {
               type: 'string',
               nullable: true,
@@ -524,6 +560,16 @@ const options: swaggerJsdoc.Options = {
             },
 
             livingIn: {
+              type: 'string',
+              nullable: true,
+            },
+
+            cityWeMet: {
+              type: 'string',
+              nullable: true,
+            },
+
+            locationWeMet: {
               type: 'string',
               nullable: true,
             },

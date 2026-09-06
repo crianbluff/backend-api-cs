@@ -52,6 +52,7 @@ const individualSchema = z.object({
   guestId: z.string().optional(),
   rating: z.number().int().min(1).max(5).nullable().optional().default(null),
   hometownCode: alpha3Schema,
+  countryCodeWeMet: alpha3Schema,
   livingInCode: alpha3Schema.nullable().optional().default(null),
   prefixCode: z.string().nullable().optional().default(null),
   continent: continentEnum,
@@ -59,6 +60,8 @@ const individualSchema = z.object({
   fullName: z.string().min(1).max(200),
   hometown: z.string().max(200).nullable().optional().default(null),
   livingIn: z.string().max(200).nullable().optional().default(null),
+  cityWeMet: z.string().max(200).nullable().optional().default(null),
+  locationWeMet: z.string().max(200).nullable().optional().default(null),
   birthDate: z
     .string()
     .regex(isoDateRegex, 'birthDate must be ISO 8601: "YYYY", "YYYY-MM" or "YYYY-MM-DD"')
@@ -115,6 +118,7 @@ export const guestQuerySchema = z.object({
   continent: continentEnum.optional(),
   region: regionEnum.optional(),
   country: alpha3Schema.optional(),
+  countryCodeWeMet: alpha3Schema.optional(),
   gender: genderEnum.optional(),
   groupType: z.enum(['couple', 'friends', 'family', 'solo']).optional(),
   isFirstTime: z.enum(['true', 'false']).optional(),

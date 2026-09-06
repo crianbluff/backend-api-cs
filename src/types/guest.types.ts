@@ -34,6 +34,7 @@ export interface GuestDocument {
   comments: string | null;
   rating: number | null;
   hometownCode: string;
+  countryCodeWeMet: string;
   livingInCode: string | null;
   prefixCode: string | null;
   continent: Continent;
@@ -41,6 +42,8 @@ export interface GuestDocument {
   fullName: string;
   hometown: string | null;
   livingIn: string | null;
+  cityWeMet: string | null;
+  locationWeMet: string | null;
   birthDate: string | null;
   occupation: string[];
   urlProfileCs: string | null;
@@ -65,6 +68,7 @@ export interface SoloListItem {
   hangOut: boolean;
   fullName: string;
   hometownCode: string;
+  countryCodeWeMet: string;
   livingInCode: string | null;
   prefixCode: string | null;
   continent: Continent;
@@ -72,6 +76,8 @@ export interface SoloListItem {
   birthDate: string | null;
   occupation: string[];
   livingIn: string | null;
+  cityWeMet: string | null;
+  locationWeMet: string | null;
   hometown: string | null;
   rating: number | null;
   gender: Gender;
@@ -96,6 +102,7 @@ export interface GroupMemberListItem {
 
   fullName: string;
   hometownCode: string;
+  countryCodeWeMet: string;
   livingInCode: string | null;
   prefixCode: string | null;
   continent: Continent;
@@ -104,6 +111,8 @@ export interface GroupMemberListItem {
   occupation: string[];
   hometown: string | null;
   livingIn: string | null;
+  cityWeMet: string | null;
+  locationWeMet: string | null;
   rating: number | null;
   gender: Gender;
   isGay: boolean;

@@ -38,9 +38,12 @@ export interface Guest {
   hangOut: boolean;
   hometown: string | null;
   hometownCode: string;
+  countryCodeWeMet: string;
   instagram: string | null;
   isFirstTime: boolean;
   livingIn: string | null;
+  cityWeMet: string | null;
+  locationWeMet: string | null;
   livingInCode: string | null;
   nights: number;
   occupation: string[];
@@ -80,6 +83,7 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     // Personal info
     fullName: doc.fullName ?? '',
     hometownCode: doc.hometownCode,
+    countryCodeWeMet: doc.countryCodeWeMet,
     livingInCode: doc.livingInCode,
     prefixCode: doc.prefixCode,
     continent: doc.continent,
@@ -88,6 +92,8 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     occupation: doc.occupation ?? [],
     hometown: doc.hometown,
     livingIn: doc.livingIn,
+    cityWeMet: doc.cityWeMet,
+    locationWeMet: doc.locationWeMet,
     rating: doc.rating,
     gender: doc.gender,
     isGay: doc.isGay,
@@ -114,6 +120,7 @@ function toSolo(doc: GuestLean): SoloListItem {
     hangOut: doc.hangOut,
     fullName: doc.fullName ?? '',
     hometownCode: doc.hometownCode,
+    countryCodeWeMet: doc.countryCodeWeMet,
     livingInCode: doc.livingInCode,
     prefixCode: doc.prefixCode,
     continent: doc.continent,
@@ -121,6 +128,8 @@ function toSolo(doc: GuestLean): SoloListItem {
     birthDate: doc.birthDate,
     occupation: doc.occupation ?? [],
     livingIn: doc.livingIn,
+    cityWeMet: doc.cityWeMet,
+    locationWeMet: doc.locationWeMet,
     hometown: doc.hometown,
     rating: doc.rating,
     gender: doc.gender,
@@ -155,6 +164,7 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.continent) filter.continent = query.continent;
   if (query.region) filter.region = query.region;
   if (query.country) filter.hometownCode = query.country;
+  if (query.countryCodeWeMet) filter.countryCodeWeMet = query.countryCodeWeMet;
   if (query.gender) filter.gender = query.gender;
 
   if (query.groupType === 'solo') {

@@ -8,7 +8,6 @@ import { isValidAlpha3 } from '../utils/iso3166';
 dotenv.config();
 
 const GROUP_TYPES = new Set(['solo', 'couple', 'family', 'friends']);
-
 const CONTINENTS = new Set(['africa', 'america', 'europe', 'asia', 'oceania']);
 
 const REGIONS = new Set([
@@ -47,13 +46,10 @@ function normalizeGroupType(value: unknown): string {
 
 function validateGuest(raw: any) {
   const continent = raw.continent ? String(raw.continent).trim().toLowerCase() : null;
-
   const region = raw.region ? String(raw.region).trim().toLowerCase() : null;
-
   const groupType = normalizeGroupType(raw.groupType);
-
   const hometownCode = raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null;
-
+  const countryCodeWeMet = raw.countryCodeWeMet ? String(raw.countryCodeWeMet).trim().toUpperCase() : null;
   const livingInCode = raw.livingInCode ? String(raw.livingInCode).trim().toUpperCase() : null;
 
   if (!continent || !CONTINENTS.has(continent)) {
@@ -66,6 +62,10 @@ function validateGuest(raw: any) {
 
   if (hometownCode && !isValidAlpha3(hometownCode)) {
     throw new Error(`Invalid hometownCode "${hometownCode}"`);
+  }
+
+  if (countryCodeWeMet && !isValidAlpha3(countryCodeWeMet)) {
+    throw new Error(`Invalid countryCodeWeMet "${countryCodeWeMet}"`);
   }
 
   if (livingInCode && !isValidAlpha3(livingInCode)) {
@@ -86,13 +86,11 @@ function loadJSONFile(filePath: string): any[] {
   }
 
   const data = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
-
   return Array.isArray(data) ? data : [data];
 }
 
 function parseDateToISO(value: string | null | undefined): string | null {
   if (!value) return null;
-
   const s = String(value).trim();
 
   if (/^\d{4}$/.test(s)) return s;
@@ -101,33 +99,27 @@ function parseDateToISO(value: string | null | undefined): string | null {
 
   const d = new Date(s);
 
-  if (!isNaN(d.getTime())) {
-    return d.toISOString().split('T')[0];
-  }
-
+  if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
   return null;
 }
 
 function nullify(value: unknown): string | null {
   if (value === null || value === undefined) return null;
-
   const result = String(value).trim();
-
   return result === '' ? null : result;
 }
 
-function buildGuest(raw: any, groupIdMap: Map<string, string>, groupPrefix = '') {
+function buildGuest(raw: any, groupIdMap: Map<string, string>) {
   validateGuest(raw);
 
   const groupType = normalizeGroupType(raw.groupType);
-
   let groupId: string | null = null;
 
   if (groupType !== 'solo' && raw.groupId != null) {
     const originalGroupId = String(raw.groupId);
 
     if (!groupIdMap.has(originalGroupId)) {
-      groupIdMap.set(originalGroupId, groupPrefix ? `${groupPrefix}${nanoid(11)}` : nanoid(11));
+      groupIdMap.set(originalGroupId, nanoid(11));
     }
 
     groupId = groupIdMap.get(originalGroupId)!;
@@ -135,63 +127,37 @@ function buildGuest(raw: any, groupIdMap: Map<string, string>, groupPrefix = '')
 
   return {
     guestId: nanoid(11),
-
     groupId,
-
     groupType,
-
     nights: raw.nights ?? 0,
-
     stayed: raw.stayed ?? false,
-
     hangOut: raw.hangOut ?? false,
-
     visitedDate: parseDateToISO(raw.visitedDate),
-
     isFirstTime: raw.isFirstTime ?? false,
-
     ambassador: raw.ambassador ?? false,
-
     didTheyReq: raw.didTheyReq ?? false,
-
     gift: Array.isArray(raw.gift) && raw.gift.length ? raw.gift : null,
-
     comments: nullify(raw.comments),
-
     rating: raw.rating ?? null,
-
     hometownCode: raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null,
-
+    countryCodeWeMet: raw.countryCodeWeMet ? String(raw.countryCodeWeMet).trim().toUpperCase() : null,
     livingInCode: raw.livingInCode ? String(raw.livingInCode).trim().toUpperCase() : null,
-
     prefixCode: raw.prefixCode ?? null,
-
     continent: nullify(raw.continent),
-
     region: nullify(raw.region),
-
     fullName: raw.fullName ?? 'Unknown',
-
     hometown: nullify(raw.hometown),
-
     livingIn: nullify(raw.livingIn),
-
+    cityWeMet: nullify(raw.cityWeMet),
+    locationWeMet: nullify(raw.locationWeMet),
     birthDate: nullify(raw.birthDate),
-
     occupation: Array.isArray(raw.occupation) && raw.occupation.length ? raw.occupation : [],
-
     urlProfileCs: nullify(raw.urlProfileCs),
-
-    gender: raw.gender ?? 'male',
-
+    gender: raw.gender ?? 'trans',
     isGay: raw.isGay ?? false,
-
     whatsapp: nullify(raw.whatsapp),
-
     instagram: nullify(raw.instagram),
-
     theirReference: nullify(raw.theirReference),
-
     myReference: nullify(raw.myReference),
   };
 }
@@ -222,7 +188,7 @@ const HOSTED_SOLO_FILES = [
   // 'src/scripts/hosted/solo/africa-hosted-solo.json',
   'src/scripts/hosted/solo/america-hosted-solo.json',
   // 'src/scripts/hosted/solo/asia-hosted-solo.json',
-  // 'src/scripts/hosted/solo/europe-hosted-solo.json',
+  'src/scripts/hosted/solo/europe-hosted-solo.json',
   // 'src/scripts/hosted/solo/oceania-hosted-solo.json',
 ];
 
@@ -242,45 +208,67 @@ const PERSONAL_FILES = [
   // 'src/scripts/personal/oceania-personal.json',
 ];
 
+const HOSTED_DID_I_GO_WITH_FILES = 'src/scripts/hosted/group/did-i-go-with/did-i-go-with.json';
+
 /**
  * ============================================================
  * GENERIC SEEDER
  * ============================================================
  */
 
-async function seedCollection(options: {
-  collection: string;
-  soloFiles: string[];
-  groupFiles?: string[];
-  groupPrefix?: string;
-}) {
-  const { collection, soloFiles, groupFiles = [], groupPrefix = '' } = options;
-
+async function seedCollection(options: { collection: string; soloFiles: string[]; groupFiles?: string[] }) {
+  const { collection, soloFiles, groupFiles = [] } = options;
   console.log(`\n🌱 Loading "${collection}"...`);
 
   const soloData = soloFiles.flatMap(loadJSONFile);
   const groupData = groupFiles.flatMap(loadJSONFile);
+  const allData = [...soloData, ...groupData];
+
+  console.log(`📦 Loaded ${allData.length} records`);
+  const db = mongoose.connection.db;
+
+  if (!db) throw new Error('No DB connection');
+
+  await db.collection(collection).deleteMany({});
+  console.log(`🗑️ Cleared "${collection}" collection`);
+  const groupIdMap = new Map<string, string>();
+  const documents = allData.map((guest) => buildGuest(guest, groupIdMap));
+  await db.collection(collection).insertMany(documents);
+  console.log(`✅ Inserted ${documents.length} documents into "${collection}"`);
+}
+
+async function seedCollectionHosted(options: {
+  collection: string;
+  soloFiles: string[];
+  companyFile: string;
+  groupFiles?: string[];
+}) {
+  const { collection, soloFiles, companyFile, groupFiles = [] } = options;
+  console.log(`\n🌱 Loading "${collection}"...`);
+
+  const soloData = soloFiles.flatMap(loadJSONFile);
+  const groupData = groupFiles.flatMap(loadJSONFile);
+  const companyData = [companyFile].flat().flatMap(loadJSONFile);
+
+  groupData.forEach(
+    (g) =>
+      (g.members = g.didIGoWith.flatMap((profileUrl: string) =>
+        companyData.filter((company) => company.urlProfileCs === profileUrl)
+      ))
+  );
 
   const allData = [...soloData, ...groupData];
 
   console.log(`📦 Loaded ${allData.length} records`);
-
   const db = mongoose.connection.db;
 
-  if (!db) {
-    throw new Error('No DB connection');
-  }
+  if (!db) throw new Error('No DB connection');
 
   await db.collection(collection).deleteMany({});
-
   console.log(`🗑️ Cleared "${collection}" collection`);
-
   const groupIdMap = new Map<string, string>();
-
-  const documents = allData.map((guest) => buildGuest(guest, groupIdMap, groupPrefix));
-
+  const documents = allData.map((guest) => buildGuest(guest, groupIdMap));
   await db.collection(collection).insertMany(documents);
-
   console.log(`✅ Inserted ${documents.length} documents into "${collection}"`);
 }
 
@@ -314,20 +302,20 @@ async function seed() {
       groupFiles: GUESTS_GROUP_FILES,
     });
 
-    await seedCollection({
+    await seedCollectionHosted({
       collection: 'hosted',
       soloFiles: HOSTED_SOLO_FILES,
       groupFiles: HOSTED_GROUP_FILES,
-      groupPrefix: 'hosted_',
+      companyFile: HOSTED_DID_I_GO_WITH_FILES,
     });
 
     await seedCollection({
       collection: 'personal',
       soloFiles: PERSONAL_FILES,
-      groupPrefix: 'personal_',
     });
 
     console.log('\n🎉 All collections seeded successfully.');
+    console.log('MONGO_URI:', process.env.MONGO_URI);
   } finally {
     await mongoose.disconnect();
     console.log('🔌 MongoDB disconnected');

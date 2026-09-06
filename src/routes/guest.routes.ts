@@ -211,6 +211,7 @@ router.get('/:id', guestController.getById.bind(guestController));
  *             stayed: true
  *             visitedDate: "2025-11"
  *             hometownCode: MAR
+ *             countryCodeWeMet: MAR
  *             prefixCode: "+212"
  *             continent: africa
  *             region: africa
