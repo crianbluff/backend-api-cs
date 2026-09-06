@@ -13,7 +13,7 @@ services:
       MONGO_URI: mongodb://mongo:27017/guests_db
       API_VERSION: v1
       RATE_LIMIT_WINDOW_MS: 900000
-      RATE_LIMIT_MAX: 1000
+      RATE_LIMIT_MAX: 100
     volumes:
       # Mount source for hot-reload — node_modules stays in the container
       - ./src:/app/src:delegated
