@@ -121,6 +121,7 @@ export const guestQuerySchema = z.object({
   countryCodeWeMet: alpha3Schema.optional(),
   gender: genderEnum.optional(),
   groupType: z.enum(['couple', 'friends', 'family', 'solo']).optional(),
+  gay: z.enum(['true', 'false']).optional(),
   isFirstTime: z.enum(['true', 'false']).optional(),
   ambassador: z.enum(['true', 'false']).optional(),
   didTheyReq: z.enum(['true', 'false']).optional(),

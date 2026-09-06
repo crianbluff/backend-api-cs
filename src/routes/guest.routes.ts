@@ -19,6 +19,14 @@ const router = Router();
  *           type: string
  *         description: ISO 3166-1 alpha-3 country code (hometownCode)
  *         example: COL
+ * 
+
+ *       - in: query
+ *         name: countryCodeWeMet
+ *         schema:
+ *           type: string
+ *         description: ISO 3166-1 alpha-3 country code (hometownCode)
+ *         example: COL
 
  *       - in: query
  *         name: gender
@@ -97,6 +105,12 @@ const router = Router();
 
  *       - in: query
  *         name: isFirstTime
+ *         schema:
+ *           type: string
+ *           enum: [true, false]
+  
+ *       - in: query
+ *         name: gay
  *         schema:
  *           type: string
  *           enum: [true, false]

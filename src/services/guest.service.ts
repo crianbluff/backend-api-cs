@@ -173,6 +173,7 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
     filter.groupType = query.groupType;
   }
 
+  if (query.gay !== undefined) filter.isGay = query.gay === 'true';
   if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';
   if (query.ambassador !== undefined) filter.ambassador = query.ambassador === 'true';
   if (query.didTheyReq !== undefined) filter.didTheyReq = query.didTheyReq === 'true';
