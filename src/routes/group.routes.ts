@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { groupController } from '../controllers/group.controller';
 import { validate } from '../middlewares/validate.middleware';
-import { updateGroupGuestSchema } from '../utils/validation';
-import { createGroupGuestSchema } from '../utils/validation';
+import { updateGroupGuestSchema, createGroupGuestSchema } from '../utils/validation';
 
 const router = Router();
 
+// ──────────── Guests Groups ──────────── //
 /**
  * @openapi
  * /guests/group/{groupId}:

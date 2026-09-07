@@ -22,7 +22,7 @@ export class GroupService {
     const groupId = generateCoupleId();
     const { members, groupType, nights, stayed, visitedDate } = input;
 
-    const docs = await GuestModel.insertMany(
+    const docs = await this.model.insertMany(
       members.map((m) => ({
         ...m,
         guestId: generateGuestId(),

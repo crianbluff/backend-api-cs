@@ -42,12 +42,12 @@ export function createApp(): Application {
   // ─── API routes ───────────────────────────────────────────────────────────
   const BASE = `/api/${env.API_VERSION}`;
   app.use(`${BASE}/guests`, guestRoutes);
-  app.use(`${BASE}/groups`, groupRoutes);
-
   app.use(`${BASE}/hosted`, hostedRoutes);
-  app.use(`${BASE}/hosted/groups`, hostedGroupRoutes);
-
   app.use(`${BASE}/personal`, personalRoutes);
+
+  // Groups
+  app.use(`${BASE}/groups/guests`, groupRoutes);
+  app.use(`${BASE}/groups/hosted`, hostedGroupRoutes);
 
   // ─── 404 & error handlers ─────────────────────────────────────────────────
   app.use(notFoundHandler);

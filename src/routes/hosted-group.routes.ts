@@ -3,6 +3,7 @@ import { hostedGroupController } from '../controllers/hosted-group.controller';
 
 const router = Router();
 
+// ──────────── Hosted Groups ──────────── //
 /**
  * @swagger
  * tags:
@@ -12,7 +13,7 @@ const router = Router();
 
 /**
  * @swagger
- * /hosted/groups/{groupId}:
+ * /groups/hosted/{groupId}:
  *   get:
  *     tags:
  *       - Hosted Groups
@@ -38,7 +39,7 @@ router.get('/:groupId', hostedGroupController.getByGroupId.bind(hostedGroupContr
 
 /**
  * @swagger
- * /hosted/groups:
+ * /groups/hosted:
  *   post:
  *     tags:
  *       - Hosted Groups
@@ -57,7 +58,7 @@ router.post('/', hostedGroupController.createGroup.bind(hostedGroupController));
 
 /**
  * @swagger
- * /hosted/groups/{groupId}:
+ * /groups/hosted/{groupId}:
  *   put:
  *     tags:
  *       - Hosted Groups
@@ -85,7 +86,7 @@ router.put('/:groupId', hostedGroupController.updateGroup.bind(hostedGroupContro
 
 /**
  * @swagger
- * /hosted/groups/{groupId}:
+ * /groups/hosted/{groupId}:
  *   delete:
  *     tags:
  *       - Hosted Groups
