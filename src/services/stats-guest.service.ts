@@ -26,8 +26,8 @@ import {
   TimelineItem,
   TimelineStats,
 } from '../types/stats-guests.types';
-import { Continent, Gender } from '../types/guest.types';
 import { GuestLean } from './guest.service';
+import { Continent, Gender } from '../types/global.types';
 
 export class StatsGuestService {
   constructor(private readonly model: Model<IGuestDocument>) {}

@@ -1,91 +1,19 @@
-import mongoose, { Document, Schema, Model } from 'mongoose';
-import {
-  Continent,
-  Region,
-  Gender,
-  GroupType,
-  RegionOceania,
-  RegionAsia,
-  RegionAfrica,
-  RegionAmerica,
-  RegionEurope,
-} from '../types/guest.types';
+import mongoose, { Document, Model, Schema } from 'mongoose';
+import { CONTINENTS, GENDERS, GROUP_TYPES, REGIONS } from '../types/global.types';
+import { GuestDocument } from '../types/guest.types';
+import { countryCode, nullableString, nullableTrimmedString } from './schemas/common.schema';
 
-const CONTINENTS: Continent[] = ['africa', 'america', 'europe', 'asia', 'oceania'];
-const REGION_OCEANIA: RegionOceania[] = ['oceania', 'melanesia', 'micronesia', 'polinesia'];
-const REGION_ASIA: RegionAsia[] = ['central_asia', 'east_asia', 'south_asia', 'southeast_asia', 'west_asia'];
+// Mongoose document
+export interface IGuestDocument extends Document, GuestDocument {}
 
-const REGION_AFRICA: RegionAfrica[] = [
-  'northern_africa',
-  'western_africa',
-  'central_africa',
-  'eastern_africa',
-  'southern_africa',
-];
-
-const REGION_EUROPE: RegionEurope[] = [
-  'northern_europe',
-  'central_europe',
-  'western_europe',
-  'eastern_europe',
-  'southern_europe',
-  'scandinavia',
-  'baltics',
-];
-
-const REGION_AMERICA: RegionAmerica[] = ['south_america', 'north_america', 'central_america', 'caribbean'];
-const REGIONS: Region[] = [...REGION_OCEANIA, ...REGION_ASIA, ...REGION_AFRICA, ...REGION_AMERICA, ...REGION_EUROPE];
-
-const GENDERS: Gender[] = ['male', 'female', 'trans'];
-const GROUP_TYPES: GroupType[] = ['solo', 'couple', 'friends', 'family'];
-
-export interface IGuestDocument extends Document {
-  guestId: string;
-  groupId: string | null;
-  groupType: GroupType;
-  // Shared visit fields
-  nights: number;
-  stayed: boolean;
-  hangOut: boolean;
-  visitedDate: string;
-  isFirstTime: boolean;
-  ambassador: boolean;
-  didTheyReq: boolean;
-  gift: string[] | null;
-  comments: string | null;
-  // References
-  theirReference: string | null;
-  myReference: string | null;
-  // Individual fields
-  rating: number | null;
-  hometownCode: string;
-  countryCodeWeMet: string;
-  livingInCode: string | null;
-  prefixCode: string | null;
-  continent: Continent;
-  region: Region;
-  fullName: string;
-  hometown: string | null;
-  livingIn: string | null;
-  cityWeMet: string | null;
-  locationWeMet: string | null;
-  birthDate: string | null;
-  occupation: string[];
-  urlProfileCs: string | null;
-  gender: Gender;
-  isGay: boolean;
-  whatsapp: string | null;
-  instagram: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
+// Schema
 export const guestSchema = new Schema<IGuestDocument>(
   {
-    guestId: { type: String, required: true, unique: true, index: true },
-    groupId: { type: String, default: null },
+    // -------------------------------------------------------------------------// Identity// -------------------------------------------------------------------------
+    guestId: { type: String, required: true, unique: true, index: true, trim: true },
+    groupId: { type: String, default: null, trim: true },
     groupType: { type: String, required: true, enum: GROUP_TYPES },
-    // Shared visit fields
+    // -------------------------------------------------------------------------// Visit// -------------------------------------------------------------------------
     nights: { type: Number, required: true, min: [1, 'nights must be at least 1'] },
     stayed: { type: Boolean, required: true },
     hangOut: { type: Boolean, required: true },
@@ -94,47 +22,44 @@ export const guestSchema = new Schema<IGuestDocument>(
     ambassador: { type: Boolean, default: false },
     didTheyReq: { type: Boolean, default: false },
     gift: { type: [String], default: null },
-    comments: { type: String, default: null, trim: true },
-    theirReference: {
-      type: String,
-      default: null,
-      trim: true,
-      maxlength: [500, 'theirReference cannot exceed 500 characters'],
-    },
-    myReference: { type: String, default: null, trim: true, maxlength: [500, 'myReference cannot exceed 500 characters'] },
-    // Individual fields
+    comments: { ...nullableTrimmedString, maxlength: [2000, 'comments cannot exceed 2000 characters'] },
+    // -------------------------------------------------------------------------// References// -------------------------------------------------------------------------
+    theirReference: { ...nullableTrimmedString, maxlength: [500, 'theirReference cannot exceed 500 characters'] },
+    myReference: { ...nullableTrimmedString, maxlength: [500, 'myReference cannot exceed 500 characters'] },
+    // -------------------------------------------------------------------------// Individual// -------------------------------------------------------------------------
     rating: { type: Number, min: 1, max: 5, default: null },
-    hometownCode: { type: String, required: true, uppercase: true, trim: true },
-    countryCodeWeMet: { type: String, required: true, uppercase: true, trim: true },
-    livingInCode: { type: String, uppercase: true, trim: true, default: null },
-    prefixCode: { type: String, default: null },
+    hometownCode: { ...countryCode, required: true },
+    countryCodeWeMet: { ...countryCode, required: true },
+    livingInCode: { ...countryCode, default: null },
+    prefixCode: nullableString,
     continent: { type: String, required: true, enum: CONTINENTS },
     region: { type: String, required: true, enum: REGIONS },
     fullName: { type: String, required: true, trim: true },
-    hometown: { type: String, default: null },
-    livingIn: { type: String, default: null },
-    cityWeMet: { type: String, default: null },
-    locationWeMet: { type: String, default: null },
-    birthDate: { type: String, default: null },
+    hometown: nullableString,
+    livingIn: nullableString,
+    cityWeMet: nullableString,
+    locationWeMet: nullableString,
+    birthDate: nullableString,
     occupation: { type: [String], default: [] },
     urlProfileCs: { type: Schema.Types.Mixed, default: null },
     gender: { type: String, required: true, enum: GENDERS },
     isGay: { type: Boolean, default: false },
-    whatsapp: { type: String, default: null },
-    instagram: { type: String, default: null },
+    whatsapp: nullableString,
+    instagram: nullableString,
   },
   {
     timestamps: true,
     versionKey: false,
     toJSON: {
       transform(_doc, ret: Record<string, unknown>) {
-        delete ret['_id'];
+        delete ret._id;
         return ret;
       },
     },
   }
 );
 
+// Indexes
 guestSchema.index({ groupId: 1 }, { sparse: true });
 guestSchema.index({ visitedDate: 1 });
 guestSchema.index({ continent: 1 });
@@ -143,4 +68,5 @@ guestSchema.index({ isFirstTime: 1 });
 guestSchema.index({ ambassador: 1 });
 guestSchema.index({ didTheyReq: 1 });
 
+// Model
 export const GuestModel: Model<IGuestDocument> = mongoose.model<IGuestDocument>('Guest', guestSchema, 'guests');

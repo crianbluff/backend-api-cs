@@ -1,87 +1,30 @@
-const MAX_LIMIT_PER_PAG = 170;
-
-import { FilterQuery, HydratedDocument } from 'mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, HydratedDocument, Model } from 'mongoose';
 import { GuestModel, IGuestDocument } from '../models/guest.model';
+import { GuestDocument, GuestListItem, SoloListItem, GroupListItem, GroupMemberListItem } from '../types/guest.types';
+import { UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 import { generateGuestId } from '../utils/nanoid';
-import {
-  PaginatedResponse,
-  GuestListItem,
-  SoloListItem,
-  GroupListItem,
-  GroupMemberListItem,
-  Gender,
-  Continent,
-  Region,
-  GroupType,
-} from '../types/guest.types';
-import { GuestQueryInput, UpdateGuestInput } from '../utils/validation';
+import { PaginatedResponse } from '../types/api-response.types';
+import { buildVisitedDateFilter, parsePagination } from '../utils/api-response';
 
-/**
- * Base domain type (lo que realmente guardas en Mongo)
- */
-export interface Guest {
-  birthDate: string | null;
-  comments: string | null;
-  continent: Continent;
-  fullName: string;
-  gender: Gender;
-  isGay: boolean;
-  ambassador: boolean;
-  didTheyReq: boolean;
-  theirReference: string | null;
-  myReference: string | null;
-  gift: string[] | null;
-  groupId: string | null;
-  groupType: GroupType;
-  guestId: string;
-  hangOut: boolean;
-  hometown: string | null;
-  hometownCode: string;
-  countryCodeWeMet: string;
-  instagram: string | null;
-  isFirstTime: boolean;
-  livingIn: string | null;
-  cityWeMet: string | null;
-  locationWeMet: string | null;
-  livingInCode: string | null;
-  nights: number;
-  occupation: string[];
-  prefixCode: string | null;
-  rating: number | null;
-  region: Region;
-  stayed: boolean;
-  urlProfileCs: string | null;
-  visitedDate: string;
-  whatsapp: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// ─── Mongoose types ──────────────────────────────────────────────────────────
+export type GuestDoc = HydratedDocument<IGuestDocument>;
+export type GuestLean = GuestDocument;
 
-/**
- * Mongoose document real
- */
-export type GuestDoc = HydratedDocument<Guest>;
-
-/**
- * Lean type (IMPORTANT: esto es lo que devuelve .lean())
- */
-export type GuestLean = Guest;
-
+// ─── Mappers ─────────────────────────────────────────────────────────────────
 function toMember(doc: GuestLean): GroupMemberListItem {
   return {
     guestId: doc.guestId,
 
-    // Visit info (individual)
+    // Visit info
     hangOut: doc.hangOut,
     gift: doc.gift,
     comments: doc.comments,
-    isFirstTime: doc.isFirstTime ?? false,
-    ambassador: doc.ambassador ?? false,
-    didTheyReq: doc.didTheyReq ?? false,
+    isFirstTime: doc.isFirstTime,
+    ambassador: doc.ambassador,
+    didTheyReq: doc.didTheyReq,
 
     // Personal info
-    fullName: doc.fullName ?? '',
+    fullName: doc.fullName,
     hometownCode: doc.hometownCode,
     countryCodeWeMet: doc.countryCodeWeMet,
     livingInCode: doc.livingInCode,
@@ -89,7 +32,7 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     continent: doc.continent,
     region: doc.region,
     birthDate: doc.birthDate,
-    occupation: doc.occupation ?? [],
+    occupation: doc.occupation,
     hometown: doc.hometown,
     livingIn: doc.livingIn,
     cityWeMet: doc.cityWeMet,
@@ -111,14 +54,18 @@ function toSolo(doc: GuestLean): SoloListItem {
   return {
     guestId: doc.guestId,
     groupType: 'solo',
-    isFirstTime: doc.isFirstTime ?? false,
-    ambassador: doc.ambassador ?? false,
-    didTheyReq: doc.didTheyReq ?? false,
+
+    // Visit info
+    isFirstTime: doc.isFirstTime,
+    ambassador: doc.ambassador,
+    didTheyReq: doc.didTheyReq,
     nights: doc.nights,
     stayed: doc.stayed,
     visitedDate: doc.visitedDate,
     hangOut: doc.hangOut,
-    fullName: doc.fullName ?? '',
+
+    // Personal info
+    fullName: doc.fullName,
     hometownCode: doc.hometownCode,
     countryCodeWeMet: doc.countryCodeWeMet,
     livingInCode: doc.livingInCode,
@@ -126,7 +73,7 @@ function toSolo(doc: GuestLean): SoloListItem {
     continent: doc.continent,
     region: doc.region,
     birthDate: doc.birthDate,
-    occupation: doc.occupation ?? [],
+    occupation: doc.occupation,
     livingIn: doc.livingIn,
     cityWeMet: doc.cityWeMet,
     locationWeMet: doc.locationWeMet,
@@ -143,21 +90,7 @@ function toSolo(doc: GuestLean): SoloListItem {
   };
 }
 
-function parsePagination(query: GuestQueryInput) {
-  const page = Math.max(1, Number(query.page ?? 1));
-  const limit = Math.min(MAX_LIMIT_PER_PAG, Math.max(1, parseInt(query.limit ?? '10', 10)));
-  return { page, limit, skip: (page - 1) * limit };
-}
-
-function buildVisitedDateFilter(from?: string, to?: string): Record<string, unknown> {
-  if (!from && !to) return {};
-  // ISO 8601 string comparison works lexicographically for YYYY, YYYY-MM, YYYY-MM-DD
-  const conditions: Record<string, string> = {};
-  if (from) conditions['$gte'] = from;
-  if (to) conditions['$lte'] = to;
-  return { visitedDate: conditions };
-}
-
+// ─── Filters ─────────────────────────────────────────────────────────────────
 function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   const filter: FilterQuery<IGuestDocument> = {};
 
@@ -178,12 +111,12 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.ambassador !== undefined) filter.ambassador = query.ambassador === 'true';
   if (query.didTheyReq !== undefined) filter.didTheyReq = query.didTheyReq === 'true';
   if (query.rating !== undefined) filter.rating = Number(query.rating);
-
-  const dateFilter = buildVisitedDateFilter(query.from, query.to);
-  Object.assign(filter, dateFilter);
+  Object.assign(filter, buildVisitedDateFilter(query.from, query.to));
 
   return filter;
 }
+
+// ─── Service ─────────────────────────────────────────────────────────────────
 
 export class GuestService {
   constructor(protected readonly model: Model<IGuestDocument>) {}
@@ -201,7 +134,7 @@ export class GuestService {
 
     const groups = new Map<string, GroupListItem>();
     const result: GuestListItem[] = [];
-    const seen = new Set<string>();
+    const seenGroups = new Set<string>();
 
     for (const doc of docs) {
       if (!doc.groupId) {
@@ -213,8 +146,10 @@ export class GuestService {
         throw new Error(`Missing groupType for groupId ${doc.groupId}`);
       }
 
-      if (!groups.has(doc.groupId)) {
-        groups.set(doc.groupId, {
+      let group = groups.get(doc.groupId);
+
+      if (!group) {
+        group = {
           groupId: doc.groupId,
           groupType: doc.groupType,
           nights: doc.nights,
@@ -223,14 +158,16 @@ export class GuestService {
           createdAt: doc.createdAt,
           updatedAt: doc.updatedAt,
           members: [],
-        });
+        };
+
+        groups.set(doc.groupId, group);
       }
 
-      groups.get(doc.groupId)!.members.push(toMember(doc));
+      group.members.push(toMember(doc));
 
-      if (!seen.has(doc.groupId)) {
-        seen.add(doc.groupId);
-        result.push(groups.get(doc.groupId)!);
+      if (!seenGroups.has(doc.groupId)) {
+        seenGroups.add(doc.groupId);
+        result.push(group);
       }
     }
 
@@ -248,11 +185,11 @@ export class GuestService {
     };
   }
 
-  async findById(guestId: string): Promise<IGuestDocument | null> {
-    return this.model.findOne({ guestId }).lean() as Promise<IGuestDocument | null>;
+  async findById(guestId: string): Promise<GuestLean | null> {
+    return this.model.findOne({ guestId }).lean<GuestLean>().exec();
   }
 
-  async createSolo(input: Record<string, unknown>): Promise<Omit<IGuestDocument, 'groupId'>> {
+  async createSolo(input: Record<string, unknown>): Promise<Omit<GuestLean, 'groupId'>> {
     const doc = await this.model.create({
       guestId: generateGuestId(),
       groupId: null,
@@ -260,11 +197,8 @@ export class GuestService {
       ...input,
     });
 
-    const raw = doc.toJSON() as Record<string, unknown>;
-    // Remove groupId from solo response
-    delete raw['groupId'];
-    // delete raw['groupType'];
-    return raw as unknown as Omit<IGuestDocument, 'groupId'>;
+    const { groupId: _groupId, ...guest } = doc.toJSON() as GuestLean;
+    return guest;
   }
 
   async update(guestId: string, input: UpdateGuestInput): Promise<GuestLean | null> {
@@ -282,8 +216,9 @@ export class GuestService {
   }
 
   async delete(guestId: string): Promise<boolean> {
-    const res = await this.model.deleteOne({ guestId });
-    return res.deletedCount === 1;
+    const result = await this.model.deleteOne({ guestId });
+
+    return result.deletedCount === 1;
   }
 }
 

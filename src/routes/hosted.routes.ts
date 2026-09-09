@@ -1,5 +1,10 @@
 import { Router } from 'express';
+
 import { hostedController } from '../controllers/hosted.controller';
+
+import { validate } from '../middlewares/validate.middleware';
+
+import { createHostedSchema, hostedQuerySchema, updateHostedSchema } from '../utils/validation';
 
 const router = Router();
 
@@ -17,7 +22,7 @@ const router = Router();
  *     tags:
  *       - Hosted
  *     summary: Get all hosted guests
- *     description: Returns a paginated list of hosted guests. References are excluded from this endpoint.
+ *     description: Returns all hosted guests with pagination and filters.
  *     parameters:
  *       - in: query
  *         name: page
@@ -33,23 +38,72 @@ const router = Router();
  *         name: continent
  *         schema:
  *           type: string
+ *           enum: [africa, america, europe, asia, oceania]
  *       - in: query
  *         name: region
  *         schema:
  *           type: string
  *       - in: query
+ *         name: country
+ *         schema:
+ *           type: string
+ *           example: COL
+ *       - in: query
+ *         name: countryCodeWeMet
+ *         schema:
+ *           type: string
+ *           example: PAN
+ *       - in: query
  *         name: gender
  *         schema:
  *           type: string
+ *           enum: [male, female, trans]
  *       - in: query
- *         name: groupType
+ *         name: groupTypeCompanionship
  *         schema:
  *           type: string
+ *           enum: [solo, couple, friends, family]
+ *       - in: query
+ *         name: gay
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *       - in: query
+ *         name: isFirstTime
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *       - in: query
+ *         name: ambassador
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *       - in: query
+ *         name: didTheyReq
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *       - in: query
+ *         name: rating
+ *         schema:
+ *           type: string
+ *           enum: ["1", "2", "3", "4", "5"]
+ *       - in: query
+ *         name: from
+ *         schema:
+ *           type: string
+ *           example: "2026-01-01"
+ *       - in: query
+ *         name: to
+ *         schema:
+ *           type: string
+ *           example: "2026-12-31"
  *     responses:
  *       200:
  *         description: Hosted guests retrieved successfully
  */
-router.get('/', hostedController.getAll.bind(hostedController));
+
+router.get('/', validate(hostedQuerySchema, 'query'), hostedController.getAll.bind(hostedController));
 
 /**
  * @swagger
@@ -68,13 +122,10 @@ router.get('/', hostedController.getAll.bind(hostedController));
  *     responses:
  *       200:
  *         description: Hosted guest retrieved successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiSuccess'
  *       404:
  *         description: Hosted guest not found
  */
+
 router.get('/:id', hostedController.getById.bind(hostedController));
 
 /**
@@ -89,12 +140,13 @@ router.get('/:id', hostedController.getById.bind(hostedController));
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateSoloGuestDto'
+ *             $ref: '#/components/schemas/CreateHostedDto'
  *     responses:
  *       201:
  *         description: Hosted guest created successfully
  */
-router.post('/', hostedController.create.bind(hostedController));
+
+router.post('/', validate(createHostedSchema), hostedController.create.bind(hostedController));
 
 /**
  * @swagger
@@ -114,12 +166,15 @@ router.post('/', hostedController.create.bind(hostedController));
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateSoloGuestDto'
+ *             $ref: '#/components/schemas/UpdateHostedDto'
  *     responses:
  *       200:
  *         description: Hosted guest updated successfully
+ *       404:
+ *         description: Hosted guest not found
  */
-router.put('/:id', hostedController.update.bind(hostedController));
+
+router.put('/:id', validate(updateHostedSchema), hostedController.update.bind(hostedController));
 
 /**
  * @swagger
@@ -137,7 +192,10 @@ router.put('/:id', hostedController.update.bind(hostedController));
  *     responses:
  *       200:
  *         description: Hosted guest deleted successfully
+ *       404:
+ *         description: Hosted guest not found
  */
+
 router.delete('/:id', hostedController.delete.bind(hostedController));
 
 export default router;

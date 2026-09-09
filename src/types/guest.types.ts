@@ -1,126 +1,148 @@
-export type Continent = 'africa' | 'america' | 'europe' | 'asia' | 'oceania';
+import { Continent, Gender, GroupType, Region } from './global.types';
 
-export type RegionOceania = 'oceania' | 'melanesia' | 'micronesia' | 'polinesia';
-export type RegionAsia = 'central_asia' | 'east_asia' | 'south_asia' | 'southeast_asia' | 'west_asia';
-export type RegionAfrica = 'northern_africa' | 'western_africa' | 'central_africa' | 'eastern_africa' | 'southern_africa';
-export type RegionAmerica = 'south_america' | 'north_america' | 'central_america' | 'caribbean';
-export type RegionEurope =
-  | 'northern_europe'
-  | 'central_europe'
-  | 'western_europe'
-  | 'eastern_europe'
-  | 'southern_europe'
-  | 'scandinavia'
-  | 'baltics';
-export type Region = RegionOceania | RegionAfrica | RegionAsia | RegionAmerica | RegionEurope;
+// -----------------------------------------------------------------------------
+// Shared fields
+// -----------------------------------------------------------------------------
 
-export type Gender = 'male' | 'female' | 'trans';
-export type GroupType = 'solo' | 'couple' | 'friends' | 'family';
-
-// ─── Flat MongoDB document ────────────────────────────────────────────────────
-
-export interface GuestDocument {
+export interface GuestIndividual {
   guestId: string;
+  rating: number | null;
+
+  hometownCode: string;
+  countryCodeWeMet: string;
+  livingInCode: string | null;
+  prefixCode: string | null;
+
+  continent: Continent;
+  region: Region;
+
+  fullName: string;
+  hometown: string | null;
+  livingIn: string | null;
+  cityWeMet: string | null;
+  locationWeMet: string | null;
+
+  birthDate: string | null;
+  occupation: string[];
+
+  urlProfileCs: string | null;
+
+  gender: Gender;
+  isGay: boolean;
+
+  whatsapp: string | null;
+  instagram: string | null;
+}
+
+export interface VisitFields {
+  nights: number;
+  stayed: boolean;
+  hangOut: boolean;
+  visitedDate: string;
+
+  isFirstTime: boolean;
+  ambassador: boolean;
+  didTheyReq: boolean;
+
+  gift: string[] | null;
+  comments: string | null;
+
+  theirReference: string | null;
+  myReference: string | null;
+}
+
+// -----------------------------------------------------------------------------
+// MongoDB document
+// -----------------------------------------------------------------------------
+
+export interface GuestDocument extends GuestIndividual, VisitFields {
   groupId: string | null;
-  groupType: GroupType | null;
-  nights: number;
-  stayed: boolean;
-  hangOut: boolean;
-  visitedDate: string;
-  isFirstTime: boolean;
-  ambassador: boolean;
-  didTheyReq: boolean;
-  gift: string[] | null;
-  comments: string | null;
-  rating: number | null;
-  hometownCode: string;
-  countryCodeWeMet: string;
-  livingInCode: string | null;
-  prefixCode: string | null;
-  continent: Continent;
-  region: Region;
-  fullName: string;
-  hometown: string | null;
-  livingIn: string | null;
-  cityWeMet: string | null;
-  locationWeMet: string | null;
-  birthDate: string | null;
-  occupation: string[];
-  urlProfileCs: string | null;
-  gender: Gender;
-  whatsapp: string | null;
-  instagram: string | null;
+  groupType: GroupType;
+
   createdAt: Date;
   updatedAt: Date;
 }
 
-// ─── GET all list items ───────────────────────────────────────────────────────
+// -----------------------------------------------------------------------------
+// GET all list items
+// -----------------------------------------------------------------------------
 
-export interface SoloListItem {
-  guestId: string;
+export interface SoloListItem extends Pick<
+  GuestIndividual,
+  | 'guestId'
+  | 'hometownCode'
+  | 'countryCodeWeMet'
+  | 'livingInCode'
+  | 'prefixCode'
+  | 'continent'
+  | 'region'
+  | 'fullName'
+  | 'hometown'
+  | 'livingIn'
+  | 'cityWeMet'
+  | 'locationWeMet'
+  | 'birthDate'
+  | 'occupation'
+  | 'livingIn'
+  | 'rating'
+  | 'gender'
+  | 'isGay'
+  | 'whatsapp'
+  | 'urlProfileCs'
+> {
   groupType: 'solo';
+
   isFirstTime: boolean;
   ambassador: boolean;
   didTheyReq: boolean;
+
   nights: number;
   stayed: boolean;
   visitedDate: string;
   hangOut: boolean;
-  fullName: string;
-  hometownCode: string;
-  countryCodeWeMet: string;
-  livingInCode: string | null;
-  prefixCode: string | null;
-  continent: Continent;
-  region: Region;
-  birthDate: string | null;
-  occupation: string[];
-  livingIn: string | null;
-  cityWeMet: string | null;
-  locationWeMet: string | null;
-  hometown: string | null;
-  rating: number | null;
-  gender: Gender;
-  isGay: boolean;
+
   theirReference: string | null;
   myReference: string | null;
-  whatsapp: string | null;
-  urlProfileCs: string | null;
+
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface GroupMemberListItem {
-  guestId: string;
-
+export interface GroupMemberListItem extends Pick<
+  GuestIndividual,
+  | 'guestId'
+  | 'hometownCode'
+  | 'countryCodeWeMet'
+  | 'livingInCode'
+  | 'prefixCode'
+  | 'continent'
+  | 'region'
+  | 'fullName'
+  | 'hometown'
+  | 'livingIn'
+  | 'cityWeMet'
+  | 'locationWeMet'
+  | 'birthDate'
+  | 'occupation'
+  | 'livingIn'
+  | 'rating'
+  | 'gender'
+  | 'isGay'
+  | 'whatsapp'
+  | 'instagram'
+  | 'urlProfileCs'
+> {
   hangOut: boolean;
   gift: string[] | null;
   comments: string | null;
+
   isFirstTime: boolean;
   ambassador: boolean;
   didTheyReq: boolean;
 
-  fullName: string;
-  hometownCode: string;
-  countryCodeWeMet: string;
-  livingInCode: string | null;
-  prefixCode: string | null;
-  continent: Continent;
-  region: Region;
-  birthDate: string | null;
-  occupation: string[];
-  hometown: string | null;
-  livingIn: string | null;
-  cityWeMet: string | null;
-  locationWeMet: string | null;
-  rating: number | null;
-  gender: Gender;
-  isGay: boolean;
   theirReference: string | null;
   myReference: string | null;
-  whatsapp: string | null;
-  instagram: string | null;
-  urlProfileCs: string | null;
+
   createdAt: Date;
   updatedAt: Date;
 }
@@ -128,43 +150,15 @@ export interface GroupMemberListItem {
 export interface GroupListItem {
   groupId: string;
   groupType: GroupType;
+
   nights: number;
   stayed: boolean;
   visitedDate: string;
+
+  members: GroupMemberListItem[];
+
   createdAt: Date;
   updatedAt: Date;
-  members: GroupMemberListItem[];
 }
 
 export type GuestListItem = SoloListItem | GroupListItem;
-
-// ─── Pagination ───────────────────────────────────────────────────────────────
-
-export interface PaginatedResponse<T> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-}
-
-export interface ApiResponse<T = unknown> {
-  success: boolean;
-  message: string;
-  data?: T;
-  errors?: Record<string, string>[];
-}
-
-export interface PaginatedApiResponse<T> {
-  success: boolean;
-  message: string;
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-}
