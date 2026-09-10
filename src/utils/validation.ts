@@ -64,9 +64,8 @@ const individualSchema = z.object({
 });
 
 // Shared guest fields
-
 const staySchema = z.object({
-  nights: z.number().int().min(1, 'nights must be at least 1'),
+  nights: z.number().int().optional().default(0),
   stayed: z.boolean(),
   visitedDate: isoDateSchema,
 });
@@ -126,7 +125,7 @@ const companionshipMemberSchema = individualSchema.pick({
 
 // Hosted guest
 const hostedBaseSchema = individualSchema.extend({
-  nights: z.number().int().min(1, 'nights must be at least 1'),
+  nights: z.number().int().optional().default(0),
   visitedDate: isoDateSchema,
   groupTypeCompanionship: groupTypeEnum,
   companionshipMembers: z.array(companionshipMemberSchema).max(4),

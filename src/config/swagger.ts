@@ -218,18 +218,9 @@ const options: swaggerJsdoc.Options = {
         SharedVisitFields: {
           type: 'object',
 
-          required: ['nights', 'stayed', 'visitedDate'],
+          required: ['visitedDate'],
 
           properties: {
-            nights: {
-              type: 'integer',
-              minimum: 1,
-            },
-
-            stayed: {
-              type: 'boolean',
-            },
-
             visitedDate: {
               type: 'string',
               example: '2026-01',
@@ -1495,18 +1486,9 @@ const options: swaggerJsdoc.Options = {
         CreateGroupGuestDto: {
           type: 'object',
 
-          required: ['nights', 'stayed', 'visitedDate', 'groupType', 'members'],
+          required: ['visitedDate', 'groupType', 'members'],
 
           properties: {
-            nights: {
-              type: 'integer',
-              minimum: 1,
-            },
-
-            stayed: {
-              type: 'boolean',
-            },
-
             visitedDate: {
               type: 'string',
               example: '2026-01',

@@ -221,17 +221,36 @@ router.get('/:id', guestController.getById.bind(guestController));
  *           schema:
  *             $ref: '#/components/schemas/CreateSoloGuestDto'
  *           example:
- *             nights: 2
- *             stayed: true
- *             visitedDate: "2025-11"
- *             hometownCode: MAR
- *             countryCodeWeMet: MAR
- *             prefixCode: "+212"
- *             continent: africa
- *             region: africa
- *             fullName: Simo Amri
- *             gender: male
- *             rating: 3
+ *             groupType: "solo",
+ *             theirReference: "everything was ok!",
+ *             myReference: "nice person :)",
+ *             comments: "she was so so small",
+ *             gift: ["keychain"],
+ *             visitedDate: "2028-08-17",
+ *             hangOut: false,
+ *             countryCodeWeMet: "COL",
+ *             cityWeMet: "Bogotá, Bogota D.C.",
+ *             locationWeMet: "My mom's home",
+ *             isGay: false,
+ *             isFirstTime: true,
+ *             stayed: true,
+ *             birthDate: "1999-07-03",
+ *             fullName: "John Doe",
+ *             gender: "male",
+ *             prefixCode: "+1",
+ *             continent: "europe",
+ *             region: "scandinavia",
+ *             urlProfileCs: "johndoe",
+ *             instagram: "johndoe",
+ *             occupation: ["teacher"],
+ *             whatsapp: "4903213332",
+ *             rating: 4,
+ *             hometownCode: "NOR",
+ *             livingInCode: "MEX",
+ *             livingIn: "Mexico city, Mexico city",
+ *             hometown: "Oslo, Oslo",
+ *             ambassador: false,
+ *             didTheyReq: true
  *     responses:
  *       201:
  *         description: Guest created successfully

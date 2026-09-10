@@ -14,7 +14,7 @@ export const guestSchema = new Schema<IGuestDocument>(
     groupId: { type: String, default: null, trim: true },
     groupType: { type: String, required: true, enum: GROUP_TYPES },
     // -------------------------------------------------------------------------// Visit// -------------------------------------------------------------------------
-    nights: { type: Number, required: true, min: [1, 'nights must be at least 1'] },
+    nights: { type: Number, default: 0 },
     stayed: { type: Boolean, required: true },
     hangOut: { type: Boolean, required: true },
     visitedDate: { type: String, required: true, trim: true },

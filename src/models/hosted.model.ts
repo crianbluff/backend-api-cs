@@ -48,7 +48,7 @@ export const hostedSchema = new Schema<IHostedDocument>(
     },
 
     // Visit
-    nights: { type: Number, required: true, min: [1, 'nights must be at least 1'] },
+    nights: { type: Number, required: false, default: 0 },
     hangOut: { type: Boolean, required: true },
     visitedDate: { type: String, required: true, trim: true },
     isFirstTime: { type: Boolean, default: false },
