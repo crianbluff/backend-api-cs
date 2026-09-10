@@ -19,12 +19,13 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/groups/{{groupId}}",
+                  "raw": "{{baseUrl}}/groups/guests/{{groupId}}",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "groups",
+                    "guests",
                     "{{groupId}}"
                   ]
                 }
@@ -43,15 +44,21 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"groupType\": \"family\",\n  \"nights\": 5,\n  \"stayed\": true,\n  \"visitedDate\": \"2026-08-01\",\n  \"members\": [\n    {\n      \"theirReference\": \"their ref buena 1\",\n      \"myReference\": \"my ref buena 1\",\n      \"hangOut\": true,\n      \"isGay\": false,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"SCT\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"1999-07-03\",\n      \"occupation\": [\n            \"programmer\"\n          ],\n      \"livingIn\": \"Edhimburg, Edhimburg\",\n      \"hometown\": \"Bogotá, Bogotá D.C.\",\n      \"instagram\": \"crianbluff\",\n      \"whatsapp\": \"3108098793\",\n      \"urlProfileCs\": \"crianbluff\",\n      \"fullName\": \"Cristian Castillo\",\n      \"isFirstTime\": false,\n      \"gender\": \"male\",\n      \"rating\": 5,\n      \"gift\": [\"cop coins\"],\n      \"comments\": \"smart\"\n    },\n    {\n      \"theirReference\": \"their ref buena 2\",\n      \"myReference\": \"my ref buena 2\",\n      \"hangOut\": true,\n      \"isGay\": false,\n      \"hometownCode\": \"MEX\",\n      \"livingInCode\": \"ESP\",\n      \"prefixCode\": \"+52\",\n      \"continent\": \"america\",\n      \"region\": \"north_america\",\n      \"birthDate\": \"2002-04-08\",\n      \"occupation\": [\n            \"languages teacher\"\n          ],\n      \"livingIn\": \"Madrid, Madrid\",\n      \"hometown\": \"Acambay, State Of México\",\n      \"instagram\": \"alobuuls\",\n      \"whatsapp\": \"17291541114\",\n      \"urlProfileCs\": \"alobuuls\",\n      \"fullName\": \"Alondra Francisco\",\n      \"isFirstTime\": true,\n      \"gender\": \"female\",\n      \"rating\": 4,\n      \"gift\": [\"tacos\"],\n      \"comments\": \"cute girl\"\n    },\n    {\n      \"theirReference\": \"their ref buena 3\",\n      \"myReference\": \"my ref buena 3\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"BRA\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"2010-10-15\",\n      \"occupation\": [\n            \"ufc fighter\"\n          ],\n      \"livingIn\": \"Sao Paulo, Sao Paulo\",\n      \"hometown\": \"Bogotá, Bogotá D.C.\",\n      \"instagram\": \"ryancastillo1511\",\n      \"whatsapp\": \"3196501884\",\n      \"urlProfileCs\": \"ryancastillo\",\n      \"fullName\": \"Ryan Castillo\",\n      \"isFirstTime\": true,\n      \"gender\": \"male\",\n      \"rating\": 1,\n      \"gift\": [\"candies\"],\n      \"comments\": \"good boy\"\n    }\n  ]\n}"
+                  "raw": "{\n  \"groupType\": \"family\",\n  \"nights\": 5,\n  \"stayed\": true,\n  \"visitedDate\": \"2026-10-01\",\n  \"members\": [\n    {\n      \"theirReference\": \"their ref buena 1\",\n      \"myReference\": \"my ref buena 1\",\n      \"hangOut\": true,\n      \"countryCodeWeMet\": \"COL\",\n      \"cityWeMet\": \"Bogotá, Bogota D.C.\",\n      \"locationWeMet\": \"My mom's home\",\n      \"isGay\": false,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"SCT\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"1999-07-03\",\n      \"occupation\": [\n            \"programmer\"\n          ],\n      \"livingIn\": \"Edhimburg, Edhimburg\",\n      \"hometown\": \"Bogotá, Bogotá D.C.\",\n      \"instagram\": \"crianbluff\",\n      \"whatsapp\": \"3108098793\",\n      \"urlProfileCs\": \"crianbluff\",\n      \"fullName\": \"Cristian Castillo\",\n      \"isFirstTime\": false,\n      \"gender\": \"male\",\n      \"rating\": 5,\n      \"gift\": [\"cop coins\"],\n      \"comments\": \"smart\",\n      \"ambassador\": true,\n      \"didTheyReq\": true\n    },\n    {\n      \"theirReference\": \"their ref buena 2\",\n      \"myReference\": \"my ref buena 2\",\n      \"hangOut\": true,\n      \"countryCodeWeMet\": \"COL\",\n      \"cityWeMet\": \"Bogotá, Bogota D.C.\",\n      \"locationWeMet\": \"My mom's home\",\n      \"isGay\": false,\n      \"hometownCode\": \"MEX\",\n      \"livingInCode\": \"ESP\",\n      \"prefixCode\": \"+52\",\n      \"continent\": \"america\",\n      \"region\": \"north_america\",\n      \"birthDate\": \"2002-04-08\",\n      \"occupation\": [\n            \"languages teacher\"\n          ],\n      \"livingIn\": \"Madrid, Madrid\",\n      \"hometown\": \"Acambay, State Of México\",\n      \"instagram\": \"alobuuls\",\n      \"whatsapp\": \"17291541114\",\n      \"urlProfileCs\": \"alobuuls\",\n      \"fullName\": \"Alondra Francisco\",\n      \"isFirstTime\": true,\n      \"gender\": \"female\",\n      \"rating\": 4,\n      \"gift\": [\"tacos\"],\n      \"comments\": \"cute girl\",\n      \"ambassador\": false,\n      \"didTheyReq\": true\n    },\n    {\n      \"theirReference\": \"their ref buena 3\",\n      \"myReference\": \"my ref buena 3\",\n      \"hangOut\": false,\n      \"countryCodeWeMet\": \"COL\",\n      \"cityWeMet\": \"Bogotá, Bogota D.C.\",\n      \"locationWeMet\": \"My mom's home\",\n      \"isGay\": true,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"BRA\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"2010-10-15\",\n      \"occupation\": [\n            \"ufc fighter\"\n          ],\n      \"livingIn\": \"Sao Paulo, Sao Paulo\",\n      \"hometown\": \"Bogotá, Bogotá D.C.\",\n      \"instagram\": \"ryancastillo1511\",\n      \"whatsapp\": \"3196501884\",\n      \"urlProfileCs\": \"ryancastillo\",\n      \"fullName\": \"Ryan Castillo\",\n      \"isFirstTime\": true,\n      \"gender\": \"male\",\n      \"rating\": 1,\n      \"gift\": [\"candies\"],\n      \"comments\": \"good boy\",\n      \"ambassador\": false,\n      \"didTheyReq\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/groups",
+                  "raw": "{{baseUrl}}/groups/guests",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "groups"
+                    "groups",
+                    "guests"
                   ]
                 }
               },
@@ -69,15 +76,21 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"groupType\": \"friends\",\n  \"nights\": 1,\n  \"stayed\": false,\n  \"visitedDate\": \"2026-08-02\",\n  \"members\": [\n    {\n      \"theirReference\": \"their ref buena 1updated\",\n      \"myReference\": \"my ref buena 1updated\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"MEX\",\n      \"livingInCode\": \"MEX\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"central_america\",\n      \"birthDate\": \"1999-07-04\",\n      \"occupation\": [\n            \"soccer player update\"\n          ],\n      \"livingIn\": \"Aguascalientes, update\",\n      \"hometown\": \"Aguascalientes, update\",\n      \"instagram\": \"crianbluffupdate\",\n      \"whatsapp\": \"310809879300\",\n      \"urlProfileCs\": \"crianbluffupdate\",\n      \"fullName\": \"Cristian Castillo update\",\n      \"isFirstTime\": true,\n      \"gender\": \"male\",\n      \"rating\": 4,\n      \"gift\": [\"cop coinsupdate\"],\n      \"comments\": \"smart update\"\n    },\n    {\n      \"theirReference\": \"their ref buena 2updated\",\n      \"myReference\": \"my ref buena 2updated\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"COL\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"2002-04-09\",\n      \"occupation\": [\n            \"languages teacherupdate\"\n          ],\n      \"livingIn\": \"Bogotá, update\",\n      \"hometown\": \"Acambay, State Of México update\",\n      \"instagram\": \"alobuulsupdate\",\n      \"whatsapp\": \"1729154111400\",\n      \"urlProfileCs\": \"alobuulsupdate\",\n      \"fullName\": \"Alondra Franciscoupdate\",\n      \"isFirstTime\": false,\n      \"gender\": \"male\",\n      \"rating\": 3,\n      \"gift\": [\"tacosupdate\"],\n      \"comments\": \"cute girl update\"\n    },\n    {\n      \"theirReference\": \"their ref buena 3updated\",\n      \"myReference\": \"my ref buena 3updated\",\n      \"hangOut\": false,\n      \"isGay\": true,\n      \"hometownCode\": \"ESP\",\n      \"livingInCode\": \"CHN\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"1910-10-15\",\n      \"occupation\": [\n            \"ufc fighterupdate\"\n          ],\n      \"livingIn\": \"Xian, Xianupdate\",\n      \"hometown\": \"Madrid, Madrid\",\n      \"instagram\": \"ryancastillo1511update\",\n      \"whatsapp\": \"319650188400\",\n      \"urlProfileCs\": \"ryancastilloupdate\",\n      \"fullName\": \"Ryan Castilloupdate\",\n      \"isFirstTime\": false,\n      \"gender\": \"female\",\n      \"rating\": 2,\n      \"gift\": [\"candiesupdate\"],\n      \"comments\": \"good boyupdate\"\n    }\n  ]\n}"
+                  "raw": "{\n  \"groupType\": \"friends\",\n  \"nights\": 1,\n  \"stayed\": false,\n  \"visitedDate\": \"2026-08-11\",\n  \"members\": [\n    {\n      \"theirReference\": \"their ref buena 1updated\",\n      \"myReference\": \"my ref buena 1updated\",\n      \"hangOut\": false,\n      \"countryCodeWeMet\": \"MEX\",\n      \"cityWeMet\": \"Cuauhtémoc, Mexico City\",\n      \"locationWeMet\": \"Metro Tlatelolco\",\n      \"isGay\": true,\n      \"hometownCode\": \"MEX\",\n      \"livingInCode\": \"MEX\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"north_america\",\n      \"birthDate\": \"1999-07-04\",\n      \"occupation\": [\n            \"soccer player update\"\n          ],\n      \"livingIn\": \"Aguascalientes, update\",\n      \"hometown\": \"Aguascalientes, update\",\n      \"instagram\": \"crianbluffupdate\",\n      \"whatsapp\": \"310809879300\",\n      \"urlProfileCs\": \"crianbluffupdate\",\n      \"fullName\": \"Cristian Castillo update\",\n      \"isFirstTime\": true,\n      \"gender\": \"male\",\n      \"rating\": 4,\n      \"gift\": [\"cop coinsupdate\"],\n      \"comments\": \"smart update\",\n      \"ambassador\": false,\n      \"didTheyReq\": false\n    },\n    {\n      \"theirReference\": \"their ref buena 2updated\",\n      \"myReference\": \"my ref buena 2updated\",\n      \"hangOut\": false,\n      \"countryCodeWeMet\": \"MEX\",\n      \"cityWeMet\": \"Cuauhtémoc, Mexico City\",\n      \"locationWeMet\": \"Metro Tlatelolco\",\n      \"isGay\": true,\n      \"hometownCode\": \"COL\",\n      \"livingInCode\": \"COL\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"america\",\n      \"region\": \"south_america\",\n      \"birthDate\": \"2002-04-09\",\n      \"occupation\": [\n            \"languages teacherupdate\"\n          ],\n      \"livingIn\": \"Bogotá, update\",\n      \"hometown\": \"Acambay, State Of México update\",\n      \"instagram\": \"alobuulsupdate\",\n      \"whatsapp\": \"1729154111400\",\n      \"urlProfileCs\": \"alobuulsupdate\",\n      \"fullName\": \"Alondra Franciscoupdate\",\n      \"isFirstTime\": false,\n      \"gender\": \"male\",\n      \"rating\": 3,\n      \"gift\": [\"tacosupdate\"],\n      \"comments\": \"cute girl update\",\n      \"ambassador\": false,\n      \"didTheyReq\": false\n    },\n    {\n      \"theirReference\": \"their ref buena 3updated\",\n      \"myReference\": \"my ref buena 3updated\",\n      \"hangOut\": false,\n      \"countryCodeWeMet\": \"MEX\",\n      \"cityWeMet\": \"Cuauhtémoc, Mexico City\",\n      \"locationWeMet\": \"Metro Tlatelolco\",\n      \"isGay\": true,\n      \"hometownCode\": \"ESP\",\n      \"livingInCode\": \"CHN\",\n      \"prefixCode\": \"+57\",\n      \"continent\": \"europe\",\n      \"region\": \"southern_europe\",\n      \"birthDate\": \"1910-10-15\",\n      \"occupation\": [\n            \"ufc fighterupdate\"\n          ],\n      \"livingIn\": \"Xian, Xianupdate\",\n      \"hometown\": \"Madrid, Madrid\",\n      \"instagram\": \"ryancastillo1511update\",\n      \"whatsapp\": \"319650188400\",\n      \"urlProfileCs\": \"ryancastilloupdate\",\n      \"fullName\": \"Ryan Castilloupdate\",\n      \"isFirstTime\": false,\n      \"gender\": \"female\",\n      \"rating\": 2,\n      \"gift\": [\"candiesupdate\"],\n      \"comments\": \"good boyupdate\",\n      \"ambassador\": true,\n      \"didTheyReq\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/groups/{{groupId}}",
+                  "raw": "{{baseUrl}}/groups/guests/{{groupId}}",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "groups",
+                    "guests",
                     "{{groupId}}"
                   ]
                 }
@@ -90,12 +103,13 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/groups/{{groupId}}",
+                  "raw": "{{baseUrl}}/groups/guests/{{groupId}}",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "groups",
+                    "guests",
                     "{{groupId}}"
                   ]
                 }
@@ -137,7 +151,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/guests?page=1&rating=4",
+              "raw": "{{baseUrl}}/guests?page=1&limit=5",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -151,7 +165,11 @@
                 },
                 {
                   "key": "limit",
-                  "value": "1",
+                  "value": "5"
+                },
+                {
+                  "key": "groupType",
+                  "value": "family",
                   "disabled": true
                 },
                 {
@@ -162,11 +180,6 @@
                 {
                   "key": "region",
                   "value": "northern_africa",
-                  "disabled": true
-                },
-                {
-                  "key": "groupType",
-                  "value": "solo",
                   "disabled": true
                 },
                 {
@@ -187,24 +200,47 @@
                 {
                   "key": "gender",
                   "value": "male",
-                  "type": "text",
                   "disabled": true
                 },
                 {
                   "key": "country",
                   "value": "MAR",
-                  "type": "text",
-                  "disabled": true
-                },
-                {
-                  "key": "ambassador",
-                  "value": "true",
-                  "type": "text",
                   "disabled": true
                 },
                 {
                   "key": "rating",
-                  "value": "4"
+                  "value": "3",
+                  "disabled": true
+                },
+                {
+                  "key": "ambassador",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "didTheyReq",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "rating",
+                  "value": "4",
+                  "disabled": true
+                },
+                {
+                  "key": "gay",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "countryCodeWeMet",
+                  "value": "COL",
+                  "disabled": true
+                },
+                {
+                  "key": "hangOut",
+                  "value": "false",
+                  "disabled": true
                 }
               ]
             }
@@ -259,7 +295,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nights\": 10,\n  \"stayed\": true,\n  \"hangOut\": true,\n  \"visitedDate\": \"2026-07-02\",\n  \"isFirstTime\": true,\n  \"isGay\": true,\n  \"theirReference\": \"their ref buena\",\n  \"myReference\": \"my ref buena\",\n  \"gift\": [\"superman\"],\n  \"comments\": \"Amazing host experience\",\n  \"rating\": 1,\n  \"hometownCode\": \"COL\",\n  \"livingInCode\": \"ESP\",\n  \"prefixCode\": \"+1\",\n  \"continent\": \"america\",\n  \"region\": \"south_america\",\n  \"fullName\": \"Carlos Ramirez\",\n  \"hometown\": \"Bogota\",\n  \"livingIn\": \"Madrid\",\n  \"birthDate\": \"1999-07-04\",\n  \"occupation\": [\"Engineer\"],\n  \"urlProfileCs\": \"crianbluff\",\n  \"gender\": \"male\",\n  \"whatsapp\": \"3108098793\",\n  \"instagram\": \"carlangas\"\n}"
+              "raw": "{\n  \"groupType\": \"solo\",\n  \"theirReference\": \"everything was ok!\",\n  \"myReference\": \"nice person :)\",\n  \"nights\": 10,\n  \"comments\": \"she was so so small\",\n  \"gift\": [\"coins\"],\n  \"visitedDate\": \"2028-08-17\",\n  \"hangOut\": false,\n  \"countryCodeWeMet\": \"COL\",\n  \"cityWeMet\": \"Bogotá, Bogota D.C.\",\n  \"locationWeMet\": \"My mom's home\",\n  \"isGay\": false,\n  \"isFirstTime\": false,\n  \"stayed\": false,\n  \"birthDate\": \"1999-07-03\",\n  \"fullName\": \"Alondra Francisco\",\n  \"gender\": \"female\",\n  \"prefixCode\": \"+52\",\n  \"continent\": \"europe\",\n  \"region\": \"scandinavia\",\n  \"urlProfileCs\": \"alobuuls\",\n  \"instagram\": \"alobuuls\",\n  \"occupation\": [\"teacher\"],\n  \"whatsapp\": \"7291541114\",\n  \"rating\": 1,\n  \"hometownCode\": \"NOR\",\n  \"livingInCode\": \"MEX\",\n  \"livingIn\": \"Mexico city, Mexico city\",\n  \"hometown\": \"Oslo, Oslo\",\n  \"ambassador\": false,\n  \"didTheyReq\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/guests",
@@ -285,7 +326,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"theirReference\": \"their ref buena 1updated\",\n  \"myReference\": \"my ref buena 1updated\",\n  \"nights\": 15,\n  \"comments\": \"updated\",\n  \"gift\": [\"barbieupdated\"],\n  \"visitedDate\": \"2028-02-24\",\n  \"hangOut\": false,\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"stayed\": false,\n  \"birthDate\": \"1900-04-08\",\n  \"fullName\": \"Amandapdated\",\n  \"gender\": \"male\",\n  \"continent\": \"europe\",\n  \"region\": \"west_europe\",\n  \"urlProfileCs\": \"amanda-cspdated\",\n  \"instagram\": \"amandaaaa1234pdated\",\n  \"occupation\": [\"lawyerpdated\"],\n  \"whatsapp\": \"9090909000\",\n  \"rating\": 1,\n  \"hometownCode\": \"DEU\",\n  \"livingInCode\": \"CHN\",\n  \"livingIn\": \"Xian\",\n  \"hometown\": \"Munich\"\n}"
+              "raw": "{\n  \"groupType\": \"solo\",\n  \"theirReference\": \"everything was ok!\",\n  \"myReference\": \"nice person :)\",\n  \"nights\": 5,\n  \"comments\": \"she was so so small updated\",\n  \"gift\": [\"coins\", \"keychain from mexico\"],\n  \"visitedDate\": \"2029-08-17\",\n  \"hangOut\": true,\n  \"countryCodeWeMet\": \"PAN\",\n  \"cityWeMet\": \"Panamá City\",\n  \"locationWeMet\": \"Albrook Mall\",\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"stayed\": true,\n  \"birthDate\": \"2002-04-08\",\n  \"fullName\": \"Alondra Francisco updated\",\n  \"gender\": \"male\",\n  \"prefixCode\": \"+57\",\n  \"continent\": \"america\",\n  \"region\": \"north_america\",\n  \"urlProfileCs\": \"alobuuls-updated\",\n  \"instagram\": \"alobuuls-updated\",\n  \"occupation\": [\"teacher\", \"programmer-updated\"],\n  \"whatsapp\": \"7291541114\",\n  \"rating\": 5,\n  \"hometownCode\": \"MEX\",\n  \"livingInCode\": \"COL\",\n  \"livingIn\": \"Bogotá, Bogota D.C. - updated\",\n  \"hometown\": \"Acambay, State Of Mexico - updated\",\n  \"ambassador\": true,\n  \"didTheyReq\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/guests/{{guestId}}",
@@ -358,7 +404,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/hosted?rating=4",
+              "raw": "{{baseUrl}}/hosted?limit=5&page=1&country=MEX&hangOut=true",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -367,14 +413,12 @@
               ],
               "query": [
                 {
-                  "key": "page",
-                  "value": "1",
-                  "disabled": true
+                  "key": "limit",
+                  "value": "5"
                 },
                 {
-                  "key": "limit",
-                  "value": "1",
-                  "disabled": true
+                  "key": "page",
+                  "value": "1"
                 },
                 {
                   "key": "continent",
@@ -383,27 +427,22 @@
                 },
                 {
                   "key": "region",
-                  "value": "north_america",
-                  "disabled": true
-                },
-                {
-                  "key": "groupType",
-                  "value": "solo",
+                  "value": "south_america",
                   "disabled": true
                 },
                 {
                   "key": "isFirstTime",
-                  "value": "false",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "from",
+                  "value": "2023-01",
                   "disabled": true
                 },
                 {
                   "key": "to",
                   "value": "2026-01",
-                  "disabled": true
-                },
-                {
-                  "key": "from",
-                  "value": "2024-05",
                   "disabled": true
                 },
                 {
@@ -413,8 +452,7 @@
                 },
                 {
                   "key": "country",
-                  "value": "MEX",
-                  "disabled": true
+                  "value": "MEX"
                 },
                 {
                   "key": "ambassador",
@@ -423,7 +461,32 @@
                 },
                 {
                   "key": "rating",
-                  "value": "4"
+                  "value": "4",
+                  "disabled": true
+                },
+                {
+                  "key": "didTheyReq",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "gay",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "countryCodeWeMet",
+                  "value": "MEX",
+                  "disabled": true
+                },
+                {
+                  "key": "groupTypeCompanionship",
+                  "value": "couple",
+                  "disabled": true
+                },
+                {
+                  "key": "hangOut",
+                  "value": "true"
                 }
               ]
             }
@@ -481,7 +544,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nights\": 10,\n  \"stayed\": true,\n  \"hangOut\": true,\n  \"visitedDate\": \"2026-07-02\",\n  \"isFirstTime\": true,\n  \"isGay\": true,\n  \"theirReference\": \"their ref buena\",\n  \"myReference\": \"my ref buena\",\n  \"gift\": [\"superman\"],\n  \"comments\": \"Amazing host experience\",\n  \"rating\": 1,\n  \"hometownCode\": \"COL\",\n  \"livingInCode\": \"ESP\",\n  \"prefixCode\": \"+1\",\n  \"continent\": \"america\",\n  \"region\": \"south_america\",\n  \"fullName\": \"Carlos Ramirez\",\n  \"hometown\": \"Bogota\",\n  \"livingIn\": \"Madrid\",\n  \"birthDate\": \"1999-07-04\",\n  \"occupation\": [\"Engineer\"],\n  \"urlProfileCs\": \"crianbluff\",\n  \"gender\": \"male\",\n  \"whatsapp\": \"3108098793\",\n  \"instagram\": \"carlangas\"\n}"
+              "raw": "{\n    \"theirReference\": \"\",\n    \"myReference\": \"\",\n    \"didTheyReq\": false,\n    \"nights\": 2,\n    \"rating\": 4,\n    \"hometownCode\": \"COL\",\n    \"countryCodeWeMet\": \"PAN\",\n    \"cityWeMet\": \"Panamá City\",\n    \"locationWeMet\": \"Albrook Mall\",\n    \"prefixCode\": \"+57\",\n    \"continent\": \"america\",\n    \"region\": \"south_america\",\n    \"fullName\": \"Carlos Ramirez\",\n    \"hometown\": \"Tunja, Boyacá\",\n    \"livingIn\": \"Tunja, Boyacá\",\n    \"livingInCode\": \"COL\",\n    \"birthDate\": \"1999-07-03\",\n    \"hangOut\": false,\n    \"visitedDate\": \"2026-11-20\",\n    \"urlProfileCs\": \"carlangas\",\n    \"occupation\": [\"seller\"],\n    \"gender\": \"male\",\n    \"whatsapp\": \"3108098793\",\n    \"instagram\": \"carlangaszzz\",\n    \"gift\": [\"toy\"],\n    \"isFirstTime\": false,\n    \"comments\": \"all right\",\n    \"ambassador\": false,\n    \"groupTypeCompanionship\": \"friends\",\n    \"companionshipMembers\": [\n        {\n          \"hometownCode\": \"AUT\",\n          \"prefixCode\": \"+43\",\n          \"continent\": \"europe\",\n          \"region\": \"central_europe\",\n          \"fullName\": \"Jon-Matteo Brüggenwerth\",\n          \"hometown\": \"Gallneukirchen, Upper Austria\",\n          \"livingIn\": \"Gallneukirchen, Upper Austria\",\n          \"livingInCode\": \"AUT\",\n          \"birthDate\": \"2000-05\",\n          \"urlProfileCs\": \"jonmatt90719330\",\n          \"gender\": \"male\",\n          \"whatsapp\": \"67761775275\",\n          \"instagram\": \"jon.matteo_brg\",\n          \"ambassador\": false,\n          \"isFirstTime\": false\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/hosted",
@@ -507,7 +575,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"theirReference\": \"their ref buena 1updated\",\n  \"myReference\": \"my ref buena 1updated\",\n  \"nights\": 15,\n  \"comments\": \"updated\",\n  \"gift\": [\"barbieupdated\"],\n  \"visitedDate\": \"2028-02-24\",\n  \"hangOut\": false,\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"stayed\": false,\n  \"birthDate\": \"1900-04-08\",\n  \"fullName\": \"Amandapdated\",\n  \"gender\": \"male\",\n  \"continent\": \"europe\",\n  \"region\": \"west_europe\",\n  \"urlProfileCs\": \"amanda-cspdated\",\n  \"instagram\": \"amandaaaa1234pdated\",\n  \"occupation\": [\"lawyerpdated\"],\n  \"whatsapp\": \"9090909000\",\n  \"rating\": 1,\n  \"hometownCode\": \"DEU\",\n  \"livingInCode\": \"CHN\",\n  \"livingIn\": \"Xian\",\n  \"hometown\": \"Munich\"\n}"
+              "raw": "{\n    \"theirReference\": \"😁-updated\",\n    \"myReference\": \"👌-updated\",\n    \"didTheyReq\": true,\n    \"nights\": 10,\n    \"rating\": 1,\n    \"hometownCode\": \"MEX\",\n    \"countryCodeWeMet\": \"MEX\",\n    \"cityWeMet\": \"Mexico City, Mexico City\",\n    \"locationWeMet\": \"Bellas Artes\",\n    \"prefixCode\": \"+57\",\n    \"continent\": \"america\",\n    \"region\": \"north_america\",\n    \"fullName\": \"Carlos Ramirez-updated\",\n    \"hometown\": \"Tunja, Boyacá-updated\",\n    \"livingIn\": \"Tunja, Boyacá-updated\",\n    \"livingInCode\": \"MEX\",\n    \"birthDate\": \"1990-07-04\",\n    \"hangOut\": true,\n    \"visitedDate\": \"2027-01-10\",\n    \"urlProfileCs\": \"carlangas-updated\",\n    \"occupation\": [\"seller555\"],\n    \"gender\": \"male\",\n    \"whatsapp\": \"3108098793\",\n    \"instagram\": \"carlangas555\",\n    \"gift\": [\"toy\", \"updated\"],\n    \"isFirstTime\": true,\n    \"comments\": \"all right-updated\",\n    \"ambassador\": true,\n    \"groupTypeCompanionship\": \"friends\",\n    \"companionshipMembers\": [\n        {\n          \"hometownCode\": \"MEX\",\n          \"prefixCode\": \"+52\",\n          \"continent\": \"america\",\n          \"region\": \"north_america\",\n          \"fullName\": \"Alondra Francisco555\",\n          \"hometown\": \"Acambay, State Of Mexico\",\n          \"livingIn\": \"Bogotá, Bogota D.C.\",\n          \"livingInCode\": \"COL\",\n          \"birthDate\": \"2002-04-08\",\n          \"urlProfileCs\": \"alitobuu\",\n          \"gender\": \"female\",\n          \"whatsapp\": \"7291541114\",\n          \"instagram\": \"alitobuu555\",\n          \"isGay\": true,\n          \"ambassador\": false,\n          \"isFirstTime\": false\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/hosted/{{hostedId}}",
@@ -578,7 +651,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/personal?rating=4",
+              "raw": "{{baseUrl}}/personal?page=1&limit=1",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -588,13 +661,11 @@
               "query": [
                 {
                   "key": "page",
-                  "value": "1",
-                  "disabled": true
+                  "value": "1"
                 },
                 {
                   "key": "limit",
-                  "value": "1",
-                  "disabled": true
+                  "value": "1"
                 },
                 {
                   "key": "continent",
@@ -644,7 +715,22 @@
                 {
                   "key": "rating",
                   "value": "4",
-                  "type": "text"
+                  "disabled": true
+                },
+                {
+                  "key": "countryCodeWeMet",
+                  "value": "COL",
+                  "disabled": true
+                },
+                {
+                  "key": "gay",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "countryCodeWeMet",
+                  "value": "COL",
+                  "disabled": true
                 }
               ]
             }
@@ -702,7 +788,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nights\": 10,\n  \"stayed\": true,\n  \"hangOut\": true,\n  \"visitedDate\": \"2026-07-02\",\n  \"isFirstTime\": true,\n  \"isGay\": true,\n  \"theirReference\": \"their ref buena\",\n  \"myReference\": \"my ref buena\",\n  \"gift\": [\"superman\"],\n  \"comments\": \"Amazing host experience\",\n  \"rating\": 1,\n  \"hometownCode\": \"COL\",\n  \"livingInCode\": \"ESP\",\n  \"prefixCode\": \"+1\",\n  \"continent\": \"america\",\n  \"region\": \"south_america\",\n  \"fullName\": \"Carlos Ramirez\",\n  \"hometown\": \"Bogota\",\n  \"livingIn\": \"Madrid\",\n  \"birthDate\": \"1999-07-04\",\n  \"occupation\": [\"Engineer\"],\n  \"urlProfileCs\": \"crianbluff\",\n  \"gender\": \"male\",\n  \"whatsapp\": \"3108098793\",\n  \"instagram\": \"carlangas\"\n}"
+              "raw": "{\n  \"groupType\": \"solo\",\n  \"stayed\": true,\n  \"nights\": 1,\n  \"hangOut\": true,\n  \"visitedDate\": \"2029-07-02\",\n  \"isFirstTime\": true,\n  \"isGay\": true,\n  \"theirReference\": \"their ref buena\",\n  \"myReference\": \"my ref buena\",\n  \"gift\": [\"superman\"],\n  \"comments\": \"Amazing host experience\",\n  \"rating\": 5,\n  \"hometownCode\": \"COL\",\n  \"countryCodeWeMet\": \"COL\",\n  \"cityWeMet\": \"Tunja, Boyacá\",\n  \"locationWeMet\": \"Bus Station\",\n  \"livingInCode\": \"ESP\",\n  \"prefixCode\": \"+1\",\n  \"continent\": \"america\",\n  \"region\": \"south_america\",\n  \"fullName\": \"Carlos Ramirez\",\n  \"hometown\": \"Bogota\",\n  \"livingIn\": \"Madrid\",\n  \"birthDate\": \"1999-07-04\",\n  \"occupation\": [\"Engineer\"],\n  \"urlProfileCs\": \"crianbluff\",\n  \"gender\": \"male\",\n  \"whatsapp\": \"3108098793\",\n  \"instagram\": \"carlangas\",\n  \"ambassador\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/personal",
@@ -728,7 +819,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"theirReference\": \"their ref buena 1updated\",\n  \"myReference\": \"my ref buena 1updated\",\n  \"nights\": 15,\n  \"comments\": \"updated\",\n  \"gift\": [\"barbieupdated\"],\n  \"visitedDate\": \"2028-02-24\",\n  \"hangOut\": false,\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"stayed\": false,\n  \"birthDate\": \"1900-04-08\",\n  \"fullName\": \"Amandapdated\",\n  \"gender\": \"male\",\n  \"continent\": \"europe\",\n  \"region\": \"west_europe\",\n  \"urlProfileCs\": \"amanda-cspdated\",\n  \"instagram\": \"amandaaaa1234pdated\",\n  \"occupation\": [\"lawyerpdated\"],\n  \"whatsapp\": \"9090909000\",\n  \"rating\": 1,\n  \"hometownCode\": \"DEU\",\n  \"livingInCode\": \"CHN\",\n  \"livingIn\": \"Xian\",\n  \"hometown\": \"Munich\"\n}"
+              "raw": "{\n  \"theirReference\": \"their ref buena 1updated\",\n  \"myReference\": \"my ref buena 1updated\",\n  \"comments\": \"updated\",\n  \"gift\": [\"barbieupdated\"],\n  \"visitedDate\": \"2028-02-24\",\n  \"isGay\": true,\n  \"isFirstTime\": true,\n  \"birthDate\": \"1900-04-08\",\n  \"fullName\": \"Amandapdated\",\n  \"gender\": \"male\",\n  \"prefixCode\": \"+57\",\n  \"continent\": \"europe\",\n  \"region\": \"central_europe\",\n  \"urlProfileCs\": \"amanda-cspdated\",\n  \"instagram\": \"amandaaaa1234pdated\",\n  \"occupation\": [\"lawyerpdated\"],\n  \"whatsapp\": \"9090909000\",\n  \"rating\": 1,\n  \"hometownCode\": \"DEU\",\n  \"countryCodeWeMet\": \"ESP\",\n  \"cityWeMet\": \"Madrid, Madrid\",\n  \"locationWeMet\": \"Plaza Mayot\",\n  \"livingInCode\": \"CHN\",\n  \"livingIn\": \"Xian\",\n  \"hometown\": \"Munich\",\n  \"ambassador\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
             },
             "url": {
               "raw": "{{baseUrl}}/personal/{{personald}}",
