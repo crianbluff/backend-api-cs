@@ -622,7 +622,6 @@ export class StatsGuestService {
     guests: T[],
     getKey: (guest: T) => string | null | undefined,
     getVisitedDate: (guest: T) => string,
-    getGroupId: (guest: T) => string | null | undefined,
     limitTop = 5,
     limitBottom = 5
   ): {
@@ -645,7 +644,6 @@ export class StatsGuestService {
       if (!code) continue;
 
       const visitedDate = getVisitedDate(guest);
-      const groupId = getGroupId(guest);
 
       let item = map.get(code);
 
@@ -661,13 +659,6 @@ export class StatsGuestService {
       }
 
       if (visitedDate.localeCompare(item.firstVisit) < 0) item.firstVisit = visitedDate;
-
-      // contar grupo como 1
-      if (groupId) {
-        if (item.groups.has(groupId)) continue;
-        item.groups.add(groupId);
-      }
-
       item.total++;
     }
 
@@ -703,7 +694,6 @@ export class StatsGuestService {
     guests: T[],
     getCode: (guest: T) => string | null | undefined,
     getName: (guest: T) => string | null | undefined,
-    getGroupId: (guest: T) => string | null | undefined,
     limit = 5
   ): LocationRanking {
     const map = new Map<
@@ -721,10 +711,7 @@ export class StatsGuestService {
       const name = getName(guest);
 
       if (!code && !name) continue;
-
       const key = `${code ?? ''}|${name ?? ''}`;
-      const groupId = getGroupId(guest);
-
       let item = map.get(key);
 
       if (!item) {
@@ -736,13 +723,6 @@ export class StatsGuestService {
         };
 
         map.set(key, item);
-      }
-
-      // contar grupos como 1
-      if (groupId) {
-        if (item.groups.has(groupId)) continue;
-
-        item.groups.add(groupId);
       }
 
       item.total++;
@@ -855,7 +835,6 @@ export class StatsGuestService {
       guests,
       (g) => g.continent,
       (g) => g.visitedDate,
-      (g) => g.groupId,
       2,
       2
     );
@@ -864,7 +843,6 @@ export class StatsGuestService {
       guests,
       (g) => g.region,
       (g) => g.visitedDate,
-      (g) => g.groupId,
       5,
       5
     );
@@ -881,15 +859,13 @@ export class StatsGuestService {
     const livingIn = this.buildLocations(
       guests,
       (g) => g.livingInCode,
-      (g) => g.livingIn,
-      (g) => g.groupId
+      (g) => g.livingIn
     );
 
     const hometown = this.buildLocations(
       guests,
       (g) => g.hometownCode,
-      (g) => g.hometown,
-      (g) => g.groupId
+      (g) => g.hometown
     );
 
     const mostConsecutive = this.getMostConsecutiveCountry(
