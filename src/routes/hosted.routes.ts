@@ -74,6 +74,11 @@ const router = Router();
  *           type: string
  *           enum: ["true", "false"]
  *       - in: query
+ *         name: hangOut
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *       - in: query
  *         name: ambassador
  *         schema:
  *           type: string

@@ -122,6 +122,12 @@ const router = Router();
  *           enum: [true, false]
 
  *       - in: query
+ *         name: hangOut
+ *         schema:
+ *           type: string
+ *           enum: [true, false]
+
+ *       - in: query
  *         name: didTheyReq
  *         schema:
  *           type: string

@@ -21,6 +21,7 @@ function buildFilter(query: HostedQueryInput): FilterQuery<IHostedDocument> {
   if (query.gay !== undefined) filter.isGay = query.gay === 'true';
   if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';
   if (query.ambassador !== undefined) filter.ambassador = query.ambassador === 'true';
+  if (query.hangOut !== undefined) filter.hangOut = query.hangOut === 'true';
   if (query.didTheyReq !== undefined) filter.didTheyReq = query.didTheyReq === 'true';
   if (query.rating !== undefined) filter.rating = Number(query.rating);
   Object.assign(filter, buildVisitedDateFilter(query.from, query.to));
