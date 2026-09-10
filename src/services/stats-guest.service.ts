@@ -521,7 +521,6 @@ export class StatsGuestService {
     getCountry: (guest: T) => string | null | undefined,
     getGender: (guest: T) => string | null | undefined,
     getVisitedDate: (guest: T) => string,
-    getGroupId: (guest: T) => string | null | undefined,
     limitTop = 5,
     limitBottom = 5
   ): {
@@ -539,7 +538,6 @@ export class StatsGuestService {
         male: number;
         female: number;
         firstVisit: string;
-        groups: Set<string>;
       }
     >();
 
@@ -550,7 +548,6 @@ export class StatsGuestService {
 
       const visitedDate = getVisitedDate(guest);
       const gender = getGender(guest);
-      const groupId = getGroupId(guest);
 
       let item = map.get(country);
 
@@ -561,34 +558,16 @@ export class StatsGuestService {
           male: 0,
           female: 0,
           firstVisit: visitedDate,
-          groups: new Set(),
         };
 
         map.set(country, item);
       }
 
-      if (visitedDate.localeCompare(item.firstVisit) < 0) {
-        item.firstVisit = visitedDate;
-      }
-
-      // Contar grupo como 1
-      if (groupId) {
-        if (item.groups.has(groupId)) {
-          continue;
-        }
-
-        item.groups.add(groupId);
-      }
-
+      if (visitedDate.localeCompare(item.firstVisit) < 0) item.firstVisit = visitedDate;
       item.total++;
 
-      if (gender === 'male') {
-        item.male++;
-      }
-
-      if (gender === 'female') {
-        item.female++;
-      }
+      if (gender === 'male') item.male++;
+      if (gender === 'female') item.female++;
     }
 
     const all = [...map.values()]
@@ -601,35 +580,23 @@ export class StatsGuestService {
       }))
       .sort((a, b) => {
         const dateCompare = a.firstVisit.localeCompare(b.firstVisit);
-
-        if (dateCompare !== 0) {
-          return dateCompare;
-        }
+        if (dateCompare !== 0) return dateCompare;
 
         return a.code.localeCompare(b.code);
       });
 
     const byTotal = [...all].sort((a, b) => {
-      if (b.total !== a.total) {
-        return b.total - a.total;
-      }
-
+      if (b.total !== a.total) return b.total - a.total;
       const dateCompare = a.firstVisit.localeCompare(b.firstVisit);
 
-      if (dateCompare !== 0) {
-        return dateCompare;
-      }
-
+      if (dateCompare !== 0) return dateCompare;
       return a.code.localeCompare(b.code);
     });
 
     const topMale = [...all]
       .filter((country) => country.male > 0)
       .sort((a, b) => {
-        if (b.male !== a.male) {
-          return b.male - a.male;
-        }
-
+        if (b.male !== a.male) return b.male - a.male;
         return a.code.localeCompare(b.code);
       })
       .slice(0, 10);
@@ -637,10 +604,7 @@ export class StatsGuestService {
     const topFemale = [...all]
       .filter((country) => country.female > 0)
       .sort((a, b) => {
-        if (b.female !== a.female) {
-          return b.female - a.female;
-        }
-
+        if (b.female !== a.female) return b.female - a.female;
         return a.code.localeCompare(b.code);
       })
       .slice(0, 10);
@@ -678,7 +642,6 @@ export class StatsGuestService {
 
     for (const guest of guests) {
       const code = getKey(guest);
-
       if (!code) continue;
 
       const visitedDate = getVisitedDate(guest);
@@ -697,14 +660,11 @@ export class StatsGuestService {
         map.set(code, item);
       }
 
-      if (visitedDate.localeCompare(item.firstVisit) < 0) {
-        item.firstVisit = visitedDate;
-      }
+      if (visitedDate.localeCompare(item.firstVisit) < 0) item.firstVisit = visitedDate;
 
       // contar grupo como 1
       if (groupId) {
         if (item.groups.has(groupId)) continue;
-
         item.groups.add(groupId);
       }
 
@@ -719,25 +679,16 @@ export class StatsGuestService {
       }))
       .sort((a, b) => {
         const dateCompare = a.firstVisit.localeCompare(b.firstVisit);
-
-        if (dateCompare !== 0) {
-          return dateCompare;
-        }
+        if (dateCompare !== 0) return dateCompare;
 
         return a.code.localeCompare(b.code);
       });
 
     const byTotal = [...all].sort((a, b) => {
-      if (b.total !== a.total) {
-        return b.total - a.total;
-      }
-
+      if (b.total !== a.total) return b.total - a.total;
       const dateCompare = a.firstVisit.localeCompare(b.firstVisit);
 
-      if (dateCompare !== 0) {
-        return dateCompare;
-      }
-
+      if (dateCompare !== 0) return dateCompare;
       return a.code.localeCompare(b.code);
     });
 
@@ -923,7 +874,6 @@ export class StatsGuestService {
       (g) => g.hometownCode,
       (g) => g.gender,
       (g) => g.visitedDate,
-      (g) => g.groupId,
       10,
       10
     );
