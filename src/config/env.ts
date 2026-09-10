@@ -9,6 +9,7 @@ interface EnvConfig {
   API_VERSION: string;
   RATE_LIMIT_WINDOW_MS: number;
   RATE_LIMIT_MAX: number;
+  API_URL: string;
 }
 
 function requireEnv(key: string): string {
@@ -28,4 +29,5 @@ export const env: EnvConfig = {
   API_VERSION: optionalEnv('API_VERSION', 'v1'),
   RATE_LIMIT_WINDOW_MS: parseInt(optionalEnv('RATE_LIMIT_WINDOW_MS', '900000'), 10),
   RATE_LIMIT_MAX: parseInt(optionalEnv('RATE_LIMIT_MAX', '100'), 10),
+  API_URL: optionalEnv('API_URL', 'http://localhost:3001'),
 };

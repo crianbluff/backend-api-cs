@@ -118,9 +118,7 @@ function nullify(value: unknown): string | null {
 // BUILDERS
 function buildBaseGuest(raw: any) {
   const gender = raw.gender ? String(raw.gender).trim().toLowerCase() : 'trans';
-
   const continent = raw.continent ? String(raw.continent).trim().toLowerCase() : null;
-
   const region = raw.region ? String(raw.region).trim().toLowerCase() : null;
 
   return {

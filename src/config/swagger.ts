@@ -1,6 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
 import { env } from './env';
+import path from 'path';
 import { CONTINENTS, GENDERS, GROUP_TYPES, REGIONS } from '../types/global.types';
 
 const options: swaggerJsdoc.Options = {
@@ -15,8 +16,8 @@ const options: swaggerJsdoc.Options = {
 
     servers: [
       {
-        url: `http://localhost:${env.PORT}/api/${env.API_VERSION}`,
-        description: 'Local dev',
+        url: `${env.API_URL}/api/${env.API_VERSION}`,
+        description: env.NODE_ENV === 'production' ? 'Production' : 'Local dev',
       },
     ],
 
@@ -1562,7 +1563,7 @@ const options: swaggerJsdoc.Options = {
     },
   },
 
-  apis: ['./src/routes/*.ts'],
+  apis: [path.join(process.cwd(), 'src/routes/*.ts'), path.join(process.cwd(), 'dist/routes/*.js')],
 };
 
 export const swaggerSpec = swaggerJsdoc(options);
