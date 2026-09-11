@@ -10,6 +10,9 @@
     "prefixCode": "+1",
     "continent": "asia",
     "region": "southeast_asia",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Candelaria",
     "fullName": "Andréw",
     "hometown": "Iloilo City, Western Visayas",
     "livingIn": "Toronto, Ontario",
@@ -22,7 +25,8 @@
     "gender": "male",
     "whatsapp": "4168802533",
     "instagram": "andrewty_15adventures_",
-    "gift": ["wiki invitation wings"]
+    "gift": ["wiki invitation wings"],
+    "comments": "they requested hosting: fuimos junto a Marco de Italia a vernos con él y su amigo"
   },
   {
     "groupType": "solo",
@@ -35,8 +39,11 @@
     "prefixCode": "+1",
     "continent": "asia",
     "region": "southeast_asia",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Candelaria",
     "fullName": "Wilmart Vallejo",
-    "hometown": "",
+    "hometown": "Philippines",
     "livingIn": "Toronto, Ontario",
     "livingInCode": "CAN",
     "birthDate": "04-10",
@@ -60,6 +67,9 @@
     "prefixCode": "+995",
     "continent": "asia",
     "region": "west_asia",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Zona T, Chapinero",
     "fullName": "Kibrdgl",
     "hometown": "Tbilisi, Tbilisi",
     "livingIn": "Tbilisi, Tbilisi",
@@ -72,6 +82,7 @@
     "gender": "male",
     "whatsapp": "599742532",
     "instagram": "croccantepanini",
-    "gift": []
+    "gift": [],
+    "comments": "I offered hosting:"
   }
 ]

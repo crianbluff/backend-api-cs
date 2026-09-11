@@ -9,6 +9,9 @@
     "prefixCode": "+52",
     "continent": "america",
     "region": "north_america",
+    "countryCodeWeMet": "MEX",
+    "cityWeMet": "Puebla City, Puebla",
+    "locationWeMet": "Zócalo de Puebla",
     "fullName": "Rodolfo G",
     "hometown": "San Andrés Cholula, Puebla",
     "livingIn": "San Andrés Cholula, Puebla",
@@ -17,12 +20,12 @@
     "hangOut": true,
     "visitedDate": "2025-03-16",
     "urlProfileCs": "rodo1986",
-    "occupation": ["Asesor financiero GNP AGC Seguros", "engineer traveler", "writer"],
+    "occupation": ["asesor financiero GNP AGC Seguros", "engineer traveler", "writer"],
     "gender": "male",
     "whatsapp": "2215755140",
     "instagram": null,
     "gift": [],
-    "comments": "Se comportaba muy raro fuimos con alo se supone que nos hospedaría pero daba mal rollo, luego llamé a Matteo para que me salvará terminamos yendo a tomar azulito y ya luego me quedé con Ilo y le saqué el cuerpo a él",
+    "comments": "I requested hosting: Se comportaba muy raro fuimos con alo se supone que nos hospedaría pero daba mal rollo, luego llamé a Matteo para que me salvará terminamos yendo a tomar azulito y ya luego me quedé con Ilo y le saqué el cuerpo a él",
     "isGay": true
   },
   {
@@ -35,6 +38,9 @@
     "prefixCode": "+52",
     "continent": "america",
     "region": "north_america",
+    "countryCodeWeMet": "MEX",
+    "cityWeMet": "Monterrey, Nuevo León",
+    "locationWeMet": "Paseo Santa Lucía",
     "fullName": "Karla",
     "hometown": "Zacatecas, Ciudad de Zacatecas",
     "livingIn": "Monterrey, Nuevo León",
@@ -48,7 +54,9 @@
     "whatsapp": "4331039426",
     "instagram": "kar_mar14",
     "gift": [],
-    "isFirstTime": true
+    "isFirstTime": true,
+    "comments": "I requested hosting:",
+    "weMetIn": "MEX , Puebla"
   },
   {
     "groupType": "solo",
@@ -60,6 +68,9 @@
     "prefixCode": "+52",
     "continent": "america",
     "region": "north_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Candelaria",
     "fullName": "Michelle T",
     "hometown": "Veracruz, Veracruz",
     "livingIn": "Veracruz, Veracruz",
@@ -73,7 +84,7 @@
     "whatsapp": "2291854872",
     "instagram": null,
     "gift": [],
-    "comments": "Me quedé dormido ya que llego a media noche y supuestamente dice que golpeó la puerta, luego se fue para un hostal en la candelaria al siguiente día le lleve arepa y le acompañé a comprar un llavero"
+    "comments": "I offer hosting: Me quedé dormido ya que llego a media noche y supuestamente dice que golpeó la puerta, luego se fue para un hostal en la candelaria al siguiente día le lleve arepa y le acompañé a comprar un llavero"
   },
   {
     "groupType": "solo",
@@ -85,6 +96,9 @@
     "prefixCode": "+52",
     "continent": "america",
     "region": "north_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Parque de los periodistas",
     "fullName": "Gabriela Zeferino",
     "hometown": "Puebla City, Puebla",
     "livingIn": "Puebla City, Puebla",
@@ -99,7 +113,7 @@
     "instagram": "zeferinogabi",
     "gift": ["me invito el funicular ida y vuelta monserrate y uber de monserrate a zona t"],
     "isFirstTime": true,
-    "comments": "se enojó pq no la acompañé a teatron y dijo que si es que era que no conocia bogota cuando ibamos en el uber, fuimos a la taqueria con 2 cs mas uno de georgia (kibrdgl) y otro de guatemala (kenneth)"
+    "comments": "I offered hosting: se enojó pq no la acompañé a teatron y dijo que si es que era que no conocia bogota cuando ibamos en el uber, fuimos a la taqueria con 2 cs mas uno de georgia (kibrdgl) y otro de guatemala (kenneth)"
   },
   {
     "groupType": "solo",
@@ -111,6 +125,9 @@
     "prefixCode": "+52",
     "continent": "america",
     "region": "north_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Close To Movistar Arena",
     "fullName": "Eréndira Morales",
     "hometown": "Puebla City, Puebla",
     "livingIn": "Puebla City, Puebla",
@@ -124,7 +141,7 @@
     "whatsapp": "2282188953",
     "instagram": "endy_morales_",
     "gift": ["2 kilos de chile poblano", "2 kilos de chile guajillo", "chamoy"],
-    "comments": "fui cerca al movistar arena 19-jul-2026 ahí me entrego el chamoy y una bolsa con chiles, otro día le regalé una coca de café para ella y su amiga ahí me dió el resto de chiles y ese día se me daño la scooter"
+    "comments": "I offered hosting: fui cerca al movistar arena 19-jul-2026 ahí me entrego el chamoy y una bolsa con chiles, otro día le regalé una coca de café para ella y su amiga ahí me dió el resto de chiles y ese día se me daño la scooter"
   },
   {
     "groupType": "solo",
@@ -136,8 +153,11 @@
     "prefixCode": "+57",
     "continent": "america",
     "region": "central_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Zona T, Chapinero",
     "fullName": "Kenneth Palacios",
-    "hometown": "Guatemala City",
+    "hometown": "Guatemala City, Guatemala",
     "livingIn": "Bogotá, Bogota D.C.",
     "livingInCode": "COL",
     "birthDate": "1993-09-27",
@@ -149,7 +169,7 @@
     "whatsapp": "3045266534",
     "instagram": "kenpalacios_",
     "gift": [],
-    "comments": "Me invito a cine"
+    "comments": "me invito a cine después por insta"
   },
   {
     "groupType": "solo",
@@ -161,6 +181,9 @@
     "prefixCode": "+503",
     "continent": "america",
     "region": "central_america",
+    "countryCodeWeMet": "PAN",
+    "cityWeMet": "Nuevo Arraijan, Panamá West Province",
+    "locationWeMet": "Casa de Mayra",
     "fullName": "Cesar",
     "hometown": "San Salvador, San Salvador Department",
     "livingIn": "San Salvador, San Salvador Department",
@@ -174,7 +197,7 @@
     "whatsapp": "79880700",
     "instagram": "proyectoviajandoalfuturo",
     "gift": [],
-    "comments": "Me lo encontré en panamá tambn lo hospedó Mayra, Habló con mi mamá por vc, Le había enviado solicitud de alojamiento cuando estuve en San Salvador pero no me respondió, tiene proyecto de recorrer latinoamerica en su carro"
+    "comments": "me lo encontré en panamá tambn lo hospedó Mayra, Habló con mi mamá por vc, Le habíamos enviado solicitud de alojamiento cuando estuve en San Salvador pero no me respondió, tiene proyecto de recorrer latinoamerica en su carro"
   },
   {
     "groupType": "solo",
@@ -186,6 +209,9 @@
     "prefixCode": "+507",
     "continent": "america",
     "region": "central_america",
+    "countryCodeWeMet": "PAN",
+    "cityWeMet": "Panama City, Provincia de Panamá",
+    "locationWeMet": "Aeropuerto Internacional de Tocumen",
     "fullName": "Abel Castillo",
     "hometown": "Juan Díaz, Provincia de Panamá",
     "livingIn": "Juan Díaz, Provincia de Panamá",
@@ -201,7 +227,7 @@
     "gift": ["1X5 centimos de balboa", "1x1 centimo de balboa"],
     "isGay": true,
     "isFirstTime": true,
-    "comments": "Cuando estuvo en bogotá antes de yo ir a panamá le ofrecí hospedaje, me recogió en su camioneta en el aeropuerto de panamá y me llevo a caminar por el casco historico, cinta costera, plaza de francia, y tomamos fotos en el edificio el tornillo, nos tomamos un café y me contó la historia de panamá"
+    "comments": "I requested hosting: cuando estuvo en bogotá antes de yo ir a panamá le ofrecí hospedaje, nos recogió en su camioneta en el aeropuerto de panamá y me llevo a caminar por el casco historico, cinta costera, plaza de francia, y tomamos fotos en el edificio el tornillo, nos tomamos un café y me contó la historia de panamá"
   },
   {
     "groupType": "solo",
@@ -213,6 +239,9 @@
     "prefixCode": "+507",
     "continent": "america",
     "region": "central_america",
+    "countryCodeWeMet": "PAN",
+    "cityWeMet": "La Chorrera, Panamá West Province",
+    "locationWeMet": "Costa Verde",
     "fullName": "Caleb",
     "hometown": "Nuevo Arraijan, Panamá Oeste Province",
     "livingIn": "Nuevo Arraijan, Panamá Oeste Province",
@@ -226,7 +255,7 @@
     "whatsapp": "64441039",
     "instagram": "cal.el14",
     "gift": ["guitarra plumilla", "chocolate copa airlines"],
-    "isFirstTime": true,
+    "isFirstTime": false,
     "comments": "nos invitaron a comer y pasar navidad junto a la familia de su novia, tocó guitarra, fuimos a la playa taboga, incluso grabó un video para alo y yo en su dron, fuimos a la cinta costera junto a su novia en plan de kayak, fuimos al westland mall, a lo ult se puso odioso pq no fuimos con el para la casa si no nos fuimos a panama city para quedarnos con victor incluso insinuaba que nos fuesemos antes de la casa"
   },
   {
@@ -239,6 +268,9 @@
     "prefixCode": "+57",
     "continent": "america",
     "region": "south_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Senet Coffee, Chapinero Alto",
     "fullName": "Angie Cruz",
     "hometown": "Bogotá, Bogota D.C.",
     "livingIn": "Bogotá, Bogota D.C.",
@@ -252,7 +284,7 @@
     "whatsapp": "3204947283",
     "instagram": null,
     "gift": [],
-    "comments": "we have seen 3 times (board games, free teather bogotá, board games in la candelaria a restaurant)",
+    "comments": "hangout: we have seen 3 times (board games, free teather bogotá, board games in la candelaria a restaurant)",
     "ambassador": true
   },
   {
@@ -265,6 +297,9 @@
     "prefixCode": "+57",
     "continent": "america",
     "region": "south_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Senet Coffee, Chapinero Alto",
     "fullName": "Laura J",
     "hometown": "Pasto, Nariño",
     "livingIn": "Bogotá, Bogota D.C.",
@@ -277,7 +312,8 @@
     "gender": "female",
     "whatsapp": "3160756850",
     "instagram": null,
-    "gift": []
+    "gift": [],
+    "comments": "hangout:"
   },
   {
     "groupType": "solo",
@@ -289,6 +325,9 @@
     "prefixCode": "+57",
     "continent": "america",
     "region": "south_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Senet Coffee, Chapinero Alto",
     "fullName": "Diego C",
     "hometown": "Pasto, Nariño",
     "livingIn": "Pasto, Nariño",
@@ -301,7 +340,8 @@
     "gender": "male",
     "whatsapp": null,
     "instagram": null,
-    "gift": []
+    "gift": [],
+    "comments": "hangout:"
   },
   {
     "groupType": "solo",
@@ -313,6 +353,9 @@
     "prefixCode": "+57",
     "continent": "america",
     "region": "south_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Chorro de quevedo, Candelaria",
     "fullName": "Valentina Acero",
     "hometown": "Soacha, Cundinamarca",
     "livingIn": "Soacha, Cundinamarca",
@@ -321,12 +364,40 @@
     "hangOut": true,
     "visitedDate": "2025-10-31",
     "urlProfileCs": "valenacero",
-    "occupation": ["artits"],
+    "occupation": ["artist"],
     "gender": "female",
     "whatsapp": "3138904798",
     "instagram": "valenacerob",
     "gift": [],
     "isFirstTime": true,
-    "comments": "platicamos de viajes me contó que junto a su novio fueron en bici de bogotá hasta argentina y que tenía familia en islas canarias, tambn fue a hacer trekking en un volcan en colombia quedo de pasarme el dato de la agencia"
+    "comments": "I requested hosting: platicamos de viajes me contó que junto a su novio fueron en bici de bogotá hasta argentina y que tenía familia en islas canarias, tambn fue a hacer trekking en un volcan en colombia quedo de pasarme el dato de la agencia"
+  },
+  {
+    "groupType": "solo",
+    "theirReference": null,
+    "myReference": null,
+    "stayed": false,
+    "rating": 4,
+    "hometownCode": "COL",
+    "prefixCode": "+57",
+    "continent": "america",
+    "region": "south_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Bacatá Tower, Santa fe",
+    "fullName": "Alejandra S",
+    "hometown": "Bogotá, Bogota D.C.",
+    "livingIn": "Bogotá, Bogota D.C.",
+    "livingInCode": "COL",
+    "birthDate": "2000",
+    "hangOut": true,
+    "visitedDate": "2026-08-28",
+    "urlProfileCs": "alejassax1",
+    "occupation": ["musician"],
+    "gender": "female",
+    "whatsapp": "3197130181",
+    "instagram": "",
+    "gift": [],
+    "comments": "hangout: fuimos a jugar billar y uno"
   }
 ]

@@ -10,6 +10,9 @@
     "prefixCode": "+420",
     "continent": "europe",
     "region": "central_europe",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Senet Coffee, Chapinero Alto",
     "fullName": "Jaroslav",
     "hometown": "Prague, Prague",
     "livingIn": "Prague, Prague",
@@ -23,6 +26,6 @@
     "whatsapp": "777445230",
     "instagram": "jaroslavcj",
     "gift": ["me invito a juegos de mesa y ping pong", "cholao"],
-    "comments": "Salimos dos días fuimos a jugar ping pong y juegos de mesa"
+    "comments": "hangout: salimos dos días fuimos a jugar ping pong y juegos de mesa"
   }
 ]

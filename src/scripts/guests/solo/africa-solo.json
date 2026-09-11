@@ -1,5 +1,8 @@
 [
   {
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "My mom's home",
     "groupType": "solo",
     "didTheyReq": false,
     "theirReference": "Cristian was an incredible host and truly made my stay in Bogotá unforgettable. From the very beginning, he was extremely helpful he accompanied me to buy a SIM card, helped me exchange money, and even lent me some cash when I needed it. I will never forget that kindness. He showed me a great local spot to eat for a cheap price and gave me so many helpful recommendations. Whenever I had a question, he was always available and patient. Staying with him felt easy, safe, and comfortable. Cristian is kind, generous, and truly enjoys helping travelers discover his city. I’m really grateful I got to meet him, and I totally recommend him to anyone who has the chance to stay with him. Thank you for everything, Cristian. See you soon in Morocco 🇲🇦",
@@ -13,7 +16,7 @@
     "region": "northern_africa",
     "fullName": "Simo Amri",
     "hometown": "Casablanca, Casablanca-Settat",
-    "livingIn": "Essaouira",
+    "livingIn": "Essaouira, Marrakesh-Safi",
     "livingInCode": "MAR",
     "birthDate": "1992-02-21",
     "hangOut": true,
@@ -27,6 +30,9 @@
     "ambassador": true
   },
   {
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "My mom's home",
     "groupType": "solo",
     "didTheyReq": false,
     "theirReference": "I had an amazing experience staying with Cristian in Bogotá. Even before I arrived, he was incredibly helpful and sent me a lot of useful information that really helped me understand the country better. When I arrived, he was there waiting for me, very attentive and welcoming. He is extremely kind, always ready to help, and communication with him was smooth and easy. He truly has a very positive energy that makes you feel comfortable right away. He even took the time to show me around in the evening , we went for a walk, and shared a drink, which made the experience even more special. The next day, we explored the area together, had breakfast, and he introduced me to a traditional Colombian breakfast, which I really appreciated. I’m very grateful for his warm hospitality and kindness. Thank you so much for everything I Highly recommend him! Waiting for you in Algeria 🇩🇿",
@@ -57,6 +63,9 @@
     ]
   },
   {
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "My mom's home",
     "groupType": "solo",
     "didTheyReq": false,
     "theirReference": null,
@@ -69,8 +78,8 @@
     "continent": "africa",
     "region": "northern_africa",
     "fullName": "Ghassen",
-    "hometown": "Djerba",
-    "livingIn": "Berlin",
+    "hometown": "Houmt Souk, Medenine Governorate",
+    "livingIn": "Berlin, State of Berlin",
     "livingInCode": "DEU",
     "birthDate": "1984-03-24",
     "hangOut": true,
@@ -84,6 +93,9 @@
     "comments": "no reference, he fixed the sink on the bathroom they have women's hair"
   },
   {
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "My mom's home",
     "groupType": "solo",
     "didTheyReq": false,
     "theirReference": "Chris made me feel comfortable and welcome from the first moment. He was respectful, friendly, and easy to communicate with, and made sure everything was clear during my stay. His home is beautiful, especially the rooftop with an amazing view😮. The room was comfortable, and the place felt warm with his lovely dog Pancho and his cats. I also met his mother she is very kind and lovely. Even though the weather was very rainy, he helped me a lot and kindly lent me his umbrella and a rain jacket, which I really appreciated. He is a creative, talented, and intelligent person. I truly felt at home and free, without any pressure. It was a great experience, and I highly recommend him. 😊",
@@ -96,8 +108,8 @@
     "continent": "africa",
     "region": "northern_africa",
     "fullName": "Yaya Mh",
-    "hometown": "Cairo",
-    "livingIn": "Cairo",
+    "hometown": "Cairo, Cairo Governorate",
+    "livingIn": "Cairo, Cairo Governorate",
     "livingInCode": "EGY",
     "birthDate": "1998",
     "hangOut": true,
@@ -111,6 +123,9 @@
     "comments": "Me pidió que lo dejara quedar de nuevo pero le dije que no"
   },
   {
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "My mom's home",
     "groupType": "solo",
     "didTheyReq": false,
     "theirReference": "Staying with Christian was a wonderful experience. Even before I arrived in Bogotá, he was incredibly helpful, answering my questions and giving me tips about the city. When I got there, his whole family welcomed me warmly; I had the chance to meet his mom, brother, girlfriend, and their pets, which made me feel right at home. Christian and his girlfriend showed me around their city and recommended great places to eat, visit, and even shop for souvenirs. They truly went out of their way to make my stay memorable. I absolutely recommend Christian to anyone traveling to Colombia. You’ll feel safe, welcomed, and very well taken care of!",
@@ -124,7 +139,7 @@
     "region": "western_africa",
     "fullName": "Esther Oyedele",
     "hometown": "Osogbo, Osun",
-    "livingIn": "Blacksburg, Va",
+    "livingIn": "Blacksburg, Virginia",
     "livingInCode": "USA",
     "birthDate": "1995",
     "hangOut": true,
@@ -134,6 +149,6 @@
     "gender": "female",
     "whatsapp": "8161200857",
     "instagram": "estherooyedele",
-    "gift": ["bill 1000X1 NGN", "bill 2X1 BRL", "coin 50X1 BRL", "coin 5X1 BRL"]
+    "gift": ["bill 1X1000 NGN", "bill 1X2 BRL, coins [1X5, 1X50] BRL"]
   }
 ]
