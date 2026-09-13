@@ -32,6 +32,12 @@ export type RegionAmerica = (typeof REGION_AMERICA)[number];
 export const REGIONS = [...REGION_OCEANIA, ...REGION_ASIA, ...REGION_AFRICA, ...REGION_AMERICA, ...REGION_EUROPE] as const;
 export type Region = (typeof REGIONS)[number];
 
+export type GenderStats<T> = {
+  male: T;
+  female: T;
+  trans: T;
+  isGay: T;
+};
 export const GENDERS = ['male', 'female', 'trans'] as const;
 export type Gender = (typeof GENDERS)[number];
 export const GROUP_TYPES = ['solo', 'couple', 'friends', 'family'] as const;

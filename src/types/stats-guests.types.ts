@@ -1,4 +1,53 @@
-import { Continent, Gender } from './global.types';
+import { Continent, Gender, GenderStats, GroupType } from './global.types';
+
+export interface OverallGroupStats<T> extends GroupStats<T> {
+  overall: T;
+}
+
+export interface GroupStats<T> {
+  solo: T;
+  couple: T;
+  friends: T;
+  family: T;
+}
+
+export interface RankingItem<T = RankingGuest> {
+  position: number;
+  guest: T;
+}
+
+export interface RankingGuest {
+  guestId?: string;
+  fullName: string;
+
+  gender?: Gender;
+
+  groupId?: string | null;
+  groupType?: GroupType | null;
+
+  hometownCode?: string | null;
+  continent?: Continent | null;
+  region?: string | null;
+
+  visitedDate?: string;
+  birthDate?: string | Date | null;
+}
+
+export interface RatingGuest extends RankingGuest {
+  rating: number;
+}
+
+export interface GenderCount {
+  male: number;
+  female: number;
+  trans: number;
+  isGay: number;
+}
+
+export interface FirstLastRanking {
+  first: RankingGuest | null;
+  last: RankingGuest | null;
+}
 
 export interface StatsGuestsResponse {
   summary: SummaryStats;
@@ -9,6 +58,7 @@ export interface StatsGuestsResponse {
   gifts: GiftStats;
   timeline: TimelineStats;
   stays: StaysStats;
+  birthdays: BirthdayStats;
 }
 
 export interface SummaryStats {
@@ -17,8 +67,8 @@ export interface SummaryStats {
   totalGuestsGroups: number;
 
   totalVisits: number;
-
   totalNights: number;
+
   averageNightsGeneral: number;
   averageNightsSolo: number;
   averageNightsGroup: number;
@@ -32,95 +82,45 @@ export interface SummaryStats {
 }
 
 export interface RankingsStats {
-  women: {
-    solo: RankingItem[];
-    overall: RankingItem[];
-  };
-
-  men: {
-    solo: RankingItem[];
-    overall: RankingItem[];
-  };
-
-  people: {
-    solo: RankingItem[];
-    overall: RankingItem[];
-  };
-
-  groups: {
-    overall: RankingItem[];
-    couple: RankingItem[];
-    friends: RankingItem[];
-    family: RankingItem[];
-  };
+  women: PeopleRanking;
+  men: PeopleRanking;
+  people: PeopleRanking;
+  groups: GroupRanking;
 }
 
-export interface RankingItem {
-  position: number;
-  guest: RankingGuest;
+export interface PeopleRanking {
+  solo: RankingItem[];
+  overall: RankingItem[];
 }
 
-export interface RankingGuest {
-  guestId?: string;
-  fullName: string;
-
-  gender?: Gender;
-
-  groupId?: string | null;
-  groupType?: string | null;
-
-  hometownCode?: string | null;
-  continent?: string | null;
-  region?: string | null;
-
-  visitedDate?: string;
-
-  birthDate?: string | Date | null;
-}
+export type GroupRanking = Omit<OverallGroupStats<RankingItem[]>, 'solo'>;
 
 export interface DemographicsStats {
   totals: {
     overall: GenderCount;
-
-    groups: {
-      solo: GenderCount;
-      couple: GenderCount;
-      friends: GenderCount;
-      family: GenderCount;
-    };
+    groups: GroupStats<GenderCount>;
   };
 
   oldest: AgeGroups;
-
   youngest: AgeGroups;
 
-  mostVisitedGender: {
-    solo: Gender;
-    overall: Gender;
-    group: Gender;
-
-    couple: Gender;
-    friends: Gender;
-    family: Gender;
-  };
+  mostVisitedGender: MostVisitedGender;
 
   firstLast: FirstLastGroups;
 }
 
-export interface GenderCount {
-  male: number;
-  female: number;
-  trans: number;
-  isGay: number;
+export interface MostVisitedGender {
+  solo: Gender;
+  overall: Gender;
+  group: Gender;
+
+  couple: Gender;
+  friends: Gender;
+  family: Gender;
 }
 
 export interface AgeGroups {
-  solo: {
-    male: RankingGuest[];
-    female: RankingGuest[];
-    trans: RankingGuest[];
-    isGay: RankingGuest[];
-  };
+  solo: GenderStats<RankingGuest[]>;
 
   overall: {
     people: RankingGuest[];
@@ -136,21 +136,11 @@ export interface FirstLastGroups {
     people: FirstLastRanking;
   };
 
-  solo: {
-    female: FirstLastRanking;
-    male: FirstLastRanking;
-    trans: FirstLastRanking;
-    isGay: FirstLastRanking;
-  };
+  solo: GenderStats<FirstLastRanking>;
 
   couple: FirstLastRanking;
   friends: FirstLastRanking;
   family: FirstLastRanking;
-}
-
-export interface FirstLastRanking {
-  first: RankingGuest | null;
-  last: RankingGuest | null;
 }
 
 export interface RatingDistribution {
@@ -162,34 +152,28 @@ export interface RatingDistribution {
   unrated: number;
 }
 
-export interface RatingGuest extends RankingGuest {
-  rating: number;
+export interface RatingsStats {
+  distribution: OverallGroupStats<RatingDistribution>;
+  highest: OverallGroupStats<RatingGuest[]>;
+  lowest: OverallGroupStats<RatingGuest[]>;
 }
 
-export interface RatingsStats {
-  distribution: {
-    solo: RatingDistribution;
-    overall: RatingDistribution;
-    couple: RatingDistribution;
-    friends: RatingDistribution;
-    family: RatingDistribution;
-  };
+export interface GeographyStats {
+  continents: GeographyRanking;
+  regions: GeographyRanking;
+  countries: CountryStats;
+  livingIn: LocationRanking;
+  hometown: LocationRanking;
+}
 
-  highest: {
-    solo: RatingGuest[];
-    overall: RatingGuest[];
-    couple: RatingGuest[];
-    friends: RatingGuest[];
-    family: RatingGuest[];
-  };
+export interface GeographyRanking {
+  all: GeographyItem[];
+}
 
-  lowest: {
-    solo: RatingGuest[];
-    overall: RatingGuest[];
-    couple: RatingGuest[];
-    friends: RatingGuest[];
-    family: RatingGuest[];
-  };
+export interface GeographyItem {
+  code: Continent;
+  total: number;
+  firstVisit: string;
 }
 
 export interface CountryStats {
@@ -212,6 +196,9 @@ export interface CountryItem {
 export interface CountryConsecutive {
   code: string;
   streak: number;
+  firstVisit: string;
+  lastVisit: string;
+  guests: RankingGuest[];
 }
 
 export interface LocationItem {
@@ -224,32 +211,9 @@ export interface LocationRanking {
   top: LocationItem[];
 }
 
-export interface GeographyItem {
-  code: Continent;
-  total: number;
-  firstVisit: string;
-}
-
-export interface GeographyRanking {
-  all: GeographyItem[];
-  top: GeographyItem[];
-  bottom: GeographyItem[];
-}
-
-export interface GeographyStats {
-  continents: GeographyRanking;
-  regions: GeographyRanking;
-  countries: CountryStats;
-  livingIn: LocationRanking;
-  hometown: LocationRanking;
-}
-
-export interface CountryConsecutive {
-  code: string;
-  streak: number;
-  firstVisit: string;
-  lastVisit: string;
-  guests: RankingGuest[];
+export interface GiftStats {
+  solo: GiftItem[];
+  groups: GiftItem[];
 }
 
 export interface GiftItem extends RankingGuest {
@@ -257,9 +221,13 @@ export interface GiftItem extends RankingGuest {
   gifts: string[];
 }
 
-export interface GiftStats {
-  solo: GiftItem[];
-  groups: GiftItem[];
+export interface TimelineStats {
+  years: TimelineItem[];
+  months: TimelineItem[];
+  days: TimelineItem[];
+
+  sameArrivalDay: TimelineArrivalItem[];
+  sameStay: TimelineGuestItem[];
 }
 
 export interface TimelineItem {
@@ -279,18 +247,14 @@ export interface TimelineGuestItem {
   guests: RankingGuest[];
 }
 
-export interface TimelineStats {
-  years: TimelineItem[];
-  months: TimelineItem[];
-  days: TimelineItem[];
+export interface StaysStats {
+  longest: StayRanking;
+  shortest: StayRanking;
 
-  sameArrivalDay: TimelineArrivalItem[];
-  sameStay: TimelineGuestItem[];
-}
+  sameDates: StayOverlapItem[];
+  sameArrival: StayArrivalItem[];
 
-export interface StayItem {
-  guest: RankingGuest;
-  nights: number;
+  maxPeopleTogether: MaxPeopleTogether;
 }
 
 export interface StayRanking {
@@ -299,6 +263,11 @@ export interface StayRanking {
   friends: StayItem[];
   couple: StayItem[];
   family: StayItem[];
+}
+
+export interface StayItem {
+  guest: RankingGuest;
+  nights: number;
 }
 
 export interface StayOverlapItem {
@@ -312,20 +281,29 @@ export interface StayArrivalItem {
   guests: RankingGuest[];
 }
 
-export interface MaxPeopleTogetherItem {
-  total: number;
-  guests: RankingGuest[];
-}
-
 export interface MaxPeopleTogether {
   solo: MaxPeopleTogetherItem;
   overall: MaxPeopleTogetherItem;
 }
 
-export interface StaysStats {
-  longest: StayRanking;
-  shortest: StayRanking;
-  sameDates: StayOverlapItem[];
-  sameArrival: StayArrivalItem[];
-  maxPeopleTogether: MaxPeopleTogether;
+export interface MaxPeopleTogetherItem {
+  total: number;
+  guests: RankingGuest[];
+}
+
+export interface BirthdayStats {
+  calendar: BirthdayCalendarItem[];
+  repeated: BirthdayCalendarItem[];
+  unusual: BirthdayUnusualItem[];
+}
+
+export interface BirthdayCalendarItem {
+  month: number;
+  day: number;
+  total: number;
+  guests: RankingGuest[];
+}
+
+export interface BirthdayUnusualItem extends BirthdayCalendarItem {
+  reason: string;
 }
