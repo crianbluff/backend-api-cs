@@ -126,57 +126,95 @@ export class GuestService {
     const { page, limit, skip } = parsePagination(query);
     const filter = buildFilter(query);
 
-    const docs = await this.model
-      .find(filter)
-      .select('-theirReference -myReference')
-      .sort({ visitedDate: -1 })
-      .lean<GuestLean[]>()
+    const [result] = await this.model
+      .aggregate([
+        {
+          $match: filter,
+        },
+
+        // Si estamos filtrando gays, cada guest debe ser un resultado independiente.
+        // En cualquier otro caso:
+        // - Solo = guestId
+        // - Grupo = groupId
+        {
+          $set: {
+            aggregationKey: query.gay === 'true' ? '$guestId' : { $ifNull: ['$groupId', '$guestId'] },
+          },
+        },
+
+        // Agrupar según aggregationKey
+        {
+          $group: {
+            _id: '$aggregationKey',
+            groupId: { $first: '$groupId' },
+            groupType: { $first: '$groupType' },
+            nights: { $first: '$nights' },
+            stayed: { $first: '$stayed' },
+            visitedDate: { $first: '$visitedDate' },
+            createdAt: { $first: '$createdAt' },
+            updatedAt: { $first: '$updatedAt' },
+
+            members: {
+              $push: '$$ROOT',
+            },
+          },
+        },
+
+        // Más recientes primero
+        {
+          $sort: {
+            visitedDate: -1,
+            _id: 1,
+          },
+        },
+
+        // Paginar y contar directamente en MongoDB
+        {
+          $facet: {
+            data: [{ $skip: skip }, { $limit: limit }],
+            metadata: [{ $count: 'total' }],
+          },
+        },
+      ])
       .exec();
 
-    const groups = new Map<string, GroupListItem>();
-    const result: GuestListItem[] = [];
-    const seenGroups = new Set<string>();
+    const data: GuestListItem[] = [];
 
-    for (const doc of docs) {
-      if (!doc.groupId) {
-        result.push(toSolo(doc));
+    for (const item of result?.data ?? []) {
+      // Si estamos filtrando gays:
+      // cada persona cuenta como un resultado individual,
+      // aunque pertenezca al mismo grupo.
+      if (query.gay === 'true') {
+        data.push(toSolo(item.members[0]));
         continue;
       }
 
-      if (!doc.groupType) {
-        throw new Error(`Missing groupType for groupId ${doc.groupId}`);
+      // Solo
+      if (!item.groupId) {
+        data.push(toSolo(item.members[0]));
+        continue;
       }
 
-      let group = groups.get(doc.groupId);
+      // Grupo
+      const group: GroupListItem = {
+        groupId: item.groupId,
+        groupType: item.groupType,
+        nights: item.nights,
+        stayed: item.stayed,
+        visitedDate: item.visitedDate,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        members: item.members.map(toMember),
+      };
 
-      if (!group) {
-        group = {
-          groupId: doc.groupId,
-          groupType: doc.groupType,
-          nights: doc.nights,
-          stayed: doc.stayed,
-          visitedDate: doc.visitedDate,
-          createdAt: doc.createdAt,
-          updatedAt: doc.updatedAt,
-          members: [],
-        };
-
-        groups.set(doc.groupId, group);
-      }
-
-      group.members.push(toMember(doc));
-
-      if (!seenGroups.has(doc.groupId)) {
-        seenGroups.add(doc.groupId);
-        result.push(group);
-      }
+      data.push(group);
     }
 
-    const total = result.length;
+    const total = result?.metadata?.[0]?.total ?? 0;
     const totalPages = Math.ceil(total / limit);
 
     return {
-      data: result.slice(skip, skip + limit),
+      data,
       total,
       page,
       limit,

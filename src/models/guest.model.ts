@@ -61,7 +61,7 @@ export const guestSchema = new Schema<IGuestDocument>(
 
 // Indexes
 guestSchema.index({ groupId: 1 }, { sparse: true });
-guestSchema.index({ visitedDate: 1 });
+guestSchema.index({ visitedDate: -1 });
 guestSchema.index({ continent: 1 });
 guestSchema.index({ region: 1 });
 guestSchema.index({ isFirstTime: 1 });

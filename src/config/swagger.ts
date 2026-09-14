@@ -1504,7 +1504,7 @@ const options: swaggerJsdoc.Options = {
             members: {
               type: 'array',
               minItems: 2,
-              maxItems: 10,
+              maxItems: 5,
 
               items: {
                 $ref: '#/components/schemas/IndividualFields',
