@@ -9,3 +9,8 @@ export function generateGuestId(): string {
 export function generateCoupleId(): string {
   return nanoid(18);
 }
+
+/** Generates a unique photo ID (16 chars). */
+export function generatePhotoId(): string {
+  return nanoid(16);
+}

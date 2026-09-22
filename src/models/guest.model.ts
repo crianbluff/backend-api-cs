@@ -6,6 +6,35 @@ import { countryCode, nullableString, nullableTrimmedString } from './schemas/co
 // Mongoose document
 export interface IGuestDocument extends Document, GuestDocument {}
 
+const guestPhotoSchema = new Schema(
+  {
+    path: {
+      type: String,
+      required: true,
+    },
+
+    // Opcional porque existen fotos antiguas
+    // que todavía no tienen thumbnail.
+    thumbnailPath: {
+      type: String,
+      required: false,
+    },
+
+    url: {
+      type: String,
+      required: false,
+    },
+
+    thumbnailUrl: {
+      type: String,
+      required: false,
+    },
+  },
+  {
+    _id: true,
+  }
+);
+
 // Schema
 export const guestSchema = new Schema<IGuestDocument>(
   {
@@ -46,6 +75,14 @@ export const guestSchema = new Schema<IGuestDocument>(
     isGay: { type: Boolean, default: false },
     whatsapp: nullableString,
     instagram: nullableString,
+    photos: {
+      type: [guestPhotoSchema],
+      default: [],
+      validate: {
+        validator: (photos: IGuestDocument['photos']) => photos.length <= 5,
+        message: 'A guest can have a maximum of 5 photos',
+      },
+    },
   },
   {
     timestamps: true,

@@ -3,6 +3,7 @@ import { guestController } from '../controllers/guest.controller';
 import { validate } from '../middlewares/validate.middleware';
 import { updateGuestSchema, guestQuerySchema, createSoloGuestSchema } from '../utils/validation';
 import { statsGuestController } from '../controllers/stats-guest.controller';
+import { uploadGuestPhotos } from '../middlewares/upload.middleware';
 
 const router = Router();
 
@@ -219,44 +220,27 @@ router.get('/:id', guestController.getById.bind(guestController));
  *   post:
  *     tags: [Guests]
  *     summary: Create a solo guest
- *     description: Creates a single guest document.
+ *     description: Creates a single guest document with up to 5 photos.
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/CreateSoloGuestDto'
- *           example:
- *             groupType: "solo",
- *             theirReference: "everything was ok!",
- *             myReference: "nice person :)",
- *             comments: "she was so so small",
- *             gift: ["keychain"],
- *             visitedDate: "2028-08-17",
- *             hangOut: false,
- *             countryCodeWeMet: "COL",
- *             cityWeMet: "Bogotá, Bogota D.C.",
- *             locationWeMet: "My mom's home",
- *             isGay: false,
- *             isFirstTime: true,
- *             stayed: true,
- *             birthDate: "1999-07-03",
- *             fullName: "John Doe",
- *             gender: "male",
- *             prefixCode: "+1",
- *             continent: "europe",
- *             region: "scandinavia",
- *             urlProfileCs: "johndoe",
- *             instagram: "johndoe",
- *             occupation: ["teacher"],
- *             whatsapp: "4903213332",
- *             rating: 4,
- *             hometownCode: "NOR",
- *             livingInCode: "MEX",
- *             livingIn: "Mexico city, Mexico city",
- *             hometown: "Oslo, Oslo",
- *             ambassador: false,
- *             didTheyReq: true
+ *             allOf:
+ *               - $ref: '#/components/schemas/CreateSoloGuestDto'
+ *               - type: object
+ *                 properties:
+ *                   photos:
+ *                     type: array
+ *                     maxItems: 5
+ *                     items:
+ *                       type: string
+ *                       format: binary
+ *                     description: Up to 5 guest photos.
+ *           encoding:
+ *             photos:
+ *               style: form
+ *               explode: true
  *     responses:
  *       201:
  *         description: Guest created successfully
@@ -271,7 +255,12 @@ router.get('/:id', guestController.getById.bind(guestController));
  *             schema:
  *               $ref: '#/components/schemas/ApiError'
  */
-router.post('/', validate(createSoloGuestSchema), guestController.create.bind(guestController));
+router.post(
+  '/',
+  uploadGuestPhotos.array('photos', 5),
+  validate(createSoloGuestSchema),
+  guestController.create.bind(guestController)
+);
 
 /**
  * @openapi
@@ -311,7 +300,19 @@ router.post('/', validate(createSoloGuestSchema), guestController.create.bind(gu
  *             schema:
  *               $ref: '#/components/schemas/ApiError'
  */
-router.put('/:id', validate(updateGuestSchema), guestController.update.bind(guestController));
+router.put(
+  '/:id',
+  uploadGuestPhotos.array('photos', 5),
+  (req, _res, next) => {
+    console.log('BODY:', req.body);
+    console.log('PHOTO IDS:', req.body.photoIds);
+    console.log('FILES:', req.files);
+
+    next();
+  },
+  validate(updateGuestSchema),
+  guestController.update.bind(guestController)
+);
 
 /**
  * @openapi

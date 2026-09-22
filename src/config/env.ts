@@ -10,6 +10,9 @@ interface EnvConfig {
   RATE_LIMIT_WINDOW_MS: number;
   RATE_LIMIT_MAX: number;
   API_URL: string;
+  GOOGLE_CLOUD_PROJECT_ID: string;
+  GOOGLE_CLOUD_STORAGE_BUCKET: string;
+  GOOGLE_CLOUD_CREDENTIALS: string;
 }
 
 function requireEnv(key: string): string {
@@ -30,4 +33,7 @@ export const env: EnvConfig = {
   RATE_LIMIT_WINDOW_MS: parseInt(optionalEnv('RATE_LIMIT_WINDOW_MS', '900000'), 10),
   RATE_LIMIT_MAX: parseInt(optionalEnv('RATE_LIMIT_MAX', '100'), 10),
   API_URL: optionalEnv('API_URL', 'http://localhost:3001'),
+  GOOGLE_CLOUD_PROJECT_ID: requireEnv('GOOGLE_CLOUD_PROJECT_ID'),
+  GOOGLE_CLOUD_STORAGE_BUCKET: requireEnv('GOOGLE_CLOUD_STORAGE_BUCKET'),
+  GOOGLE_CLOUD_CREDENTIALS: requireEnv('GOOGLE_CLOUD_CREDENTIALS'),
 };

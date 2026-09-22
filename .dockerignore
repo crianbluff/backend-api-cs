@@ -9,3 +9,4 @@ coverage
 README.md
 npm-debug.log
 docker-compose*.yml
+credentials/*.json

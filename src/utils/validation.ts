@@ -29,11 +29,51 @@ const paginationSchema = z.object({
   limit: z.string().regex(/^\d+$/).optional().default('10'),
 });
 
+const booleanFromFormData = z.preprocess((value) => {
+  if (typeof value === 'string') {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+  }
+
+  return value;
+}, z.boolean());
+
+const integerFromFormData = (min?: number, max?: number) =>
+  z.preprocess(
+    (value) => {
+      if (typeof value === 'string' && value.trim() !== '') return Number(value);
+      return value;
+    },
+    z
+      .number()
+      .int()
+      .min(min ?? Number.MIN_SAFE_INTEGER)
+      .max(max ?? Number.MAX_SAFE_INTEGER)
+  );
+
+const arrayFromFormData = z.preprocess((value) => {
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value);
+
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    } catch {
+      return [value];
+    }
+
+    return [value];
+  }
+
+  return value;
+}, z.array(z.string()));
+
 // Individual guest
 
 const individualSchema = z.object({
   guestId: z.string().optional(),
-  rating: z.number().int().min(1).max(5).nullable().optional().default(null),
+  rating: integerFromFormData(1, 5).nullable().optional().default(null),
   hometownCode: alpha3Schema,
   countryCodeWeMet: alpha3Schema,
   livingInCode: alpha3Schema.nullable().optional().default(null),
@@ -46,27 +86,27 @@ const individualSchema = z.object({
   cityWeMet: z.string().max(200).nullable().optional().default(null),
   locationWeMet: z.string().max(200).nullable().optional().default(null),
   birthDate: isoDateSchema.nullable().optional().default(null),
-  occupation: z.array(z.string().max(100)).optional().default([]),
+  occupation: arrayFromFormData.optional().default([]),
   urlProfileCs: z.union([z.string(), z.number()]).nullable().optional().default(null),
   gender: genderEnum,
-  isGay: z.boolean().default(false),
+  isGay: booleanFromFormData.default(false),
   theirReference: z.string().max(500, 'theirReference cannot exceed 500 characters').nullable().optional(),
   myReference: z.string().max(500, 'myReference cannot exceed 500 characters').nullable().optional(),
   whatsapp: z.string().max(20).nullable().optional().default(null),
   instagram: z.string().max(100).nullable().optional().default(null),
   // Per-member fields
-  isFirstTime: z.boolean().optional().default(false),
-  ambassador: z.boolean().optional().default(false),
-  didTheyReq: z.boolean().optional().default(false),
-  hangOut: z.boolean().optional().default(false),
-  gift: z.array(z.string().max(200)).nullable().optional().default(null),
+  isFirstTime: booleanFromFormData.optional().default(false),
+  ambassador: booleanFromFormData.optional().default(false),
+  didTheyReq: booleanFromFormData.optional().default(false),
+  hangOut: booleanFromFormData.optional().default(false),
+  gift: arrayFromFormData.nullable().optional().default(null),
   comments: z.string().max(2000).nullable().optional().default(null),
 });
 
 // Shared guest fields
 const staySchema = z.object({
-  nights: z.number().int().optional().default(0),
-  stayed: z.boolean(),
+  nights: integerFromFormData(0).optional().default(0),
+  stayed: booleanFromFormData,
   visitedDate: isoDateSchema,
 });
 
@@ -82,7 +122,9 @@ export const createGroupGuestSchema = staySchema.extend({
 // Update schemas
 export const updateSoloGuestSchema = createSoloGuestSchema.partial();
 export const updateGroupGuestSchema = createGroupGuestSchema.partial();
-export const updateGuestSchema = createSoloGuestSchema.partial();
+export const updateGuestSchema = createSoloGuestSchema.partial().extend({
+  photoIds: arrayFromFormData.optional(),
+});
 
 // Guest query params
 

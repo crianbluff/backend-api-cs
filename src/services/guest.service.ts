@@ -5,6 +5,8 @@ import { UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 import { generateGuestId } from '../utils/nanoid';
 import { PaginatedResponse } from '../types/api-response.types';
 import { buildVisitedDateFilter, parsePagination } from '../utils/api-response';
+import { storageService, UploadedPhoto } from './storage.service';
+import { AppError } from '../middlewares/error.middleware';
 
 // ─── Mongoose types ──────────────────────────────────────────────────────────
 export type GuestDoc = HydratedDocument<IGuestDocument>;
@@ -45,6 +47,9 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     whatsapp: doc.whatsapp,
     instagram: doc.instagram,
     urlProfileCs: doc.urlProfileCs,
+
+    photos: doc.photos,
+
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,
   };
@@ -85,6 +90,10 @@ function toSolo(doc: GuestLean): SoloListItem {
     myReference: doc.myReference,
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
+
+    // Photos
+    photos: doc.photos,
+
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,
   };
@@ -121,6 +130,52 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
 
 export class GuestService {
   constructor(protected readonly model: Model<IGuestDocument>) {}
+
+  private async addSignedUrls(doc: GuestLean): Promise<GuestLean> {
+    if (!doc.photos?.length) {
+      return doc;
+    }
+
+    return {
+      ...doc,
+
+      photos: await Promise.all(
+        doc.photos.map(async (photo) => {
+          const url = await storageService.getSignedUrl(photo.path);
+
+          const thumbnailUrl = photo.thumbnailPath ? await storageService.getSignedUrl(photo.thumbnailPath) : url;
+
+          return {
+            ...photo,
+            url,
+            thumbnailUrl,
+          };
+        })
+      ),
+    };
+  }
+
+  private async addPhotoUrls(guest: GuestLean): Promise<GuestLean> {
+    if (!guest.photos?.length) {
+      return guest;
+    }
+
+    guest.photos = await Promise.all(
+      guest.photos.map(async (photo) => {
+        const url = await storageService.getSignedUrl(photo.path);
+
+        const thumbnailUrl = photo.thumbnailPath ? await storageService.getSignedUrl(photo.thumbnailPath) : url;
+
+        return {
+          ...photo,
+          url,
+          thumbnailUrl,
+        };
+      })
+    );
+
+    return guest;
+  }
 
   async findAll(query: GuestQueryInput): Promise<PaginatedResponse<GuestListItem>> {
     const { page, limit, skip } = parsePagination(query);
@@ -185,17 +240,20 @@ export class GuestService {
       // cada persona cuenta como un resultado individual,
       // aunque pertenezca al mismo grupo.
       if (query.gay === 'true') {
-        data.push(toSolo(item.members[0]));
+        const member = await this.addSignedUrls(item.members[0]);
+        data.push(toSolo(member));
         continue;
       }
 
       // Solo
       if (!item.groupId) {
-        data.push(toSolo(item.members[0]));
+        const member = await this.addSignedUrls(item.members[0]);
+        data.push(toSolo(member));
         continue;
       }
 
-      // Grupo
+      const membersWithSignedUrls = await Promise.all(item.members.map((member: GuestLean) => this.addSignedUrls(member)));
+
       const group: GroupListItem = {
         groupId: item.groupId,
         groupType: item.groupType,
@@ -204,7 +262,7 @@ export class GuestService {
         visitedDate: item.visitedDate,
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
-        members: item.members.map(toMember),
+        members: membersWithSignedUrls.map(toMember),
       };
 
       data.push(group);
@@ -225,33 +283,245 @@ export class GuestService {
   }
 
   async findById(guestId: string): Promise<GuestLean | null> {
-    return this.model.findOne({ guestId }).lean<GuestLean>().exec();
+    const guest = await this.model.findOne({ guestId }).lean<GuestLean>().exec();
+    if (!guest) return null;
+
+    return this.addPhotoUrls(guest);
   }
 
-  async createSolo(input: Record<string, unknown>): Promise<Omit<GuestLean, 'groupId'>> {
+  async createSolo(input: Record<string, unknown>, files: Express.Multer.File[] = []): Promise<Omit<GuestLean, 'groupId'>> {
+    const guestId = generateGuestId();
+
+    console.log('[GuestService] 1. Creating Mongo document');
+
     const doc = await this.model.create({
-      guestId: generateGuestId(),
+      guestId,
       groupId: null,
       groupType: 'solo',
       ...input,
+      photos: [],
     });
 
+    console.log('[GuestService] 2. Mongo document created');
+
+    let uploadedPhotos: UploadedPhoto[] = [];
+
+    try {
+      if (files.length > 0) {
+        console.log('[GuestService] 3. Uploading photos:', files.length);
+
+        uploadedPhotos = await storageService.uploadGuestPhotos(guestId, files);
+
+        console.log('[GuestService] 4. Photos uploaded');
+
+        doc.photos = uploadedPhotos.map((photo) => ({
+          path: photo.path,
+          thumbnailPath: photo.thumbnailPath,
+        }));
+
+        console.log('[GuestService] 5. Saving photo references');
+
+        await doc.save();
+
+        console.log('[GuestService] 6. Photo references saved');
+      }
+    } catch (error) {
+      console.error('[GuestService] Error after photo upload. Cleaning up GCS files...', error);
+
+      if (uploadedPhotos.length > 0) {
+        await storageService.deleteGuestPhotos(uploadedPhotos);
+      }
+
+      throw error;
+    }
+
     const { groupId: _groupId, ...guest } = doc.toJSON() as GuestLean;
+
+    console.log('[GuestService] 7. Document converted to JSON');
+
+    if (guest.photos?.length) {
+      console.log('[GuestService] 8. Generating signed URLs');
+
+      guest.photos = await Promise.all(
+        guest.photos.map(async (photo) => {
+          console.log('[GuestService] Signing:', photo.path);
+
+          const [url, thumbnailUrl] = await Promise.all([
+            storageService.getSignedUrl(photo.path),
+            photo.thumbnailPath ? storageService.getSignedUrl(photo.thumbnailPath) : Promise.resolve(undefined),
+          ]);
+
+          return {
+            ...photo,
+            url,
+            thumbnailUrl: thumbnailUrl ?? url,
+          };
+        })
+      );
+
+      console.log('[GuestService] 9. Signed URLs generated');
+    }
+
+    console.log('[GuestService] 10. Returning guest');
+
     return guest;
   }
 
-  async update(guestId: string, input: UpdateGuestInput): Promise<GuestLean | null> {
-    return this.model
-      .findOneAndUpdate(
-        { guestId },
-        { $set: input },
-        {
-          new: true,
-          runValidators: true,
-        }
-      )
-      .lean<GuestLean>()
-      .exec();
+  async update(
+    guestId: string,
+    input: UpdateGuestInput,
+    files: Express.Multer.File[] = [],
+    photoIds?: string[]
+  ): Promise<GuestLean | null> {
+    const guest = await this.model.findOne({ guestId }).exec();
+
+    if (!guest) {
+      return null;
+    }
+
+    const existingPhotos = guest.photos ?? [];
+
+    // ---------------------------------------------------------
+    // 1. Determinar qué fotos conservar y cuáles eliminar
+    // ---------------------------------------------------------
+
+    let photosToKeep = existingPhotos;
+    let photosToDelete: typeof existingPhotos = [];
+
+    if (photoIds !== undefined) {
+      const existingPhotoIds = new Set(
+        existingPhotos.map((photo) => photo._id?.toString()).filter((id): id is string => Boolean(id))
+      );
+
+      // Validar que TODOS los IDs recibidos existen.
+      // Si alguno no existe, abortamos el update completo.
+      const invalidPhotoIds = photoIds.filter((photoId) => !existingPhotoIds.has(photoId));
+
+      if (invalidPhotoIds.length > 0) {
+        throw new AppError(`The following photo IDs do not exist: ${invalidPhotoIds.join(', ')}`, 400);
+      }
+
+      const requestedPhotoIds = new Set(photoIds);
+
+      // Fotos que el usuario quiere conservar
+      photosToKeep = existingPhotos.filter((photo) => {
+        const photoId = photo._id?.toString();
+
+        return photoId ? requestedPhotoIds.has(photoId) : false;
+      });
+
+      // Fotos existentes que el usuario ya no quiere
+      photosToDelete = existingPhotos.filter((photo) => {
+        const photoId = photo._id?.toString();
+
+        return photoId ? !requestedPhotoIds.has(photoId) : true;
+      });
+    }
+
+    // ---------------------------------------------------------
+    // 2. Validar máximo de 5 fotos
+    // ---------------------------------------------------------
+
+    const finalPhotoCount = photosToKeep.length + files.length;
+
+    if (finalPhotoCount > 5) {
+      throw new AppError('A guest can have a maximum of 5 photos', 400);
+    }
+
+    let uploadedPhotos: UploadedPhoto[] = [];
+
+    try {
+      // -------------------------------------------------------
+      // 3. Subir fotos nuevas
+      // -------------------------------------------------------
+
+      if (files.length > 0) {
+        uploadedPhotos = await storageService.uploadGuestPhotos(guestId, files);
+      }
+
+      // -------------------------------------------------------
+      // 4. Crear referencias de las fotos nuevas
+      // -------------------------------------------------------
+
+      const newPhotos = uploadedPhotos.map((photo) => ({
+        path: photo.path,
+        thumbnailPath: photo.thumbnailPath,
+      }));
+
+      // -------------------------------------------------------
+      // 5. Actualizar los campos del guest
+      // -------------------------------------------------------
+
+      Object.assign(guest, input);
+
+      // Las fotos se controlan exclusivamente aquí.
+      // Nunca usamos input.photos.
+      guest.photos = [...photosToKeep, ...newPhotos] as typeof guest.photos;
+
+      // -------------------------------------------------------
+      // 6. Guardar MongoDB
+      // -------------------------------------------------------
+
+      await guest.save();
+
+      // -------------------------------------------------------
+      // 7. Eliminar de GCS las fotos que ya no están en MongoDB
+      // -------------------------------------------------------
+
+      if (photosToDelete.length > 0) {
+        await storageService.deleteGuestPhotos(
+          photosToDelete.map((photo) => ({
+            path: photo.path,
+            thumbnailPath: photo.thumbnailPath,
+          }))
+        );
+      }
+
+      // -------------------------------------------------------
+      // 8. Generar signed URLs
+      // -------------------------------------------------------
+
+      const result = guest.toJSON() as GuestLean;
+
+      if (result.photos?.length) {
+        result.photos = await Promise.all(
+          result.photos.map(async (photo) => {
+            const [url, thumbnailUrl] = await Promise.all([
+              storageService.getSignedUrl(photo.path),
+              photo.thumbnailPath ? storageService.getSignedUrl(photo.thumbnailPath) : Promise.resolve(undefined),
+            ]);
+
+            return {
+              ...photo,
+              url,
+              thumbnailUrl: thumbnailUrl ?? url,
+            };
+          })
+        );
+      }
+
+      return result;
+    } catch (error) {
+      // -------------------------------------------------------
+      // 9. Si algo falla después de subir fotos nuevas,
+      // eliminar únicamente las fotos nuevas.
+      //
+      // Las fotos antiguas no se tocan.
+      // -------------------------------------------------------
+
+      if (uploadedPhotos.length > 0) {
+        await storageService.deleteGuestPhotos(uploadedPhotos);
+      }
+
+      throw error;
+    }
+  }
+
+  async deletePhoto(photo: { path: string; thumbnailPath?: string }): Promise<void> {
+    await storageService.deletePhoto({
+      path: photo.path,
+      thumbnailPath: photo.thumbnailPath,
+    });
   }
 
   async delete(guestId: string): Promise<boolean> {

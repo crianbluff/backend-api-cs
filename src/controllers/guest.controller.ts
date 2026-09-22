@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { GuestService, guestService } from '../services/guest.service';
-import { sendSuccess, sendCreated, sendNotFound, sendBadRequest, sendPaginated } from '../utils/response';
+import { sendSuccess, sendCreated, sendNotFound, sendPaginated } from '../utils/response';
 import { GuestQueryInput, UpdateGuestInput } from '../utils/validation';
 import { logger } from '../utils/logger';
 
@@ -10,6 +10,7 @@ export class GuestController {
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const result = await this.service.findAll(req.query as unknown as GuestQueryInput);
+
       sendPaginated(res, result, 'Guests retrieved successfully');
     } catch (error) {
       logger.error('[getAll]', error);
@@ -20,11 +21,14 @@ export class GuestController {
   async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
+
       const guest = await this.service.findById(id);
+
       if (!guest) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
+
       sendSuccess(res, guest, 'Guest retrieved successfully');
     } catch (error) {
       logger.error('[getById]', error);
@@ -34,7 +38,9 @@ export class GuestController {
 
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const guest = await this.service.createSolo(req.body);
+      const files = (req.files as Express.Multer.File[]) ?? [];
+
+      const guest = await this.service.createSolo(req.body, files);
 
       sendCreated(res, guest, 'Guest created successfully');
     } catch (error) {
@@ -46,21 +52,22 @@ export class GuestController {
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
-      const input = req.body as UpdateGuestInput;
 
-      if (!input || Object.keys(input).length === 0) {
-        sendBadRequest(res, 'Request body is empty. Please provide at least one field to update.');
-        return;
-      }
+      const files = (req.files as Express.Multer.File[]) ?? [];
 
-      const updated = await this.service.update(id, input);
+      const { photoIds, ...input } = req.body as UpdateGuestInput;
 
-      if (!updated) {
+      console.log('[GuestController] guestId:', id);
+      console.log('[GuestController] photoIds:', photoIds);
+
+      const guest = await this.service.update(id, input, files, photoIds);
+
+      if (!guest) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
 
-      sendSuccess(res, updated, 'Guest updated successfully');
+      sendSuccess(res, guest, 'Guest updated successfully');
     } catch (error) {
       logger.error('[update]', error);
       next(error);
@@ -70,11 +77,14 @@ export class GuestController {
   async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
+
       const deleted = await this.service.delete(id);
+
       if (!deleted) {
         sendNotFound(res, `No guest found with ID "${id}"`);
         return;
       }
+
       sendSuccess(res, null, `Guest "${id}" deleted successfully`);
     } catch (error) {
       logger.error('[delete]', error);

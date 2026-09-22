@@ -32,6 +32,7 @@ export interface GuestIndividual {
 
   whatsapp: string | null;
   instagram: string | null;
+  photos: GuestPhoto[];
 }
 
 export interface VisitFields {
@@ -58,6 +59,7 @@ export interface VisitFields {
 export interface GuestDocument extends GuestIndividual, VisitFields {
   groupId: string | null;
   groupType: GroupType;
+  photos: GuestPhoto[];
 
   createdAt: Date;
   updatedAt: Date;
@@ -89,6 +91,7 @@ export interface SoloListItem extends Pick<
   | 'isGay'
   | 'whatsapp'
   | 'urlProfileCs'
+  | 'photos'
 > {
   groupType: 'solo';
 
@@ -131,6 +134,7 @@ export interface GroupMemberListItem extends Pick<
   | 'whatsapp'
   | 'instagram'
   | 'urlProfileCs'
+  | 'photos'
 > {
   hangOut: boolean;
   gift: string[] | null;
@@ -159,6 +163,14 @@ export interface GroupListItem {
 
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface GuestPhoto {
+  _id?: string;
+  path: string;
+  thumbnailPath?: string;
+  url?: string;
+  thumbnailUrl?: string;
 }
 
 export type GuestListItem = SoloListItem | GroupListItem;

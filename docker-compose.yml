@@ -8,6 +8,7 @@ services:
     restart: unless-stopped
     ports:
       - '3001:3001'
+
     environment:
       NODE_ENV: production
       PORT: 3001
@@ -15,6 +16,14 @@ services:
       API_VERSION: v1
       RATE_LIMIT_WINDOW_MS: 900000
       RATE_LIMIT_MAX: 100
+
+      GOOGLE_CLOUD_PROJECT_ID: ${GOOGLE_CLOUD_PROJECT_ID}
+      GOOGLE_CLOUD_STORAGE_BUCKET: ${GOOGLE_CLOUD_STORAGE_BUCKET}
+      GOOGLE_CLOUD_CREDENTIALS: /app/credentials/couchsurfing-backend-photos-42dd1dd5eb95.json
+
+    volumes:
+      - ./credentials:/app/credentials:ro
+
     networks:
       - guests_network
 
