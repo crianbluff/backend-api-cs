@@ -139,18 +139,134 @@ const router = Router();
  *         schema:
  *           type: string
  *           enum: [true, false]
-
  *       - in: query
+ *         name: birthDate
+ *         schema:
+ *           type: string
+ *         description: |
+ *           Filter guests by birth date. The format determines the type of search:
+ *
+ *           - YYYY: all guests born in that year.
+ *             Example: 1999 → all guests born in 1999.
+ *
+ *           - MM: all guests born in that month, regardless of year or day.
+ *             Example: 05 → all guests born in May.
+ *
+ *           - YYYY-MM: all guests born in that month and year, regardless of day.
+ *             Example: 1999-05 → all guests born in May 1999.
+ *
+ *           - YYYY-MM-DD: all guests born on that exact date.
+ *             Example: 1999-05-15 → all guests born on May 15, 1999.
+ *
+ *           - MM-DD: all guests born on that month and day, regardless of year.
+ *             Example: 05-15 → all guests born on May 15.
+ *
+ *         examples:
+ *           year:
+ *             summary: Birth year
+ *             value: "1999"
+ *           month:
+ *             summary: Birth month, any year
+ *             value: "05"
+ *           monthYear:
+ *             summary: Specific month and year
+ *             value: "1999-05"
+ *           exactDate:
+ *             summary: Exact birth date
+ *             value: "1999-05-15"
+ *           monthDay:
+ *             summary: Month and day, any year
+ *             value: "05-15"
+ *
+ *       - in: query
+ *         name: day
+ *         schema:
+ *           type: string
+ *         description: |
+ *           Filter guests by the day of the visit across all months of a specific year.
+ *
+ *           Format: YYYY-DD
+ *
+ *           Example: 2026-05 returns all guests who visited on the 5th day
+ *           of any month in 2026.
+ *
+ *           For example, it matches:
+ *           - 2026-01-05
+ *           - 2026-02-05
+ *           - 2026-03-05
+ *           - 2026-12-05
+ *
+ *           It does not match:
+ *           - 2025-05-05
+ *           - 2026-01-04
+ *           - 2026-01-06
+ *
+ *         example: "2026-05"
+
+
+  *       - in: query
  *         name: from
  *         schema:
  *           type: string
- *         example: 2022-11
-
+ *         description: |
+ *           Start date for filtering guests by visited date.
+ *
+ *           The date can be provided as:
+ *
+ *           - YYYY: from the beginning of that year.
+ *             Example: 2022 → dates from 2022 onward.
+ *
+ *           - YYYY-MM: from the beginning of that month.
+ *             Example: 2022-11 → dates from November 2022 onward.
+ *
+ *           - YYYY-MM-DD: from that exact date.
+ *             Example: 2022-11-15 → dates from November 15, 2022 onward.
+ *
+ *           When used together with "to", guests are returned within the
+ *           specified date range.
+ *
+ *         examples:
+ *           year:
+ *             summary: From a year
+ *             value: "2022"
+ *           month:
+ *             summary: From a month
+ *             value: "2022-11"
+ *           date:
+ *             summary: From an exact date
+ *             value: "2022-11-15"
+ *
  *       - in: query
  *         name: to
  *         schema:
  *           type: string
- *         example: 2025-08
+ *         description: |
+ *           End date for filtering guests by visited date.
+ *
+ *           The date can be provided as:
+ *
+ *           - YYYY: up to the end of that year.
+ *             Example: 2025 → dates up to the end of 2025.
+ *
+ *           - YYYY-MM: up to the end of that month.
+ *             Example: 2025-08 → dates up to the end of August 2025.
+ *
+ *           - YYYY-MM-DD: up to that exact date.
+ *             Example: 2025-08-15 → dates up to August 15, 2025.
+ *
+ *           When used together with "from", guests are returned within the
+ *           specified date range.
+ *
+ *         examples:
+ *           year:
+ *             summary: To a year
+ *             value: "2025"
+ *           month:
+ *             summary: To a month
+ *             value: "2025-08"
+ *           date:
+ *             summary: To an exact date
+ *             value: "2025-08-15"
  *     responses:
  *       200:
  *         description: Guests retrieved successfully

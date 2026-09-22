@@ -4,7 +4,7 @@ import { GuestDocument, GuestListItem, SoloListItem, GroupListItem, GroupMemberL
 import { UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 import { generateGuestId } from '../utils/nanoid';
 import { PaginatedResponse } from '../types/api-response.types';
-import { buildVisitedDateFilter, parsePagination } from '../utils/api-response';
+import { buildBirthDateFilter, buildVisitedDateFilter, parsePagination } from '../utils/api-response';
 import { storageService, UploadedPhoto } from './storage.service';
 import { AppError } from '../middlewares/error.middleware';
 
@@ -128,8 +128,14 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.hangOut !== undefined) filter.hangOut = query.hangOut === 'true';
   if (query.didTheyReq !== undefined) filter.didTheyReq = query.didTheyReq === 'true';
   if (query.rating !== undefined) filter.rating = Number(query.rating);
-  Object.assign(filter, buildVisitedDateFilter(query.from, query.to));
+  Object.assign(filter, buildBirthDateFilter(query.birthDate));
 
+  if (query.day) {
+    const [year, day] = query.day.split('-');
+    filter.visitedDate = { $regex: `^${year}-\\d{2}-${day}$` };
+  }
+
+  Object.assign(filter, buildVisitedDateFilter(query.from, query.to));
   return filter;
 }
 

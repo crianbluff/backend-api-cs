@@ -8,10 +8,17 @@ const regionEnum = z.enum(REGIONS);
 const genderEnum = z.enum(GENDERS);
 const groupTypeEnum = z.enum(GROUP_TYPES);
 
-// ISO 8601 flexible:
-// "2026" | "2026-01" | "2026-01-05"
+// ISO 8601 flexible: YYYY | YYYY-MM | YYYY-MM-DD
 const isoDateRegex = /^\d{4}(-\d{2}(-\d{2})?)?$/;
 const isoDateSchema = z.string().regex(isoDateRegex, 'Date must be ISO 8601: "YYYY", "YYYY-MM" or "YYYY-MM-DD"');
+
+// Birth date filter: YYYY | YYYY-MM | YYYY-MM-DD | MM | MM-DD | --DD
+const birthDateQuerySchema = z
+  .string()
+  .regex(
+    /^(?:\d{4}|\d{2}|\d{4}-\d{2}|\d{4}-\d{2}-\d{2}|\d{2}-\d{2}|--\d{2})$/,
+    'birthDate must be YYYY, MM, YYYY-MM, YYYY-MM-DD, MM-DD or --DD'
+  );
 
 const alpha3Schema = z
   .string()
@@ -142,6 +149,11 @@ const guestQueryFiltersSchema = z.object({
   hangOut: booleanQuerySchema.optional(),
   didTheyReq: booleanQuerySchema.optional(),
   rating: ratingQuerySchema.optional(),
+  birthDate: birthDateQuerySchema.optional(),
+  day: z
+    .string()
+    .regex(/^\d{4}-\d{2}$/, 'day must be YYYY-MM')
+    .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
 });
@@ -238,6 +250,11 @@ const hostedQueryFiltersSchema = z.object({
   hangOut: booleanQuerySchema.optional(),
   didTheyReq: booleanQuerySchema.optional(),
   rating: ratingQuerySchema.optional(),
+  birthDate: birthDateQuerySchema.optional(),
+  day: z
+    .string()
+    .regex(/^\d{4}-\d{2}$/, 'day must be YYYY-MM')
+    .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
 });
