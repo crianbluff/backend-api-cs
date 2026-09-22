@@ -8,7 +8,7 @@ const router = Router();
 // ──────────── Guests Groups ──────────── //
 /**
  * @openapi
- * /guests/group/{groupId}:
+ * /groups/{groupId}:
  *   get:
  *     tags: [Groups]
  *     summary: Get all members of a group by groupId

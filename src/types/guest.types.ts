@@ -137,7 +137,6 @@ export interface GroupMemberListItem extends Pick<
   | 'photos'
 > {
   hangOut: boolean;
-  gift: string[] | null;
   comments: string | null;
 
   isFirstTime: boolean;

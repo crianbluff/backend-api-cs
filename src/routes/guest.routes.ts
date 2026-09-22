@@ -109,6 +109,12 @@ const router = Router();
  *         schema:
  *           type: string
  *           enum: [true, false]
+
+ *       - in: query
+ *         name: gift
+ *         schema:
+ *           type: string
+ *           enum: [true, false] 
   
  *       - in: query
  *         name: gay

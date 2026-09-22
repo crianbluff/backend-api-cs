@@ -19,7 +19,6 @@ function toMember(doc: GuestLean): GroupMemberListItem {
 
     // Visit info
     hangOut: doc.hangOut,
-    gift: doc.gift,
     comments: doc.comments,
     isFirstTime: doc.isFirstTime,
     ambassador: doc.ambassador,
@@ -115,6 +114,14 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
     filter.groupType = query.groupType;
   }
 
+  if (query.gift !== undefined) {
+    if (query.gift === 'true') {
+      filter['gift.0'] = { $exists: true };
+    } else {
+      filter.$or = [{ gift: null }, { gift: { $exists: false } }, { gift: { $size: 0 } }];
+    }
+  }
+
   if (query.gay !== undefined) filter.isGay = query.gay === 'true';
   if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';
   if (query.ambassador !== undefined) filter.ambassador = query.ambassador === 'true';
@@ -193,7 +200,8 @@ export class GuestService {
         // - Grupo = groupId
         {
           $set: {
-            aggregationKey: query.gay === 'true' ? '$guestId' : { $ifNull: ['$groupId', '$guestId'] },
+            aggregationKey:
+              query.gay === 'true' || query.gift !== undefined ? '$guestId' : { $ifNull: ['$groupId', '$guestId'] },
           },
         },
 

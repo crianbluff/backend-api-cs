@@ -136,6 +136,7 @@ const guestQueryFiltersSchema = z.object({
   gender: genderEnum.optional(),
   groupType: groupTypeEnum.optional(),
   gay: booleanQuerySchema.optional(),
+  gift: booleanQuerySchema.optional(),
   isFirstTime: booleanQuerySchema.optional(),
   ambassador: booleanQuerySchema.optional(),
   hangOut: booleanQuerySchema.optional(),

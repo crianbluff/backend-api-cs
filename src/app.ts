@@ -44,7 +44,7 @@ export function createApp(): Application {
   // ─── API routes ───────────────────────────────────────────────────────────
   const BASE = `/api/${env.API_VERSION}`;
   // Groups
-  app.use(`${BASE}/groups/guests`, groupRoutes);
+  app.use(`${BASE}/groups`, groupRoutes);
 
   app.use(`${BASE}/guests`, guestRoutes);
   app.use(`${BASE}/hosted`, hostedRoutes);
