@@ -314,8 +314,6 @@ export class GuestService {
   async createSolo(input: Record<string, unknown>, files: Express.Multer.File[] = []): Promise<Omit<GuestLean, 'groupId'>> {
     const guestId = generateGuestId();
 
-    console.log('[GuestService] 1. Creating Mongo document');
-
     const doc = await this.model.create({
       guestId,
       groupId: null,
@@ -324,28 +322,18 @@ export class GuestService {
       photos: [],
     });
 
-    console.log('[GuestService] 2. Mongo document created');
-
     let uploadedPhotos: UploadedPhoto[] = [];
 
     try {
       if (files.length > 0) {
-        console.log('[GuestService] 3. Uploading photos:', files.length);
-
         uploadedPhotos = await storageService.uploadGuestPhotos(guestId, files);
-
-        console.log('[GuestService] 4. Photos uploaded');
 
         doc.photos = uploadedPhotos.map((photo) => ({
           path: photo.path,
           thumbnailPath: photo.thumbnailPath,
         }));
 
-        console.log('[GuestService] 5. Saving photo references');
-
         await doc.save();
-
-        console.log('[GuestService] 6. Photo references saved');
       }
     } catch (error) {
       console.error('[GuestService] Error after photo upload. Cleaning up GCS files...', error);
@@ -359,15 +347,9 @@ export class GuestService {
 
     const { groupId: _groupId, ...guest } = doc.toJSON() as GuestLean;
 
-    console.log('[GuestService] 7. Document converted to JSON');
-
     if (guest.photos?.length) {
-      console.log('[GuestService] 8. Generating signed URLs');
-
       guest.photos = await Promise.all(
         guest.photos.map(async (photo) => {
-          console.log('[GuestService] Signing:', photo.path);
-
           const [url, thumbnailUrl] = await Promise.all([
             storageService.getSignedUrl(photo.path),
             photo.thumbnailPath ? storageService.getSignedUrl(photo.thumbnailPath) : Promise.resolve(undefined),
@@ -380,11 +362,7 @@ export class GuestService {
           };
         })
       );
-
-      console.log('[GuestService] 9. Signed URLs generated');
     }
-
-    console.log('[GuestService] 10. Returning guest');
 
     return guest;
   }

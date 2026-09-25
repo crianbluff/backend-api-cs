@@ -52,14 +52,8 @@ export class GuestController {
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
-
       const files = (req.files as Express.Multer.File[]) ?? [];
-
       const { photoIds, ...input } = req.body as UpdateGuestInput;
-
-      console.log('[GuestController] guestId:', id);
-      console.log('[GuestController] photoIds:', photoIds);
-
       const guest = await this.service.update(id, input, files, photoIds);
 
       if (!guest) {
