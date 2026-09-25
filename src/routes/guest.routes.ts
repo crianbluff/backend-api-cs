@@ -34,6 +34,16 @@ const router = Router();
  *         schema:
  *           type: string
  *           enum: [male, female, trans]
+  
+ *       - in: query
+ *         name: livingIn
+ *         schema:
+ *           type: string
+
+ *       - in: query
+ *         name: hometown
+ *         schema:
+ *           type: string
 
  *       - in: query
  *         name: page

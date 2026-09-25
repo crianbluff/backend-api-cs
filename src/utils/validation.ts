@@ -156,6 +156,8 @@ const guestQueryFiltersSchema = z.object({
     .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
+  hometown: z.string().max(200).nullable().optional().default(null),
+  livingIn: z.string().max(200).nullable().optional().default(null),
 });
 
 export const guestQuerySchema = paginationSchema.merge(guestQueryFiltersSchema);
@@ -245,6 +247,7 @@ const hostedQueryFiltersSchema = z.object({
   gender: genderEnum.optional(),
   groupTypeCompanionship: groupTypeEnum.optional(),
   gay: booleanQuerySchema.optional(),
+  gift: booleanQuerySchema.optional(),
   isFirstTime: booleanQuerySchema.optional(),
   ambassador: booleanQuerySchema.optional(),
   hangOut: booleanQuerySchema.optional(),
@@ -257,6 +260,8 @@ const hostedQueryFiltersSchema = z.object({
     .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
+  hometown: z.string().max(200).nullable().optional().default(null),
+  livingIn: z.string().max(200).nullable().optional().default(null),
 });
 
 export const hostedQuerySchema = paginationSchema.merge(hostedQueryFiltersSchema);

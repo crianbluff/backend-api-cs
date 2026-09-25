@@ -61,3 +61,14 @@ export const buildBirthDateFilter = (birthDate?: string): Record<string, unknown
     birthDate: { $regex: getBirthDateRegex(birthDate) },
   };
 };
+
+export const buildLocationNameFilter = (field: 'livingIn' | 'hometown', value: string) => {
+  const normalizedValue = value.trim().toLowerCase().replace(/-/g, ' ').replace(/\s+/g, ' ');
+
+  const regexValue = normalizedValue
+    .split(' ')
+    .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('\\s+');
+
+  return { [field]: { $regex: `(?:,\\s*)?${regexValue}$`, $options: 'i' } };
+};

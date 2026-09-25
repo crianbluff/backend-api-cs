@@ -4,7 +4,12 @@ import { GuestDocument, GuestListItem, SoloListItem, GroupListItem, GroupMemberL
 import { UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 import { generateGuestId } from '../utils/nanoid';
 import { PaginatedResponse } from '../types/api-response.types';
-import { buildBirthDateFilter, buildVisitedDateFilter, parsePagination } from '../utils/api-response';
+import {
+  buildBirthDateFilter,
+  buildLocationNameFilter,
+  buildVisitedDateFilter,
+  parsePagination,
+} from '../utils/api-response';
 import { storageService, UploadedPhoto } from './storage.service';
 import { AppError } from '../middlewares/error.middleware';
 
@@ -107,6 +112,9 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.country) filter.hometownCode = query.country;
   if (query.countryCodeWeMet) filter.countryCodeWeMet = query.countryCodeWeMet;
   if (query.gender) filter.gender = query.gender;
+
+  if (query.hometown) Object.assign(filter, buildLocationNameFilter('hometown', query.hometown));
+  if (query.livingIn) Object.assign(filter, buildLocationNameFilter('livingIn', query.livingIn));
 
   if (query.groupType === 'solo') {
     filter.groupId = null;
