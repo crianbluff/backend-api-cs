@@ -116,10 +116,17 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.hometown) Object.assign(filter, buildLocationNameFilter('hometown', query.hometown));
   if (query.livingIn) Object.assign(filter, buildLocationNameFilter('livingIn', query.livingIn));
 
-  if (query.groupType === 'solo') {
-    filter.groupId = null;
-  } else if (query.groupType) {
-    filter.groupType = query.groupType;
+  if (query.groupType?.length) {
+    const includesSolo = query.groupType.includes('solo');
+    const groupTypesWithoutSolo = query.groupType.filter((type) => type !== 'solo');
+
+    if (includesSolo && groupTypesWithoutSolo.length > 0) {
+      filter.$or = [{ groupId: null }, { groupType: { $in: groupTypesWithoutSolo } }];
+    } else if (includesSolo) {
+      filter.groupId = null;
+    } else {
+      filter.groupType = { $in: groupTypesWithoutSolo };
+    }
   }
 
   if (query.gift !== undefined) {

@@ -8,6 +8,16 @@ const regionEnum = z.enum(REGIONS);
 const genderEnum = z.enum(GENDERS);
 const groupTypeEnum = z.enum(GROUP_TYPES);
 
+const groupTypeQuerySchema = z
+  .string()
+  .transform((value) =>
+    value
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean)
+  )
+  .pipe(z.array(groupTypeEnum).min(1));
+
 // ISO 8601 flexible: YYYY | YYYY-MM | YYYY-MM-DD
 const isoDateRegex = /^\d{4}(-\d{2}(-\d{2})?)?$/;
 const isoDateSchema = z.string().regex(isoDateRegex, 'Date must be ISO 8601: "YYYY", "YYYY-MM" or "YYYY-MM-DD"');
@@ -141,7 +151,7 @@ const guestQueryFiltersSchema = z.object({
   country: alpha3Schema.optional(),
   countryCodeWeMet: alpha3Schema.optional(),
   gender: genderEnum.optional(),
-  groupType: groupTypeEnum.optional(),
+  groupType: groupTypeQuerySchema.optional(),
   gay: booleanQuerySchema.optional(),
   gift: booleanQuerySchema.optional(),
   isFirstTime: booleanQuerySchema.optional(),
