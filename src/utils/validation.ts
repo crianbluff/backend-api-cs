@@ -107,8 +107,8 @@ const individualSchema = z.object({
   urlProfileCs: z.union([z.string(), z.number()]).nullable().optional().default(null),
   gender: genderEnum,
   isGay: booleanFromFormData.default(false),
-  theirReference: z.string().max(500, 'theirReference cannot exceed 500 characters').nullable().optional(),
-  myReference: z.string().max(500, 'myReference cannot exceed 500 characters').nullable().optional(),
+  theirReference: z.string().max(1000, 'theirReference cannot exceed 1000 characters').nullable().optional(),
+  myReference: z.string().max(1000, 'myReference cannot exceed 1000 characters').nullable().optional(),
   whatsapp: z.string().max(20).nullable().optional().default(null),
   instagram: z.string().max(100).nullable().optional().default(null),
   // Per-member fields

@@ -112,7 +112,10 @@ const router = Router();
  *         name: groupType
  *         schema:
  *           type: string
- *           enum: [solo, couple, friends, family]
+ *           example: solo,couple,friends,family
+ *         description: Comma-separated group types. Allowed values are solo, couple, friends, and family.
+ *         style: form
+ *         explode: false
 
  *       - in: query
  *         name: isFirstTime

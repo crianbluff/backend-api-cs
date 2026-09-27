@@ -58,8 +58,8 @@ export const hostedSchema = new Schema<IHostedDocument>(
     comments: { ...nullableTrimmedString, maxlength: [2000, 'comments cannot exceed 2000 characters'] },
 
     // References
-    theirReference: { ...nullableTrimmedString, maxlength: [500, 'theirReference cannot exceed 500 characters'] },
-    myReference: { ...nullableTrimmedString, maxlength: [500, 'myReference cannot exceed 500 characters'] },
+    theirReference: { ...nullableTrimmedString, maxlength: [1000, 'theirReference cannot exceed 1000 characters'] },
+    myReference: { ...nullableTrimmedString, maxlength: [1000, 'myReference cannot exceed 1000 characters'] },
 
     // Individual
     rating: { type: Number, min: 1, max: 5, default: null },

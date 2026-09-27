@@ -183,13 +183,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             hangOut: {
@@ -453,13 +453,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             rating: {
@@ -796,13 +796,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             hangOut: {
@@ -1099,13 +1099,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             didTheyReq: {
@@ -1309,13 +1309,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 500,
+              maxLength: 1000,
             },
 
             didTheyReq: {
