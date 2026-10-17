@@ -6,7 +6,9 @@ dist
 .DS_Store
 coverage
 .git
+.gitignore
 README.md
 npm-debug.log
+Dockerfile*
 docker-compose*.yml
 credentials/*.json

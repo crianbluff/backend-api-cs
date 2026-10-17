@@ -1,28 +1,20 @@
 services:
-  api:
+  cs_api:
+    image: cs_api_dev:latest
+
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: guests_api_dev
-    restart: unless-stopped
+
     ports:
       - '3001:3001'
 
-    environment:
-      NODE_ENV: development
-      PORT: 3001
-      MONGO_URI: mongodb://mongo:27017/guests_db
-      API_VERSION: v1
-      RATE_LIMIT_WINDOW_MS: 900000
-      RATE_LIMIT_MAX: 100
-
-      GOOGLE_CLOUD_PROJECT_ID: couchsurfing-backend-photos
-      GOOGLE_CLOUD_STORAGE_BUCKET: couchsurfing-backend-photos
-      GOOGLE_CLOUD_CREDENTIALS: /app/credentials/couchsurfing-backend-photos-42dd1dd5eb95.json
+    env_file:
+      - .env.dev
 
     volumes:
       # Mount source for hot-reload — node_modules stays in the container
-      - ./src:/app/src:delegated
+      - ./src:/app/src
       - ./tsconfig.json:/app/tsconfig.json:ro
       - /app/node_modules
 
@@ -33,52 +25,62 @@ services:
       mongo:
         condition: service_healthy
 
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:3001/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
     networks:
-      - guests_network_dev
+      - cs_network_dev
 
   mongo:
     image: mongo:7.0-jammy
-    container_name: guests_mongo_dev
-    restart: unless-stopped
-    ports:
-      - '27017:27017'
+    # container_name: cs_mongo_dev
+
     volumes:
-      - mongo_data_dev:/data/db
+      - cs_mongo_data_dev:/data/db
+
     environment:
-      MONGO_INITDB_DATABASE: guests_db
+      MONGO_INITDB_DATABASE: cs_db
+
     healthcheck:
       test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 20s
+
     networks:
-      - guests_network_dev
+      - cs_network_dev
 
   # MongoDB visual UI — only in dev
   mongo-express:
-    image: mongo-express:latest
-    container_name: guests_mongo_express
-    restart: unless-stopped
+    image: mongo-express:1.0.2
+
     ports:
-      - '8081:8081'
+      - '127.0.0.1:8081:8081'
+
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin123
       ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+
     depends_on:
       mongo:
         condition: service_healthy
+
     networks:
-      - guests_network_dev
+      - cs_network_dev
 
 volumes:
-  mongo_data_dev:
-    name: guests_mongo_data_dev
+  cs_mongo_data_dev:
+    name: cs_mongo_data_dev
 
 networks:
-  guests_network_dev:
-    name: guests_network_dev
-    driver: bridge
+  cs_network_dev:
+    external: true
+    name: cs_network_dev

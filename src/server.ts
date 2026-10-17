@@ -8,6 +8,8 @@ async function bootstrap(): Promise<void> {
 
   const app = createApp();
 
+  app.set('trust proxy', 1);
+
   const server = app.listen(env.PORT, '0.0.0.0', () => {
     logger.info(`🚀 Server running on port ${env.PORT} [${env.NODE_ENV}]`);
     logger.info(`📄 Swagger docs → http://localhost:${env.PORT}/docs`);
