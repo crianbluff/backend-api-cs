@@ -1,7 +1,7 @@
 export const CONTINENTS = ['africa', 'america', 'europe', 'asia', 'oceania'] as const;
 export type Continent = (typeof CONTINENTS)[number];
 
-export const REGION_OCEANIA = ['oceania', 'melanesia', 'micronesia', 'polinesia'] as const;
+export const REGION_OCEANIA = ['oceania', 'melanesia', 'micronesia', 'polynesia'] as const;
 export type RegionOceania = (typeof REGION_OCEANIA)[number];
 
 export const REGION_ASIA = ['central_asia', 'east_asia', 'south_asia', 'southeast_asia', 'west_asia'] as const;
