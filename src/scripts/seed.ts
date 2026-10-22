@@ -8,43 +8,73 @@ import { isValidAlpha3 } from '../utils/iso3166';
 
 // COLLECTION CONFIG
 const GUESTS_SOLO_FILES = [
-  'src/scripts/guests/solo/africa-solo.json',
-  'src/scripts/guests/solo/america-solo.json',
-  'src/scripts/guests/solo/asia-solo.json',
-  'src/scripts/guests/solo/europe-solo.json',
-  'src/scripts/guests/solo/oceania-solo.json',
+  'src/scripts/guests/solo/africa/northern.json',
+  'src/scripts/guests/solo/africa/western.json',
+  'src/scripts/guests/solo/america/caribbean.json',
+  'src/scripts/guests/solo/america/central.json',
+  'src/scripts/guests/solo/america/north.json',
+  'src/scripts/guests/solo/america/south.json',
+  'src/scripts/guests/solo/asia/east.json',
+  'src/scripts/guests/solo/asia/south.json',
+  'src/scripts/guests/solo/asia/southeast.json',
+  'src/scripts/guests/solo/asia/west.json',
+  'src/scripts/guests/solo/europe/central.json',
+  'src/scripts/guests/solo/europe/eastern.json',
+  'src/scripts/guests/solo/europe/northern.json',
+  'src/scripts/guests/solo/europe/scandinavia.json',
+  'src/scripts/guests/solo/europe/southern.json',
+  'src/scripts/guests/solo/europe/western.json',
+  'src/scripts/guests/solo/oceania/oceania.json',
 ];
 
-const GUESTS_GROUP_FILES = [
-  // 'src/scripts/guests/group/africa-group.json',
-  'src/scripts/guests/group/america-group.json',
-  'src/scripts/guests/group/asia-group.json',
-  'src/scripts/guests/group/europe-group.json',
-  'src/scripts/guests/group/oceania-group.json',
+const GUESTS_GROUP_COUPLE_FILES = [
+  'src/scripts/guests/group/couple/america/north.json',
+  'src/scripts/guests/group/couple/america/south.json',
+  'src/scripts/guests/group/couple/asia/east.json',
+  'src/scripts/guests/group/couple/asia/south.json',
+  'src/scripts/guests/group/couple/europe/central.json',
+  'src/scripts/guests/group/couple/europe/eastern.json',
+  'src/scripts/guests/group/couple/europe/southern.json',
+  'src/scripts/guests/group/couple/europe/western.json',
+  'src/scripts/guests/group/couple/oceania/oceania.json',
+];
+
+const GUESTS_GROUP_FRIENDS_FILES = [
+  'src/scripts/guests/group/friends/america/south.json',
+  'src/scripts/guests/group/friends/asia/central.json',
+  'src/scripts/guests/group/friends/asia/west.json',
+  'src/scripts/guests/group/friends/europe/central.json',
+  'src/scripts/guests/group/friends/europe/eastern.json',
+  'src/scripts/guests/group/friends/europe/southern.json',
+  'src/scripts/guests/group/friends/europe/western.json',
+];
+
+const GUESTS_GROUP_FAMILY_FILES = [
+  'src/scripts/guests/group/family/america/caribbean.json',
+  'src/scripts/guests/group/family/america/south.json',
 ];
 
 const HOSTED_SOLO_FILES = [
-  // 'src/scripts/hosted/solo/africa-hosted-solo.json',
-  'src/scripts/hosted/solo/america-hosted-solo.json',
-  // 'src/scripts/hosted/solo/asia-hosted-solo.json',
-  'src/scripts/hosted/solo/europe-hosted-solo.json',
-  // 'src/scripts/hosted/solo/oceania-hosted-solo.json',
+  'src/scripts/hosted/solo/america/north.json',
+  'src/scripts/hosted/solo/america/south.json',
+  'src/scripts/hosted/solo/europe/western.json',
 ];
 
-const HOSTED_GROUP_FILES = [
-  // 'src/scripts/hosted/group/africa-hosted-group.json',
-  'src/scripts/hosted/group/america-hosted-group.json',
-  // 'src/scripts/hosted/group/asia-hosted-group.json',
-  // 'src/scripts/hosted/group/europe-hosted-group.json',
-  // 'src/scripts/hosted/group/oceania-hosted-group.json',
+const HOSTED_GROUP_COUPLE_FILES = [
+  'src/scripts/hosted/group/couple/america/central.json',
+  'src/scripts/hosted/group/couple/america/north.json',
+  'src/scripts/hosted/group/couple/america/south.json',
 ];
+
+const HOSTED_GROUP_FRIENDS_FILES = ['src/scripts/hosted/group/friends/america/north.json'];
 
 const PERSONAL_FILES = [
-  // 'src/scripts/personal/africa-personal.json',
-  'src/scripts/personal/america-personal.json',
-  'src/scripts/personal/asia-personal.json',
-  'src/scripts/personal/europe-personal.json',
-  // 'src/scripts/personal/oceania-personal.json',
+  'src/scripts/personal/america/central.json',
+  'src/scripts/personal/america/north.json',
+  'src/scripts/personal/america/south.json',
+  'src/scripts/personal/asia/southeast.json',
+  'src/scripts/personal/asia/west.json',
+  'src/scripts/personal/europe/central.json',
 ];
 
 dotenv.config();
@@ -296,13 +326,13 @@ async function seed() {
     await seedCollection({
       collection: 'guests',
       soloFiles: GUESTS_SOLO_FILES,
-      groupFiles: GUESTS_GROUP_FILES,
+      groupFiles: [...GUESTS_GROUP_COUPLE_FILES, ...GUESTS_GROUP_FRIENDS_FILES, ...GUESTS_GROUP_FAMILY_FILES],
     });
 
     await seedCollectionHosted({
       collection: 'hosted',
       soloFiles: HOSTED_SOLO_FILES,
-      groupFiles: HOSTED_GROUP_FILES,
+      groupFiles: [...HOSTED_GROUP_COUPLE_FILES, ...HOSTED_GROUP_FRIENDS_FILES],
       companyFile: HOSTED_DID_I_GO_WITH_FILES,
     });
 

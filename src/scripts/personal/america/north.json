@@ -1,0 +1,31 @@
+[
+  {
+    "groupType": "solo",
+    "theirReference": null,
+    "myReference": null,
+    "stayed": false,
+    "rating": 1,
+    "hometownCode": "MEX",
+    "prefixCode": "+52",
+    "continent": "america",
+    "region": "north_america",
+    "countryCodeWeMet": "MEX",
+    "cityWeMet": "Puebla City, Puebla",
+    "locationWeMet": "Zócalo de Puebla",
+    "fullName": "Rodolfo G",
+    "hometown": "San Andrés Cholula, Puebla",
+    "livingIn": "San Andrés Cholula, Puebla",
+    "livingInCode": "MEX",
+    "birthDate": null,
+    "hangOut": true,
+    "visitedDate": "2025-03-16",
+    "urlProfileCs": "rodo1986",
+    "occupation": ["asesor financiero GNP AGC Seguros", "engineer traveler", "writer"],
+    "gender": "male",
+    "whatsapp": "2215755140",
+    "instagram": null,
+    "gift": [],
+    "comments": "I requested hosting: Se comportaba muy raro fuimos con alo se supone que nos hospedaría pero daba mal rollo, luego llamé a Matteo para que me salvará terminamos yendo a tomar azulito y ya luego me quedé con Ilo y le saqué el cuerpo a él",
+    "isGay": true
+  }
+]

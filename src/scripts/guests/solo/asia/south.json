@@ -1,0 +1,32 @@
+[
+  {
+    "groupType": "solo",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "My mom's home",
+    "didTheyReq": false,
+    "theirReference": "Cristian is super friendly & always made sure I had a comfortable stay at his home. His house is within walking distance to La Candelaria! The view from his Terrace is super amazing 🤩 He took me for a tour of city the next day & we even played chess ♟️ together... Thank you very much for your wonderful hospitality & your most welcome to my home in Mumbai if you happen to visit India someday!",
+    "myReference": "Rahul has amazing energy—he’s super kind, really fun, very respectful, clean, and a great person to be around. He understands the Couchsurfing community very well and I totally recommend him. We even played chess together and it was great! He’s always welcome here in Bogotá 🤗 Count on me for anything you need, Rahul!",
+    "nights": 2,
+    "stayed": true,
+    "rating": 4,
+    "hometownCode": "IND",
+    "prefixCode": "+91",
+    "continent": "asia",
+    "region": "south_asia",
+    "fullName": "Rahul Patel",
+    "hometown": "Maharashtra, Mumbai",
+    "livingIn": "Maharashtra, Mumbai",
+    "livingInCode": "IND",
+    "birthDate": "1985-12-19",
+    "hangOut": true,
+    "visitedDate": "2025-10-17",
+    "urlProfileCs": "rahulpatel787",
+    "occupation": ["retired airline pilot", "computer engineering"],
+    "gender": "male",
+    "whatsapp": "9869765709",
+    "instagram": "rahul_patel_787",
+    "gift": ["Empanadas"],
+    "comments": "we played chess :) he won one match and we draw one, accidentally we offered arepa but his religion does not allow him to eat pork"
+  }
+]

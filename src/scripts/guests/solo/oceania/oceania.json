@@ -1,0 +1,31 @@
+[
+  {
+    "groupType": "solo",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "My mom's home",
+    "didTheyReq": true,
+    "theirReference": "Cristian and his dear mother, Bianca, were such wonderful hosts. Their house has an exceptional view over all of Bogota's suburb lights and I adored Santa Fe because it was a true, no-frills neighbourhood ungentrified. Cristian's an exceptionally bright young man with much initiative. He has true passion for his neighbourhood and Candelaria and took me on a personal scooter private tour around town ! He gave me so many suggestions for museums and was very knowledgable on pricing. Even when we had miscomms, he was so understanding ! We shared lovely breakfast and coffee, and walked around to get local arepas for dinner. His mother is a starburst spirit and just so vibrant and kind to the core. They live a short walk to Candelaria and I love that it's not too close to the horrific bustle and traffic and in a neighbourhood tranquil. I hope any CouchSurfers reading this make sure to visit Cristian and his mother !",
+    "myReference": "Anica was an amazing guest — incredibly kind, intelligent, and truly interested in experiencing the local culture. She has such a positive energy and a wonderful vibe that fills any space she’s in. She was very understanding, clean, and respectful, and even shared arepa with cheese with my mom, which we really appreciated. 💫 We walked around the city together, visited some of the local art around town, went out for coffee, and had very interesting and enriching conversations filled with great anecdotes. Every moment with her was meaningful and fun. 🤩 Hosting her was a fantastic experience. I totally recommend her 😁",
+    "nights": 1,
+    "stayed": true,
+    "rating": 5,
+    "hometownCode": "AUS",
+    "prefixCode": "+61",
+    "continent": "oceania",
+    "region": "oceania",
+    "fullName": "Anica Shen",
+    "hometown": "Sydney, New South Wales",
+    "livingIn": "Sydney, New South Wales",
+    "livingInCode": "AUS",
+    "birthDate": "2002",
+    "hangOut": true,
+    "visitedDate": "2025-12-10",
+    "urlProfileCs": "anica-shen",
+    "occupation": ["law", "software engineer"],
+    "gender": "female",
+    "whatsapp": "414199161",
+    "instagram": "neshinca",
+    "gift": ["arepa with cheese for my mom", "coffee"]
+  }
+]

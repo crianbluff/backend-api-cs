@@ -1,0 +1,31 @@
+[
+  {
+    "groupType": "solo",
+    "theirReference": null,
+    "myReference": "Conocí a Angie en Bogotá junto a otros couchsurfers y la pasamos genial jugando juegos de mesa 🎲. Es súper buena onda, muy fácil de conversar con ella y siempre con una sonrisa 😁. Transmite muy buena energía ✨ y hace que el rato se sienta más divertido. ¡Fue un gusto compartir tiempo contigo, Angie! 🤍",
+    "stayed": false,
+    "rating": 4,
+    "hometownCode": "COL",
+    "prefixCode": "+57",
+    "continent": "america",
+    "region": "south_america",
+    "countryCodeWeMet": "COL",
+    "cityWeMet": "Bogotá, Bogota D.C.",
+    "locationWeMet": "Senet Coffee, Chapinero Alto",
+    "fullName": "Angie Cruz",
+    "hometown": "Bogotá, Bogota D.C.",
+    "livingIn": "Bogotá, Bogota D.C.",
+    "livingInCode": "COL",
+    "birthDate": "05-05",
+    "hangOut": true,
+    "visitedDate": "2025-08-08",
+    "urlProfileCs": "angecruz2016",
+    "occupation": ["ventas", "tecnico en administracion"],
+    "gender": "female",
+    "whatsapp": "3204947283",
+    "instagram": null,
+    "gift": [],
+    "comments": "hangout: we have seen 3 times (board games, free teather bogotá, board games in la candelaria a restaurant)",
+    "ambassador": true
+  }
+]
