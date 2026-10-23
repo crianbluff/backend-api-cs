@@ -20,7 +20,19 @@ export function createApp(): Application {
 
   // ─── Security & parsing ───────────────────────────────────────────────────
   app.use(helmet());
-  app.use(cors());
+
+  // CORS
+  const allowedOrigins = env.NODE_ENV === 'production' ? ['https://alobuuls.github.io'] : true;
+
+  app.use(
+    cors({
+      origin: allowedOrigins,
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      credentials: false,
+      optionsSuccessStatus: 204,
+    })
+  );
 
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
