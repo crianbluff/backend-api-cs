@@ -36,12 +36,22 @@ const router = Router();
  *           enum: [male, female, trans]
   
  *       - in: query
- *         name: livingIn
+ *         name: livingInCity
  *         schema:
  *           type: string
 
  *       - in: query
- *         name: hometown
+ *         name: livingInState
+ *         schema:
+ *           type: string
+
+ *       - in: query
+ *         name: hometownState
+ *         schema:
+ *           type: string
+
+ *       - in: query
+ *         name: hometownCity
  *         schema:
  *           type: string
 

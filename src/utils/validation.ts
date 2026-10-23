@@ -93,22 +93,26 @@ const individualSchema = z.object({
   rating: integerFromFormData(1, 5).nullable().optional().default(null),
   hometownCode: alpha3Schema,
   countryCodeWeMet: alpha3Schema,
-  livingInCode: alpha3Schema.nullable().optional().default(null),
+  livingInCode: z.preprocess((value) => (value === '' ? null : value), alpha3Schema.nullable().optional().default(null)),
   prefixCode: z.string().nullable().optional().default(null),
   continent: continentEnum,
   region: regionEnum,
   fullName: z.string().min(1).max(200),
-  hometown: z.string().max(200).nullable().optional().default(null),
-  livingIn: z.string().max(200).nullable().optional().default(null),
+  hometownCity: z.string().max(200).nullable().optional().default(null),
+  hometownState: z.string().max(200).nullable().optional().default(null),
+  livingInCity: z.string().max(200).nullable().optional().default(null),
+  livingInState: z.string().max(200).nullable().optional().default(null),
   cityWeMet: z.string().max(200).nullable().optional().default(null),
+  stateWeMet: z.string().max(200).nullable().optional().default(null),
   locationWeMet: z.string().max(200).nullable().optional().default(null),
   birthDate: isoDateSchema.nullable().optional().default(null),
   occupation: arrayFromFormData.optional().default([]),
+  occupationArea: arrayFromFormData.optional().default([]),
   urlProfileCs: z.union([z.string(), z.number()]).nullable().optional().default(null),
   gender: genderEnum,
   isGay: booleanFromFormData.default(false),
-  theirReference: z.string().max(1000, 'theirReference cannot exceed 1000 characters').nullable().optional(),
-  myReference: z.string().max(1000, 'myReference cannot exceed 1000 characters').nullable().optional(),
+  theirReference: z.string().max(1500, 'theirReference cannot exceed 1500 characters').nullable().optional(),
+  myReference: z.string().max(1500, 'myReference cannot exceed 1500 characters').nullable().optional(),
   whatsapp: z.string().max(20).nullable().optional().default(null),
   instagram: z.string().max(100).nullable().optional().default(null),
   // Per-member fields
@@ -166,8 +170,10 @@ const guestQueryFiltersSchema = z.object({
     .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
-  hometown: z.string().max(200).nullable().optional().default(null),
-  livingIn: z.string().max(200).nullable().optional().default(null),
+  hometownCity: z.string().max(200).nullable().optional().default(null),
+  hometownState: z.string().max(200).nullable().optional().default(null),
+  livingInCity: z.string().max(200).nullable().optional().default(null),
+  livingInState: z.string().max(200).nullable().optional().default(null),
 });
 
 export const guestQuerySchema = paginationSchema.merge(guestQueryFiltersSchema);
@@ -184,8 +190,10 @@ const companionshipMemberSchema = individualSchema.pick({
   ambassador: true,
   isFirstTime: true,
   livingInCode: true,
-  hometown: true,
-  livingIn: true,
+  hometownCity: true,
+  hometownState: true,
+  livingInCity: true,
+  livingInState: true,
   urlProfileCs: true,
   instagram: true,
   birthDate: true,
@@ -196,7 +204,7 @@ const hostedBaseSchema = individualSchema.extend({
   nights: z.number().int().optional().default(0),
   visitedDate: isoDateSchema,
   groupTypeCompanionship: groupTypeEnum,
-  companionshipMembers: z.array(companionshipMemberSchema).max(4),
+  companionshipMembers: z.array(companionshipMemberSchema).max(4).optional(),
 });
 
 // Hosted validation helpers
@@ -229,16 +237,13 @@ const validateCompanionshipMembers = (
 
 // Hosted create
 export const createHostedSchema = hostedBaseSchema.superRefine((data, ctx) => {
-  if (data.groupTypeCompanionship !== 'solo' && data.companionshipMembers.length === 0) {
+  const { groupTypeCompanionship, companionshipMembers } = data;
+
+  if (groupTypeCompanionship !== 'solo' && (!companionshipMembers || companionshipMembers.length === 0)) {
     ctx.addIssue({
-      code: z.ZodIssueCode.too_small,
-      type: 'array',
-      minimum: 1,
-      inclusive: true,
+      code: z.ZodIssueCode.custom,
       path: ['companionshipMembers'],
-      message:
-        `companionshipMembers must have at least 1 member ` +
-        `when groupTypeCompanionship is "${data.groupTypeCompanionship}"`,
+      message: `companionshipMembers must have at least 1 member when groupTypeCompanionship is "${groupTypeCompanionship}"`,
     });
   }
 });
@@ -270,8 +275,10 @@ const hostedQueryFiltersSchema = z.object({
     .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
-  hometown: z.string().max(200).nullable().optional().default(null),
-  livingIn: z.string().max(200).nullable().optional().default(null),
+  hometownCity: z.string().max(200).nullable().optional().default(null),
+  hometownState: z.string().max(200).nullable().optional().default(null),
+  livingInCity: z.string().max(200).nullable().optional().default(null),
+  livingInState: z.string().max(200).nullable().optional().default(null),
 });
 
 export const hostedQuerySchema = paginationSchema.merge(hostedQueryFiltersSchema);

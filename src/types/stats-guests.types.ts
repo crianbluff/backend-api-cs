@@ -162,8 +162,8 @@ export interface GeographyStats {
   continents: GeographyRanking;
   regions: GeographyRanking;
   countries: CountryStats;
-  livingIn: LocationRanking;
-  hometown: LocationRanking;
+  livingInState: LocationRanking;
+  hometownState: LocationRanking;
 }
 
 export interface GeographyRanking {

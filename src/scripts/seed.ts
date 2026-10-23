@@ -90,6 +90,22 @@ function normalizeGroupType(value: unknown): string {
     .toLowerCase();
 }
 
+function getLocationName(value: string | null | undefined): {
+  city: string | null;
+  state: string | null;
+} {
+  const location = nullify(value);
+
+  if (!location) return { city: null, state: null };
+
+  const [city, state] = location.split(',').map((part) => part.trim());
+
+  return {
+    city: city || null,
+    state: state || city || null,
+  };
+}
+
 function validateGuest(raw: any): void {
   const continent = raw.continent ? String(raw.continent).trim().toLowerCase() : null;
   const region = raw.region ? String(raw.region).trim().toLowerCase() : null;
@@ -151,6 +167,10 @@ function buildBaseGuest(raw: any) {
   const continent = raw.continent ? String(raw.continent).trim().toLowerCase() : null;
   const region = raw.region ? String(raw.region).trim().toLowerCase() : null;
 
+  const { city: hometownCity, state: hometownState } = getLocationName(raw.hometown);
+  const { city: livingInCity, state: livingInState } = getLocationName(raw.livingIn);
+  const { city: cityWeMet, state: stateWeMet } = getLocationName(raw.cityWeMet);
+
   return {
     guestId: nanoid(11),
     nights: raw.nights ?? 0,
@@ -170,12 +190,16 @@ function buildBaseGuest(raw: any) {
     continent,
     region,
     fullName: raw.fullName ?? 'Unknown',
-    hometown: nullify(raw.hometown),
-    livingIn: nullify(raw.livingIn),
-    cityWeMet: nullify(raw.cityWeMet),
+    hometownCity,
+    hometownState,
+    livingInCity,
+    livingInState,
+    cityWeMet,
+    stateWeMet,
     locationWeMet: nullify(raw.locationWeMet),
     birthDate: nullify(raw.birthDate),
     occupation: Array.isArray(raw.occupation) && raw.occupation.length ? raw.occupation : [],
+    occupationArea: ['other'],
     urlProfileCs: nullify(raw.urlProfileCs),
     gender,
     isGay: raw.isGay ?? false,
@@ -214,6 +238,21 @@ function buildHostedGuest(raw: any) {
 }
 
 const HOSTED_DID_I_GO_WITH_FILES = 'src/scripts/hosted/group/companionship-members/companionship-members.json';
+
+function buildCompanionshipMember(raw: any) {
+  const { city: hometownCity, state: hometownState } = getLocationName(raw.hometown);
+  const { city: livingInCity, state: livingInState } = getLocationName(raw.livingIn);
+
+  const { hometown, livingIn, ...rest } = raw;
+
+  return {
+    ...rest,
+    hometownCity,
+    hometownState,
+    livingInCity,
+    livingInState,
+  };
+}
 
 // GENERIC SEEDER
 async function seedCollection(options: { collection: string; soloFiles: string[]; groupFiles?: string[] }) {
@@ -278,7 +317,7 @@ async function seedCollectionHosted(options: {
               `Debe verificar el archivo JSON.`
           );
 
-        return company;
+        return buildCompanionshipMember(company);
       });
       return;
     }

@@ -95,19 +95,37 @@ const options: swaggerJsdoc.Options = {
               maxLength: 200,
             },
 
-            hometown: {
+            hometownCity: {
               type: 'string',
               nullable: true,
               maxLength: 200,
             },
 
-            livingIn: {
+            hometownState: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            livingInCity: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            livingInState: {
               type: 'string',
               nullable: true,
               maxLength: 200,
             },
 
             cityWeMet: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            stateWeMet: {
               type: 'string',
               nullable: true,
               maxLength: 200,
@@ -127,6 +145,13 @@ const options: swaggerJsdoc.Options = {
             },
 
             occupation: {
+              type: 'array',
+              items: {
+                type: 'string',
+              },
+            },
+
+            occupationArea: {
               type: 'array',
               items: {
                 type: 'string',
@@ -183,13 +208,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             hangOut: {
@@ -282,18 +307,32 @@ const options: swaggerJsdoc.Options = {
               example: 'Jon-Matteo Brüggenwerth',
             },
 
-            hometown: {
+            hometownCity: {
               type: 'string',
               nullable: true,
               maxLength: 200,
-              example: 'Gallneukirchen, Upper Austria',
+              example: 'Gallneukirchen',
             },
 
-            livingIn: {
+            hometownState: {
               type: 'string',
               nullable: true,
               maxLength: 200,
-              example: 'Gallneukirchen, Upper Austria',
+              example: 'Upper Austria',
+            },
+
+            livingInCity: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+              example: 'Gallneukirchen',
+            },
+
+            livingInState: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+              example: 'Upper Austria',
             },
 
             livingInCode: {
@@ -453,13 +492,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             rating: {
@@ -483,6 +522,12 @@ const options: swaggerJsdoc.Options = {
               type: 'string',
               nullable: true,
               example: 'Panamá City',
+            },
+
+            stateWeMet: {
+              type: 'string',
+              nullable: true,
+              example: 'Boyacá',
             },
 
             locationWeMet: {
@@ -515,13 +560,25 @@ const options: swaggerJsdoc.Options = {
               example: 'Carlos Ramirez',
             },
 
-            hometown: {
+            hometownCity: {
               type: 'string',
               nullable: true,
               maxLength: 200,
             },
 
-            livingIn: {
+            hometownState: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            livingInCity: {
+              type: 'string',
+              nullable: true,
+              maxLength: 200,
+            },
+
+            livingInState: {
               type: 'string',
               nullable: true,
               maxLength: 200,
@@ -540,6 +597,13 @@ const options: swaggerJsdoc.Options = {
             },
 
             occupation: {
+              type: 'array',
+              items: {
+                type: 'string',
+              },
+            },
+
+            occupationArea: {
               type: 'array',
               items: {
                 type: 'string',
@@ -732,7 +796,12 @@ const options: swaggerJsdoc.Options = {
               nullable: true,
             },
 
-            livingIn: {
+            livingInCity: {
+              type: 'string',
+              nullable: true,
+            },
+
+            livingInState: {
               type: 'string',
               nullable: true,
             },
@@ -742,12 +811,22 @@ const options: swaggerJsdoc.Options = {
               nullable: true,
             },
 
+            stateWeMet: {
+              type: 'string',
+              nullable: true,
+            },
+
             locationWeMet: {
               type: 'string',
               nullable: true,
             },
 
-            hometown: {
+            hometownCity: {
+              type: 'string',
+              nullable: true,
+            },
+
+            hometownState: {
               type: 'string',
               nullable: true,
             },
@@ -796,13 +875,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             hangOut: {
@@ -871,7 +950,12 @@ const options: swaggerJsdoc.Options = {
               nullable: true,
             },
 
-            livingIn: {
+            livingInCity: {
+              type: 'string',
+              nullable: true,
+            },
+
+            livingInState: {
               type: 'string',
               nullable: true,
             },
@@ -881,12 +965,22 @@ const options: swaggerJsdoc.Options = {
               nullable: true,
             },
 
+            stateWeMet: {
+              type: 'string',
+              nullable: true,
+            },
+
             locationWeMet: {
               type: 'string',
               nullable: true,
             },
 
-            hometown: {
+            hometownCity: {
+              type: 'string',
+              nullable: true,
+            },
+
+            hometownState: {
               type: 'string',
               nullable: true,
             },
@@ -1099,13 +1193,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             didTheyReq: {
@@ -1143,6 +1237,12 @@ const options: swaggerJsdoc.Options = {
               example: 'Panamá City',
             },
 
+            stateWeMet: {
+              type: 'string',
+              nullable: true,
+              example: 'Boyacá',
+            },
+
             locationWeMet: {
               type: 'string',
               nullable: true,
@@ -1173,16 +1273,28 @@ const options: swaggerJsdoc.Options = {
               example: 'Carlos Ramirez',
             },
 
-            hometown: {
+            hometownCity: {
               type: 'string',
               nullable: true,
-              example: 'Tunja, Boyacá',
+              example: 'Tunja',
             },
 
-            livingIn: {
+            hometownState: {
               type: 'string',
               nullable: true,
-              example: 'Tunja, Boyacá',
+              example: 'Boyacá',
+            },
+
+            livingInCity: {
+              type: 'string',
+              nullable: true,
+              example: 'Tunja',
+            },
+
+            livingInState: {
+              type: 'string',
+              nullable: true,
+              example: 'Boyacá',
             },
 
             livingInCode: {
@@ -1309,13 +1421,13 @@ const options: swaggerJsdoc.Options = {
             theirReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             myReference: {
               type: 'string',
               nullable: true,
-              maxLength: 1000,
+              maxLength: 1500,
             },
 
             didTheyReq: {
@@ -1347,6 +1459,11 @@ const options: swaggerJsdoc.Options = {
               nullable: true,
             },
 
+            stateWeMet: {
+              type: 'string',
+              nullable: true,
+            },
+
             locationWeMet: {
               type: 'string',
               nullable: true,
@@ -1372,12 +1489,22 @@ const options: swaggerJsdoc.Options = {
               maxLength: 200,
             },
 
-            hometown: {
+            hometownCity: {
               type: 'string',
               nullable: true,
             },
 
-            livingIn: {
+            hometownState: {
+              type: 'string',
+              nullable: true,
+            },
+
+            livingInCity: {
+              type: 'string',
+              nullable: true,
+            },
+
+            livingInState: {
               type: 'string',
               nullable: true,
             },

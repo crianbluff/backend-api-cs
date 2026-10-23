@@ -62,7 +62,10 @@ export const buildBirthDateFilter = (birthDate?: string): Record<string, unknown
   };
 };
 
-export const buildLocationNameFilter = (field: 'livingIn' | 'hometown', value: string): Record<string, unknown> => {
+export const buildLocationNameFilter = (
+  field: 'livingInState' | 'hometownState',
+  value: string
+): Record<string, unknown> => {
   const normalizedValue = value.trim().toLowerCase().replace(/-/g, ' ').replace(/\s+/g, ' ');
 
   const regexValue = normalizedValue
