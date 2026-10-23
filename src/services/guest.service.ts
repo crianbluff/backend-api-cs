@@ -24,7 +24,6 @@ function toMember(doc: GuestLean): GroupMemberListItem {
 
     // Visit info
     hangOut: doc.hangOut,
-    comments: doc.comments,
     isFirstTime: doc.isFirstTime,
     ambassador: doc.ambassador,
     didTheyReq: doc.didTheyReq,
@@ -38,18 +37,17 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     continent: doc.continent,
     region: doc.region,
     birthDate: doc.birthDate,
-    occupation: doc.occupation,
-    hometown: doc.hometown,
-    livingIn: doc.livingIn,
+    hometownCity: doc.hometownCity,
+    hometownState: doc.hometownState,
+    livingInCity: doc.livingInCity,
+    livingInState: doc.livingInState,
     cityWeMet: doc.cityWeMet,
+    stateWeMet: doc.stateWeMet,
     locationWeMet: doc.locationWeMet,
     rating: doc.rating,
     gender: doc.gender,
     isGay: doc.isGay,
-    theirReference: doc.theirReference,
-    myReference: doc.myReference,
     whatsapp: doc.whatsapp,
-    instagram: doc.instagram,
     urlProfileCs: doc.urlProfileCs,
 
     photos: doc.photos,
@@ -82,16 +80,16 @@ function toSolo(doc: GuestLean): SoloListItem {
     continent: doc.continent,
     region: doc.region,
     birthDate: doc.birthDate,
-    occupation: doc.occupation,
-    livingIn: doc.livingIn,
+    livingInCity: doc.livingInCity,
+    livingInState: doc.livingInState,
     cityWeMet: doc.cityWeMet,
+    stateWeMet: doc.stateWeMet,
     locationWeMet: doc.locationWeMet,
-    hometown: doc.hometown,
+    hometownCity: doc.hometownCity,
+    hometownState: doc.hometownState,
     rating: doc.rating,
     gender: doc.gender,
     isGay: doc.isGay,
-    theirReference: doc.theirReference,
-    myReference: doc.myReference,
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
 
@@ -113,8 +111,8 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.countryCodeWeMet) filter.countryCodeWeMet = query.countryCodeWeMet;
   if (query.gender) filter.gender = query.gender;
 
-  if (query.hometown) Object.assign(filter, buildLocationNameFilter('hometown', query.hometown));
-  if (query.livingIn) Object.assign(filter, buildLocationNameFilter('livingIn', query.livingIn));
+  if (query.hometownState) Object.assign(filter, buildLocationNameFilter('hometownState', query.hometownState));
+  if (query.livingInState) Object.assign(filter, buildLocationNameFilter('livingInState', query.livingInState));
 
   if (query.groupType?.length) {
     const includesSolo = query.groupType.includes('solo');

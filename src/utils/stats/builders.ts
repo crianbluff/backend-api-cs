@@ -279,7 +279,7 @@ export function buildLocations<T>(
 
   for (const guest of guests) {
     const code = getCode(guest) ?? null;
-    const name = getLocationName(getName(guest));
+    const name = getName(guest)?.trim() || null;
 
     if (!code && !name) continue;
     const key = `${code ?? ''}|${name ?? ''}`;
@@ -304,14 +304,6 @@ export function buildLocations<T>(
     .slice(0, limit);
 
   return { top };
-}
-
-function getLocationName(value: string | null | undefined): string | null {
-  if (!value) return null;
-  const parts = value.split(',');
-
-  if (parts.length > 1) return parts[1].trim() || null;
-  return value.trim() || null;
 }
 
 export function buildTimeline<T>(

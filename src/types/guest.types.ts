@@ -17,13 +17,18 @@ export interface GuestIndividual {
   region: Region;
 
   fullName: string;
-  hometown: string | null;
-  livingIn: string | null;
+  hometownState: string | null;
+  hometownCity: string | null;
+  livingInCity: string | null;
+  livingInState: string | null;
   cityWeMet: string | null;
+  stateWeMet: string | null;
+
   locationWeMet: string | null;
 
   birthDate: string | null;
   occupation: string[];
+  occupationArea: string[];
 
   urlProfileCs: string | null;
 
@@ -79,13 +84,14 @@ export interface SoloListItem extends Pick<
   | 'continent'
   | 'region'
   | 'fullName'
-  | 'hometown'
-  | 'livingIn'
+  | 'hometownCity'
+  | 'hometownState'
+  | 'livingInCity'
+  | 'livingInState'
   | 'cityWeMet'
+  | 'stateWeMet'
   | 'locationWeMet'
   | 'birthDate'
-  | 'occupation'
-  | 'livingIn'
   | 'rating'
   | 'gender'
   | 'isGay'
@@ -104,9 +110,6 @@ export interface SoloListItem extends Pick<
   visitedDate: string;
   hangOut: boolean;
 
-  theirReference: string | null;
-  myReference: string | null;
-
   createdAt: Date;
   updatedAt: Date;
 }
@@ -121,30 +124,26 @@ export interface GroupMemberListItem extends Pick<
   | 'continent'
   | 'region'
   | 'fullName'
-  | 'hometown'
-  | 'livingIn'
+  | 'hometownCity'
+  | 'hometownState'
+  | 'livingInCity'
+  | 'livingInState'
   | 'cityWeMet'
+  | 'stateWeMet'
   | 'locationWeMet'
   | 'birthDate'
-  | 'occupation'
-  | 'livingIn'
   | 'rating'
   | 'gender'
   | 'isGay'
   | 'whatsapp'
-  | 'instagram'
   | 'urlProfileCs'
   | 'photos'
 > {
   hangOut: boolean;
-  comments: string | null;
 
   isFirstTime: boolean;
   ambassador: boolean;
   didTheyReq: boolean;
-
-  theirReference: string | null;
-  myReference: string | null;
 
   createdAt: Date;
   updatedAt: Date;

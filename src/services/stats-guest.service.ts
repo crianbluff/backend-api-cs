@@ -396,16 +396,16 @@ export class StatsGuestService {
       (guest) => guest.visitedDate
     );
 
-    const livingIn = buildLocations(
+    const livingInState = buildLocations(
       guests,
       (guest) => guest.livingInCode,
-      (guest) => guest.livingIn
+      (guest) => guest.livingInState
     );
 
-    const hometown = buildLocations(
+    const hometownState = buildLocations(
       guests,
       (guest) => guest.hometownCode,
-      (guest) => guest.hometown
+      (guest) => guest.hometownState
     );
 
     const mostConsecutive = getMostConsecutiveCountry(
@@ -428,8 +428,8 @@ export class StatsGuestService {
         mostConsecutive,
       },
 
-      livingIn,
-      hometown,
+      livingInState,
+      hometownState,
     };
   }
 
