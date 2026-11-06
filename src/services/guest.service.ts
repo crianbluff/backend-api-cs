@@ -61,6 +61,7 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
     instagram: doc.instagram,
+    gift: doc.gift,
 
     photos: doc.photos,
 
@@ -105,6 +106,7 @@ function toSolo(doc: GuestLean): SoloListItem {
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
     instagram: doc.instagram,
+    gift: doc.gift,
 
     // Photos
     photos: doc.photos,

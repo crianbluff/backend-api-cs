@@ -36,6 +36,7 @@ export interface GuestIndividual {
   isGay: boolean;
 
   whatsapp: string | null;
+  gift: string[];
   instagram: string | null;
   photos: GuestPhoto[];
 }
@@ -98,6 +99,7 @@ export interface SoloListItem extends Pick<
   | 'whatsapp'
   | 'urlProfileCs'
   | 'instagram'
+  | 'gift'
   | 'photos'
 > {
   groupType: 'solo';
@@ -139,6 +141,7 @@ export interface GroupMemberListItem extends Pick<
   | 'whatsapp'
   | 'urlProfileCs'
   | 'instagram'
+  | 'gift'
   | 'photos'
 > {
   hangOut: boolean;
