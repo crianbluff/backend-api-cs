@@ -14,12 +14,15 @@ export function sendPaginated<T>(res: Response, result: PaginatedResponse<T>, me
     success: true,
     message,
     data: result.data,
-    total: result.total,
-    page: result.page,
-    limit: result.limit,
-    totalPages: result.totalPages,
-    hasNextPage: result.hasNextPage,
-    hasPrevPage: result.hasPrevPage,
+    monthlyStats: result.monthlyStats,
+    pagination: {
+      total: result.pagination.total,
+      page: result.pagination.page,
+      limit: result.pagination.limit,
+      totalPages: result.pagination.totalPages,
+      hasNextPage: result.pagination.hasNextPage,
+      hasPrevPage: result.pagination.hasPrevPage,
+    },
   };
   res.status(200).json(body);
 }

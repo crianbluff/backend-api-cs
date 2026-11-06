@@ -1,3 +1,4 @@
+import { YearlyStat } from '../types/api-response.types';
 import { GuestQueryInput } from './validation';
 
 const MAX_PAGE_SIZE = 170;
@@ -75,3 +76,24 @@ export const buildLocationNameFilter = (
 
   return { [field]: { $regex: `(?:,\\s*)?${regexValue}$`, $options: 'i' } };
 };
+
+export function completeMonthlyStats(stats: YearlyStat[]): YearlyStat[] {
+  return stats.map((yearStats) => {
+    const monthsMap = new Map(
+      yearStats.months.map(({ month, totalVisits, totalPeople }) => [month, { totalVisits, totalPeople }])
+    );
+
+    return {
+      ...yearStats,
+      months: Array.from({ length: 12 }, (_, index) => {
+        const monthStats = monthsMap.get(index + 1);
+
+        return {
+          month: index + 1,
+          totalVisits: monthStats?.totalVisits ?? 0,
+          totalPeople: monthStats?.totalPeople ?? 0,
+        };
+      }),
+    };
+  });
+}

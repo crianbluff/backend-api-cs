@@ -180,7 +180,7 @@ function buildBaseGuest(raw: any) {
     isFirstTime: raw.isFirstTime ?? false,
     ambassador: raw.ambassador ?? false,
     didTheyReq: raw.didTheyReq ?? false,
-    gift: Array.isArray(raw.gift) && raw.gift.length ? raw.gift : null,
+    gift: Array.isArray(raw.gift) && raw.gift.length ? raw.gift : [],
     comments: nullify(raw.comments),
     rating: raw.rating ?? null,
     hometownCode: raw.hometownCode ? String(raw.hometownCode).trim().toUpperCase() : null,

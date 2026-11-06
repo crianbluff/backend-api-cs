@@ -56,7 +56,7 @@ export const hostedSchema = new Schema<IHostedDocument>(
     isFirstTime: { type: Boolean, default: false },
     ambassador: { type: Boolean, default: false },
     didTheyReq: { type: Boolean, default: false },
-    gift: { type: [String], default: null },
+    gift: { type: [String], default: [] },
     comments: { ...nullableTrimmedString, maxlength: [2000, 'comments cannot exceed 2000 characters'] },
 
     // References

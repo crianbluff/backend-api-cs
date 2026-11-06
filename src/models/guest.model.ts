@@ -50,7 +50,7 @@ export const guestSchema = new Schema<IGuestDocument>(
     isFirstTime: { type: Boolean, default: false },
     ambassador: { type: Boolean, default: false },
     didTheyReq: { type: Boolean, default: false },
-    gift: { type: [String], default: null },
+    gift: { type: [String], default: [] },
     comments: { ...nullableTrimmedString, maxlength: [2000, 'comments cannot exceed 2000 characters'] },
     // -------------------------------------------------------------------------// References// -------------------------------------------------------------------------
     theirReference: { ...nullableTrimmedString, maxlength: [1500, 'theirReference cannot exceed 1500 characters'] },

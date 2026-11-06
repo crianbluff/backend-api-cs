@@ -50,7 +50,7 @@ export interface VisitFields {
   ambassador: boolean;
   didTheyReq: boolean;
 
-  gift: string[] | null;
+  gift: string[];
   comments: string | null;
 
   theirReference: string | null;
@@ -97,6 +97,7 @@ export interface SoloListItem extends Pick<
   | 'isGay'
   | 'whatsapp'
   | 'urlProfileCs'
+  | 'instagram'
   | 'photos'
 > {
   groupType: 'solo';
@@ -137,6 +138,7 @@ export interface GroupMemberListItem extends Pick<
   | 'isGay'
   | 'whatsapp'
   | 'urlProfileCs'
+  | 'instagram'
   | 'photos'
 > {
   hangOut: boolean;

@@ -1,17 +1,28 @@
 import { FilterQuery, HydratedDocument, Model } from 'mongoose';
+
+// Models
 import { GuestModel, IGuestDocument } from '../models/guest.model';
+
+// Interfaces
+import { PaginatedResponse, YearlyStat } from '../types/api-response.types';
 import { GuestDocument, GuestListItem, SoloListItem, GroupListItem, GroupMemberListItem } from '../types/guest.types';
-import { UpdateGuestInput, GuestQueryInput } from '../utils/validation';
+
+// Services
+import { storageService, UploadedPhoto } from './storage.service';
+
+// Middlewares
+import { AppError } from '../middlewares/error.middleware';
+
+// Helpers
 import { generateGuestId } from '../utils/nanoid';
-import { PaginatedResponse } from '../types/api-response.types';
+import { UpdateGuestInput, GuestQueryInput } from '../utils/validation';
 import {
   buildBirthDateFilter,
   buildLocationNameFilter,
   buildVisitedDateFilter,
+  completeMonthlyStats,
   parsePagination,
 } from '../utils/api-response';
-import { storageService, UploadedPhoto } from './storage.service';
-import { AppError } from '../middlewares/error.middleware';
 
 // ─── Mongoose types ──────────────────────────────────────────────────────────
 export type GuestDoc = HydratedDocument<IGuestDocument>;
@@ -49,6 +60,7 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     isGay: doc.isGay,
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
+    instagram: doc.instagram,
 
     photos: doc.photos,
 
@@ -92,6 +104,7 @@ function toSolo(doc: GuestLean): SoloListItem {
     isGay: doc.isGay,
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
+    instagram: doc.instagram,
 
     // Photos
     photos: doc.photos,
@@ -105,10 +118,10 @@ function toSolo(doc: GuestLean): SoloListItem {
 function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   const filter: FilterQuery<IGuestDocument> = {};
 
-  if (query.continent) filter.continent = query.continent;
-  if (query.region) filter.region = query.region;
-  if (query.country) filter.hometownCode = query.country;
-  if (query.countryCodeWeMet) filter.countryCodeWeMet = query.countryCodeWeMet;
+  if (query.continent?.length) filter.continent = { $in: query.continent };
+  if (query.region?.length) filter.region = { $in: query.region };
+  if (query.country?.length) filter.hometownCode = { $in: query.country };
+  if (query.countryCodeWeMet?.length) filter.countryCodeWeMet = { $in: query.countryCodeWeMet };
   if (query.gender) filter.gender = query.gender;
 
   if (query.hometownState) Object.assign(filter, buildLocationNameFilter('hometownState', query.hometownState));
@@ -128,11 +141,9 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   }
 
   if (query.gift !== undefined) {
-    if (query.gift === 'true') {
-      filter['gift.0'] = { $exists: true };
-    } else {
-      filter.$or = [{ gift: null }, { gift: { $exists: false } }, { gift: { $size: 0 } }];
-    }
+    query.gift === 'true'
+      ? (filter['gift.0'] = { $exists: true })
+      : (filter.$or = [{ gift: [] }, { gift: { $exists: false } }, { gift: { $size: 0 } }]);
   }
 
   if (query.gay !== undefined) filter.isGay = query.gay === 'true';
@@ -158,9 +169,7 @@ export class GuestService {
   constructor(protected readonly model: Model<IGuestDocument>) {}
 
   private async addSignedUrls(doc: GuestLean): Promise<GuestLean> {
-    if (!doc.photos?.length) {
-      return doc;
-    }
+    if (!doc.photos?.length) return doc;
 
     return {
       ...doc,
@@ -168,7 +177,6 @@ export class GuestService {
       photos: await Promise.all(
         doc.photos.map(async (photo) => {
           const url = await storageService.getSignedUrl(photo.path);
-
           const thumbnailUrl = photo.thumbnailPath ? await storageService.getSignedUrl(photo.thumbnailPath) : url;
 
           return {
@@ -182,14 +190,11 @@ export class GuestService {
   }
 
   private async addPhotoUrls(guest: GuestLean): Promise<GuestLean> {
-    if (!guest.photos?.length) {
-      return guest;
-    }
+    if (!guest.photos?.length) return guest;
 
     guest.photos = await Promise.all(
       guest.photos.map(async (photo) => {
         const url = await storageService.getSignedUrl(photo.path);
-
         const thumbnailUrl = photo.thumbnailPath ? await storageService.getSignedUrl(photo.thumbnailPath) : url;
 
         return {
@@ -243,18 +248,90 @@ export class GuestService {
         },
 
         // Más recientes primero
-        {
-          $sort: {
-            visitedDate: -1,
-            _id: 1,
-          },
-        },
+        { $sort: { visitedDate: -1, _id: 1 } },
 
         // Paginar y contar directamente en MongoDB
         {
           $facet: {
             data: [{ $skip: skip }, { $limit: limit }],
+
             metadata: [{ $count: 'total' }],
+
+            monthlyStats: [
+              {
+                $set: {
+                  statsYear: {
+                    $convert: {
+                      input: {
+                        $substr: [{ $ifNull: ['$visitedDate', ''] }, 0, 4],
+                      },
+                      to: 'int',
+                      onError: null,
+                      onNull: null,
+                    },
+                  },
+                  statsMonth: {
+                    $convert: {
+                      input: {
+                        $substr: [{ $ifNull: ['$visitedDate', ''] }, 5, 2],
+                      },
+                      to: 'int',
+                      onError: null,
+                      onNull: null,
+                    },
+                  },
+
+                  // Cantidad de personas dentro de cada visita
+                  peopleCount: { $size: '$members' },
+                },
+              },
+              {
+                $match: {
+                  statsYear: { $ne: null },
+                  statsMonth: { $gte: 1, $lte: 12 },
+                },
+              },
+              {
+                $group: {
+                  _id: {
+                    year: '$statsYear',
+                    month: '$statsMonth',
+                  },
+
+                  // Cada documento agrupado representa una visita
+                  totalVisits: { $sum: 1 },
+
+                  // Sumar todas las personas de las visitas
+                  totalPeople: { $sum: '$peopleCount' },
+                },
+              },
+              {
+                $group: {
+                  _id: '$_id.year',
+
+                  months: {
+                    $push: {
+                      month: '$_id.month',
+                      totalVisits: '$totalVisits',
+                      totalPeople: '$totalPeople',
+                    },
+                  },
+
+                  totalVisits: { $sum: '$totalVisits' },
+                  totalPeople: { $sum: '$totalPeople' },
+                },
+              },
+              { $sort: { _id: 1 } },
+              {
+                $project: {
+                  _id: 0,
+                  year: '$_id',
+                  months: 1,
+                  totalVisits: 1,
+                  totalPeople: 1,
+                },
+              },
+            ],
           },
         },
       ])
@@ -298,21 +375,25 @@ export class GuestService {
     const total = result?.metadata?.[0]?.total ?? 0;
     const totalPages = Math.ceil(total / limit);
 
+    const monthlyStats: YearlyStat[] = completeMonthlyStats(result?.monthlyStats ?? []);
+
     return {
       data,
-      total,
-      page,
-      limit,
-      totalPages,
-      hasNextPage: page < totalPages,
-      hasPrevPage: page > 1,
+      monthlyStats,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
     };
   }
 
   async findById(guestId: string): Promise<GuestLean | null> {
     const guest = await this.model.findOne({ guestId }).lean<GuestLean>().exec();
     if (!guest) return null;
-
     return this.addPhotoUrls(guest);
   }
 
@@ -343,10 +424,7 @@ export class GuestService {
     } catch (error) {
       console.error('[GuestService] Error after photo upload. Cleaning up GCS files...', error);
 
-      if (uploadedPhotos.length > 0) {
-        await storageService.deleteGuestPhotos(uploadedPhotos);
-      }
-
+      if (uploadedPhotos.length > 0) await storageService.deleteGuestPhotos(uploadedPhotos);
       throw error;
     }
 
@@ -379,13 +457,9 @@ export class GuestService {
     photoIds?: string[]
   ): Promise<GuestLean | null> {
     const guest = await this.model.findOne({ guestId }).exec();
-
-    if (!guest) {
-      return null;
-    }
+    if (!guest) return null;
 
     const existingPhotos = guest.photos ?? [];
-
     // ---------------------------------------------------------
     // 1. Determinar qué fotos conservar y cuáles eliminar
     // ---------------------------------------------------------
@@ -411,14 +485,12 @@ export class GuestService {
       // Fotos que el usuario quiere conservar
       photosToKeep = existingPhotos.filter((photo) => {
         const photoId = photo._id?.toString();
-
         return photoId ? requestedPhotoIds.has(photoId) : false;
       });
 
       // Fotos existentes que el usuario ya no quiere
       photosToDelete = existingPhotos.filter((photo) => {
         const photoId = photo._id?.toString();
-
         return photoId ? !requestedPhotoIds.has(photoId) : true;
       });
     }
@@ -428,10 +500,7 @@ export class GuestService {
     // ---------------------------------------------------------
 
     const finalPhotoCount = photosToKeep.length + files.length;
-
-    if (finalPhotoCount > 5) {
-      throw new AppError('A guest can have a maximum of 5 photos', 400);
-    }
+    if (finalPhotoCount > 5) throw new AppError('A guest can have a maximum of 5 photos', 400);
 
     let uploadedPhotos: UploadedPhoto[] = [];
 
@@ -439,15 +508,11 @@ export class GuestService {
       // -------------------------------------------------------
       // 3. Subir fotos nuevas
       // -------------------------------------------------------
-
-      if (files.length > 0) {
-        uploadedPhotos = await storageService.uploadGuestPhotos(guestId, files);
-      }
+      if (files.length > 0) uploadedPhotos = await storageService.uploadGuestPhotos(guestId, files);
 
       // -------------------------------------------------------
       // 4. Crear referencias de las fotos nuevas
       // -------------------------------------------------------
-
       const newPhotos = uploadedPhotos.map((photo) => ({
         path: photo.path,
         thumbnailPath: photo.thumbnailPath,
@@ -458,7 +523,6 @@ export class GuestService {
       // -------------------------------------------------------
 
       Object.assign(guest, input);
-
       // Las fotos se controlan exclusivamente aquí.
       // Nunca usamos input.photos.
       guest.photos = [...photosToKeep, ...newPhotos] as typeof guest.photos;
@@ -466,13 +530,11 @@ export class GuestService {
       // -------------------------------------------------------
       // 6. Guardar MongoDB
       // -------------------------------------------------------
-
       await guest.save();
 
       // -------------------------------------------------------
       // 7. Eliminar de GCS las fotos que ya no están en MongoDB
       // -------------------------------------------------------
-
       if (photosToDelete.length > 0) {
         await storageService.deleteGuestPhotos(
           photosToDelete.map((photo) => ({
@@ -514,10 +576,7 @@ export class GuestService {
       // Las fotos antiguas no se tocan.
       // -------------------------------------------------------
 
-      if (uploadedPhotos.length > 0) {
-        await storageService.deleteGuestPhotos(uploadedPhotos);
-      }
-
+      if (uploadedPhotos.length > 0) await storageService.deleteGuestPhotos(uploadedPhotos);
       throw error;
     }
   }
@@ -531,7 +590,6 @@ export class GuestService {
 
   async delete(guestId: string): Promise<boolean> {
     const result = await this.model.deleteOne({ guestId });
-
     return result.deletedCount === 1;
   }
 }

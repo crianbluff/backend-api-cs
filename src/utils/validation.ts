@@ -8,15 +8,32 @@ const regionEnum = z.enum(REGIONS);
 const genderEnum = z.enum(GENDERS);
 const groupTypeEnum = z.enum(GROUP_TYPES);
 
-const groupTypeQuerySchema = z
+// Multi-value query helper
+const multiValueQuery = <T extends z.ZodTypeAny>(schema: T) =>
+  z
+    .string()
+    .transform((value) =>
+      value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean)
+    )
+    .pipe(z.array(schema).min(1));
+
+const alpha3Schema = z
   .string()
-  .transform((value) =>
-    value
-      .split(',')
-      .map((item) => item.trim())
-      .filter(Boolean)
-  )
-  .pipe(z.array(groupTypeEnum).min(1));
+  .length(3)
+  .toUpperCase()
+  .refine((code) => isValidAlpha3(code), {
+    message: 'Must be a valid ISO 3166-1 alpha-3 country code',
+  });
+
+// Multi-value query schemas
+const continentQuerySchema = multiValueQuery(continentEnum);
+const regionQuerySchema = multiValueQuery(regionEnum);
+const countryQuerySchema = multiValueQuery(alpha3Schema);
+const countryCodeWeMetQuerySchema = multiValueQuery(alpha3Schema);
+const groupTypeQuerySchema = multiValueQuery(groupTypeEnum);
 
 // ISO 8601 flexible: YYYY | YYYY-MM | YYYY-MM-DD
 const isoDateRegex = /^\d{4}(-\d{2}(-\d{2})?)?$/;
@@ -29,14 +46,6 @@ const birthDateQuerySchema = z
     /^(?:\d{4}|\d{2}|\d{4}-\d{2}|\d{4}-\d{2}-\d{2}|\d{2}-\d{2}|--\d{2})$/,
     'birthDate must be YYYY, MM, YYYY-MM, YYYY-MM-DD, MM-DD or --DD'
   );
-
-const alpha3Schema = z
-  .string()
-  .length(3)
-  .toUpperCase()
-  .refine((code) => isValidAlpha3(code), {
-    message: 'Must be a valid ISO 3166-1 alpha-3 country code (e.g. "COL", "DEU", "JPN")',
-  });
 
 const booleanQuerySchema = z.enum(['true', 'false']);
 const ratingQuerySchema = z.string().regex(/^[1-5]$/, 'rating must be between 1 and 5');
@@ -120,7 +129,7 @@ const individualSchema = z.object({
   ambassador: booleanFromFormData.optional().default(false),
   didTheyReq: booleanFromFormData.optional().default(false),
   hangOut: booleanFromFormData.optional().default(false),
-  gift: arrayFromFormData.nullable().optional().default(null),
+  gift: arrayFromFormData.optional().default([]),
   comments: z.string().max(2000).nullable().optional().default(null),
 });
 
@@ -150,10 +159,10 @@ export const updateGuestSchema = createSoloGuestSchema.partial().extend({
 // Guest query params
 
 const guestQueryFiltersSchema = z.object({
-  continent: continentEnum.optional(),
-  region: regionEnum.optional(),
-  country: alpha3Schema.optional(),
-  countryCodeWeMet: alpha3Schema.optional(),
+  continent: continentQuerySchema.optional(),
+  region: regionQuerySchema.optional(),
+  country: countryQuerySchema.optional(),
+  countryCodeWeMet: countryCodeWeMetQuerySchema.optional(),
   gender: genderEnum.optional(),
   groupType: groupTypeQuerySchema.optional(),
   gay: booleanQuerySchema.optional(),
@@ -255,12 +264,12 @@ export const updateHostedSchema = hostedBaseSchema.partial().superRefine((data, 
 
 // Hosted query params
 const hostedQueryFiltersSchema = z.object({
-  continent: continentEnum.optional(),
-  region: regionEnum.optional(),
-  country: alpha3Schema.optional(),
-  countryCodeWeMet: alpha3Schema.optional(),
+  continent: continentQuerySchema.optional(),
+  region: regionQuerySchema.optional(),
+  country: countryQuerySchema.optional(),
+  countryCodeWeMet: countryCodeWeMetQuerySchema.optional(),
   gender: genderEnum.optional(),
-  groupTypeCompanionship: groupTypeEnum.optional(),
+  groupTypeCompanionship: groupTypeQuerySchema.optional(),
   gay: booleanQuerySchema.optional(),
   gift: booleanQuerySchema.optional(),
   isFirstTime: booleanQuerySchema.optional(),

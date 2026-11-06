@@ -16,13 +16,21 @@ const DEFAULT_POSITIONS = [
 const UNUSUAL_BIRTHDAY_REASONS = new Map<string, string>([
   // Special dates
   ['1-1', "New Year's Day"],
+  ['1-6', "Three Kings' Day"],
+  ['1-27', 'International Holocaust Remembrance Day'],
   ['2-14', "Valentine's Day"],
   ['2-29', 'Leap Day'],
+  ['3-8', "International Women's Day"],
+  ['4-1', "April Fools' Day"],
+  ['4-22', 'Earth Day'],
+  ['5-1', "International Workers' Day"],
+  ['5-10', "Mother's Day"],
   ['10-31', 'Halloween'],
+  ['11-2', 'Day of the Dead'],
+  ['11-20', "World Children's Day"],
   ['12-24', 'Christmas Eve'],
   ['12-25', 'Christmas Day'],
   ['12-31', 'Last Day'],
-  ['5-10', "Mother's Day"],
 
   // Special birthdays
   ['4-8', "Alo's Birthday"],
