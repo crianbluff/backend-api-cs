@@ -58,21 +58,21 @@ const options: swaggerJsdoc.Options = {
 
             hometownCode: {
               type: 'string',
-              example: 'CHN',
-              description: 'ISO 3166-1 alpha-3 country code',
+              example: 'AW',
+              description: 'ISO 3166-1 alpha-2 country code',
             },
 
             countryCodeWeMet: {
               type: 'string',
-              example: 'CHN',
-              description: 'ISO 3166-1 alpha-3 country code',
+              example: 'ZW',
+              description: 'ISO 3166-1 alpha-2 country code',
             },
 
             livingInCode: {
               type: 'string',
               nullable: true,
-              example: 'DEU',
-              description: 'ISO 3166-1 alpha-3 country code',
+              example: 'TN',
+              description: 'ISO 3166-1 alpha-2 country code',
             },
 
             prefixCode: {
@@ -280,8 +280,8 @@ const options: swaggerJsdoc.Options = {
           properties: {
             hometownCode: {
               type: 'string',
-              example: 'AUT',
-              description: 'ISO 3166-1 alpha-3 country code',
+              example: 'AU',
+              description: 'ISO 3166-1 alpha-2 country code',
             },
 
             prefixCode: {
@@ -338,8 +338,8 @@ const options: swaggerJsdoc.Options = {
             livingInCode: {
               type: 'string',
               nullable: true,
-              example: 'AUT',
-              description: 'ISO 3166-1 alpha-3 country code',
+              example: 'AU',
+              description: 'ISO 3166-1 alpha-2 country code',
             },
 
             birthDate: {

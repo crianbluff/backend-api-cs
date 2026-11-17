@@ -18,16 +18,16 @@ const router = Router();
  *         name: country
  *         schema:
  *           type: string
- *         description: ISO 3166-1 alpha-3 country code (hometownCode)
- *         example: COL
+ *         description: ISO 3166-1 alpha-2 country code (hometownCode)
+ *         example: CO
  * 
 
  *       - in: query
  *         name: countryCodeWeMet
  *         schema:
  *           type: string
- *         description: ISO 3166-1 alpha-3 country code (hometownCode)
- *         example: COL
+ *         description: ISO 3166-1 alpha-2 country code (hometownCode)
+ *         example: CO
 
  *       - in: query
  *         name: gender

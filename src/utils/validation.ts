@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { isValidAlpha3 } from './iso3166';
+import { isValidAlpha2 } from './iso3166';
 import { CONTINENTS, GENDERS, GROUP_TYPES, REGIONS } from '../types/global.types';
 
 // Enums & shared primitives
@@ -20,19 +20,18 @@ const multiValueQuery = <T extends z.ZodTypeAny>(schema: T) =>
     )
     .pipe(z.array(schema).min(1));
 
-const alpha3Schema = z
+const alpha2Schema = z
   .string()
-  .length(3)
   .toUpperCase()
-  .refine((code) => isValidAlpha3(code), {
-    message: 'Must be a valid ISO 3166-1 alpha-3 country code',
+  .refine((code) => isValidAlpha2(code), {
+    message: 'Must be a valid ISO 3166-1 alpha-2 country code',
   });
 
 // Multi-value query schemas
 const continentQuerySchema = multiValueQuery(continentEnum);
 const regionQuerySchema = multiValueQuery(regionEnum);
-const countryQuerySchema = multiValueQuery(alpha3Schema);
-const countryCodeWeMetQuerySchema = multiValueQuery(alpha3Schema);
+const countryQuerySchema = multiValueQuery(alpha2Schema);
+const countryCodeWeMetQuerySchema = multiValueQuery(alpha2Schema);
 const groupTypeQuerySchema = multiValueQuery(groupTypeEnum);
 
 // ISO 8601 flexible: YYYY | YYYY-MM | YYYY-MM-DD
@@ -100,9 +99,9 @@ const arrayFromFormData = z.preprocess((value) => {
 const individualSchema = z.object({
   guestId: z.string().optional(),
   rating: integerFromFormData(1, 5).nullable().optional().default(null),
-  hometownCode: alpha3Schema,
-  countryCodeWeMet: alpha3Schema,
-  livingInCode: z.preprocess((value) => (value === '' ? null : value), alpha3Schema.nullable().optional().default(null)),
+  hometownCode: alpha2Schema,
+  countryCodeWeMet: alpha2Schema,
+  livingInCode: z.preprocess((value) => (value === '' ? null : value), alpha2Schema.nullable().optional().default(null)),
   prefixCode: z.string().nullable().optional().default(null),
   continent: continentEnum,
   region: regionEnum,

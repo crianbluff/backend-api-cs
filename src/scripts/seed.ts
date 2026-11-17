@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import fs from 'fs';
 import path from 'path';
 import { CONTINENTS, REGIONS, GENDERS, GROUP_TYPES } from '../types/global.types';
-import { isValidAlpha3 } from '../utils/iso3166';
+import { isValidAlpha2 } from '../utils/iso3166';
 
 // COLLECTION CONFIG
 const GUESTS_SOLO_FILES = [
@@ -41,6 +41,7 @@ const GUESTS_GROUP_COUPLE_FILES = [
 
 const GUESTS_GROUP_FRIENDS_FILES = [
   'src/scripts/guests/group/friends/america/south.json',
+  'src/scripts/guests/group/friends/america/caribbean.json',
   'src/scripts/guests/group/friends/asia/central.json',
   'src/scripts/guests/group/friends/asia/west.json',
   'src/scripts/guests/group/friends/europe/central.json',
@@ -50,7 +51,7 @@ const GUESTS_GROUP_FRIENDS_FILES = [
 ];
 
 const GUESTS_GROUP_FAMILY_FILES = [
-  'src/scripts/guests/group/family/america/caribbean.json',
+  'src/scripts/guests/group/family/america/central.json',
   'src/scripts/guests/group/family/america/south.json',
 ];
 
@@ -121,12 +122,12 @@ function validateGuest(raw: any): void {
   if (!region || !VALID_REGIONS.has(region)) throw new Error(`Invalid region "${raw.region}" for "${raw.fullName}"`);
   if (!VALID_GROUP_TYPES.has(groupType)) throw new Error(`Invalid groupType "${raw.groupType}" for "${raw.fullName}"`);
   if (gender && !VALID_GENDERS.has(gender)) throw new Error(`Invalid gender "${raw.gender}" for "${raw.fullName}"`);
-  if (hometownCode && !isValidAlpha3(hometownCode)) throw new Error(`Invalid hometownCode "${hometownCode}"`);
+  if (hometownCode && !isValidAlpha2(hometownCode)) throw new Error(`Invalid hometownCode "${hometownCode}"`);
 
-  if (countryCodeWeMet && !isValidAlpha3(countryCodeWeMet))
+  if (countryCodeWeMet && !isValidAlpha2(countryCodeWeMet))
     throw new Error(`Invalid countryCodeWeMet "${countryCodeWeMet}"`);
 
-  if (livingInCode && !isValidAlpha3(livingInCode)) throw new Error(`Invalid livingInCode "${livingInCode}"`);
+  if (livingInCode && !isValidAlpha2(livingInCode)) throw new Error(`Invalid livingInCode "${livingInCode}"`);
 }
 
 function loadJSONFile(filePath: string): any[] {
