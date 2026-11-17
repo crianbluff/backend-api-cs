@@ -1,13 +1,13 @@
 [
   {
-    "hometownCode": "MEX",
+    "hometownCode": "MX",
     "prefixCode": "+52",
     "continent": "america",
     "region": "north_america",
     "fullName": "Alondra Francisco",
     "hometown": "Acambay, State Of Mexico",
     "livingIn": "Bogotá, Bogota D.C.",
-    "livingInCode": "COL",
+    "livingInCode": "CO",
     "birthDate": "2002-04-08",
     "urlProfileCs": "alitobuu",
     "gender": "female",
@@ -18,14 +18,14 @@
     "isFirstTime": false
   },
   {
-    "hometownCode": "AUT",
+    "hometownCode": "AT",
     "prefixCode": "+43",
     "continent": "europe",
     "region": "central_europe",
     "fullName": "Jon-Matteo Brüggenwerth",
     "hometown": "Gallneukirchen, Upper Austria",
     "livingIn": "Gallneukirchen, Upper Austria",
-    "livingInCode": "AUT",
+    "livingInCode": "AT",
     "birthDate": "2000-05",
     "urlProfileCs": "jonmatt90719330",
     "gender": "male",

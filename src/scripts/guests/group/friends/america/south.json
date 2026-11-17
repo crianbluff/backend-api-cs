@@ -7,7 +7,7 @@
     "visitedDate": "2026-02-24",
     "groupType": "friends",
     "groupId": "14",
-    "countryCodeWeMet": "COL",
+    "countryCodeWeMet": "CO",
     "cityWeMet": "Bogotá, Bogota D.C.",
     "locationWeMet": "My mom's home",
     "theirReference": "Cristian es una persona súper carismática y amigable, un anfitrión excepcional, tanto él como su familia nos recibieron con los brazos abiertos y nos hicieron sentir como en casa desde el primer momento. Siempre estuvieron atentos a resolver todas nuestras dudas y nunca faltó un buen tinto y una buena conversación. Fui con una amiga y ambas nos sentimos muy cómodas, cuidadas y agradecidas por la experiencia.",
@@ -15,10 +15,10 @@
     "gift": ["1/2 tigrillo lunch para todos"],
     "comments": "we play bolirana",
     "livingIn": "Quito, Pichincha",
-    "livingInCode": "ECU",
+    "livingInCode": "EC",
     "continent": "america",
     "region": "south_america",
-    "hometownCode": "ECU",
+    "hometownCode": "EC",
     "rating": 4,
     "prefixCode": "+593",
     "fullName": "Naomy Jethzabel",
@@ -28,7 +28,8 @@
     "occupation": ["psychologist student"],
     "gender": "female",
     "whatsapp": "968686502",
-    "instagram": "jst.naomy"
+    "instagram": "jst.naomy",
+    "isFirstTime": true
   },
   {
     "nights": 3,
@@ -38,7 +39,7 @@
     "visitedDate": "2026-02-24",
     "groupType": "friends",
     "groupId": "14",
-    "countryCodeWeMet": "COL",
+    "countryCodeWeMet": "CO",
     "cityWeMet": "Bogotá, Bogota D.C.",
     "locationWeMet": "My mom's home",
     "theirReference": null,
@@ -46,10 +47,10 @@
     "gift": ["1/2 tigrillo lunch para todos"],
     "comments": "we play bolirana",
     "livingIn": "Quito, Pichincha",
-    "livingInCode": "ECU",
+    "livingInCode": "EC",
     "continent": "america",
     "region": "south_america",
-    "hometownCode": "ECU",
+    "hometownCode": "EC",
     "rating": 4,
     "prefixCode": null,
     "fullName": "Gabriela",
@@ -59,6 +60,7 @@
     "occupation": ["psychologist student"],
     "gender": "female",
     "whatsapp": null,
-    "instagram": "lurk.31"
+    "instagram": "lurk.31",
+    "isFirstTime": true
   }
 ]

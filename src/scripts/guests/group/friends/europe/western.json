@@ -1,7 +1,7 @@
 [
   {
     "nights": 2,
-    "countryCodeWeMet": "COL",
+    "countryCodeWeMet": "CO",
     "cityWeMet": "Bogotá, Bogota D.C.",
     "locationWeMet": "My mom's home",
     "didTheyReq": true,
@@ -15,9 +15,9 @@
     "groupId": "26",
     "hometown": "Mont-Saint-Aignan, Normandía",
     "livingIn": "Mont-Saint-Aignan, Normandía",
-    "livingInCode": "FRA",
+    "livingInCode": "FR",
     "rating": 3,
-    "hometownCode": "FRA",
+    "hometownCode": "FR",
     "continent": "europe",
     "region": "western_europe",
     "prefixCode": "+33",
@@ -28,11 +28,12 @@
     "gender": "male",
     "whatsapp": "767672526",
     "instagram": "gustave.lm",
-    "comments": "Tuve que decirles que se fueran una noche antes ya que llegaba otro cs de taiwan"
+    "comments": "Tuve que decirles que se fueran una noche antes ya que llegaba otro cs de taiwan",
+    "isFirstTime": true
   },
   {
     "nights": 2,
-    "countryCodeWeMet": "COL",
+    "countryCodeWeMet": "CO",
     "cityWeMet": "Bogotá, Bogota D.C.",
     "locationWeMet": "My mom's home",
     "didTheyReq": true,
@@ -46,9 +47,9 @@
     "groupId": "26",
     "hometown": "Île-de-France, Paris",
     "livingIn": "Montpellier, Occitanie",
-    "livingInCode": "FRA",
+    "livingInCode": "FR",
     "rating": 4,
-    "hometownCode": "FRA",
+    "hometownCode": "FR",
     "continent": "europe",
     "region": "western_europe",
     "prefixCode": "+33",
@@ -58,6 +59,7 @@
     "occupation": ["history student"],
     "gender": "male",
     "whatsapp": null,
-    "instagram": "mathiasvct.ww"
+    "instagram": "mathiasvct.ww",
+    "isFirstTime": true
   }
 ]

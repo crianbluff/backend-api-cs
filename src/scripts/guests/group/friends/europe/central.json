@@ -1,7 +1,7 @@
 [
   {
     "nights": 2,
-    "countryCodeWeMet": "COL",
+    "countryCodeWeMet": "CO",
     "cityWeMet": "Bogotá, Bogota D.C.",
     "locationWeMet": "My mom's home",
     "didTheyReq": true,
@@ -15,10 +15,10 @@
     "rating": 4,
     "continent": "europe",
     "region": "central_europe",
-    "hometownCode": "DEU",
+    "hometownCode": "DE",
     "hometown": "Erbach, Baden-Württemberg",
     "livingIn": "Würzburg, Bavaria",
-    "livingInCode": "DEU",
+    "livingInCode": "DE",
     "gift": ["1/2 they invited me an iced latte at San Alberto"],
     "prefixCode": "+49",
     "fullName": "Elisia Walter",
@@ -31,7 +31,7 @@
   },
   {
     "nights": 2,
-    "countryCodeWeMet": "COL",
+    "countryCodeWeMet": "CO",
     "cityWeMet": "Bogotá, Bogota D.C.",
     "locationWeMet": "My mom's home",
     "didTheyReq": true,
@@ -45,10 +45,10 @@
     "rating": 3,
     "continent": "europe",
     "region": "central_europe",
-    "hometownCode": "DEU",
+    "hometownCode": "DE",
     "hometown": "Peissenberg, Bavaria",
     "livingIn": "Würzburg, Bavaria",
-    "livingInCode": "DEU",
+    "livingInCode": "DE",
     "gift": ["1/2 they invited me an iced latte at San Alberto"],
     "prefixCode": "+49",
     "fullName": "Franziska Steigenberger",
@@ -57,6 +57,7 @@
     "occupation": ["teacher for special needs education"],
     "gender": "female",
     "whatsapp": "15777797727",
-    "instagram": null
+    "instagram": null,
+    "isFirstTime": true
   }
 ]
