@@ -205,6 +205,7 @@ function buildBaseGuest(raw: any) {
     gender,
     isGay: raw.isGay ?? false,
     whatsapp: nullify(raw.whatsapp),
+    platform: raw.platform ?? 'couchsurfing',
     instagram: nullify(raw.instagram),
     theirReference: nullify(raw.theirReference),
     myReference: nullify(raw.myReference),

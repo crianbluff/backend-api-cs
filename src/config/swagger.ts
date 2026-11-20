@@ -46,7 +46,7 @@ const options: swaggerJsdoc.Options = {
         IndividualFields: {
           type: 'object',
 
-          required: ['hometownCode', 'countryCodeWeMet', 'continent', 'region', 'fullName', 'gender'],
+          required: ['hometownCode', 'countryCodeWeMet', 'continent', 'region', 'fullName', 'platform', 'gender'],
 
           properties: {
             rating: {
@@ -183,6 +183,11 @@ const options: swaggerJsdoc.Options = {
             instagram: {
               type: 'string',
               nullable: true,
+            },
+
+            platform: {
+              type: 'string',
+              maxLength: 100,
             },
 
             isFirstTime: {
@@ -642,6 +647,12 @@ const options: swaggerJsdoc.Options = {
               nullable: true,
             },
 
+            platform: {
+              type: 'string',
+              maxLength: 100,
+              example: 'couchsurfing',
+            },
+
             groupTypeCompanionship: {
               type: 'string',
               enum: GROUP_TYPES,
@@ -845,6 +856,10 @@ const options: swaggerJsdoc.Options = {
               type: 'string',
               nullable: true,
             },
+
+            platform: {
+              type: 'string',
+            },
           },
         },
 
@@ -998,6 +1013,10 @@ const options: swaggerJsdoc.Options = {
             whatsapp: {
               type: 'string',
               nullable: true,
+            },
+
+            platform: {
+              type: 'string',
             },
 
             instagram: {
@@ -1184,6 +1203,7 @@ const options: swaggerJsdoc.Options = {
             'continent',
             'region',
             'fullName',
+            'platform',
             'gender',
             'visitedDate',
             'groupTypeCompanionship',
@@ -1344,6 +1364,12 @@ const options: swaggerJsdoc.Options = {
             whatsapp: {
               type: 'string',
               nullable: true,
+            },
+
+            platform: {
+              type: 'string',
+              maxLength: 100,
+              example: 'couchsurfing',
             },
 
             instagram: {
@@ -1552,6 +1578,11 @@ const options: swaggerJsdoc.Options = {
             whatsapp: {
               type: 'string',
               nullable: true,
+            },
+
+            platform: {
+              type: 'string',
+              maxLength: 100,
             },
 
             instagram: {

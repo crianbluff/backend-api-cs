@@ -8,6 +8,15 @@ const regionEnum = z.enum(REGIONS);
 const genderEnum = z.enum(GENDERS);
 const groupTypeEnum = z.enum(GROUP_TYPES);
 
+export const buildPlatformFilter = (platforms: string[]) => {
+  return {
+    $in: platforms.map((platform) => {
+      const escaped = platform.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp(`^${escaped}$`, 'i');
+    }),
+  };
+};
+
 // Multi-value query helper
 const multiValueQuery = <T extends z.ZodTypeAny>(schema: T) =>
   z
@@ -19,6 +28,12 @@ const multiValueQuery = <T extends z.ZodTypeAny>(schema: T) =>
         .filter(Boolean)
     )
     .pipe(z.array(schema).min(1));
+
+const platformSchema = z
+  .string()
+  .min(1)
+  .max(100)
+  .transform((value) => value.trim().toLowerCase().replace(/\s+/g, ''));
 
 const alpha2Schema = z
   .string()
@@ -33,6 +48,7 @@ const regionQuerySchema = multiValueQuery(regionEnum);
 const countryQuerySchema = multiValueQuery(alpha2Schema);
 const countryCodeWeMetQuerySchema = multiValueQuery(alpha2Schema);
 const groupTypeQuerySchema = multiValueQuery(groupTypeEnum);
+const platformQuerySchema = multiValueQuery(platformSchema);
 
 // ISO 8601 flexible: YYYY | YYYY-MM | YYYY-MM-DD
 const isoDateRegex = /^\d{4}(-\d{2}(-\d{2})?)?$/;
@@ -123,6 +139,7 @@ const individualSchema = z.object({
   myReference: z.string().max(1500, 'myReference cannot exceed 1500 characters').nullable().optional(),
   whatsapp: z.string().max(20).nullable().optional().default(null),
   instagram: z.string().max(100).nullable().optional().default(null),
+  platform: platformSchema,
   // Per-member fields
   isFirstTime: booleanFromFormData.optional().default(false),
   ambassador: booleanFromFormData.optional().default(false),
@@ -178,6 +195,7 @@ const guestQueryFiltersSchema = z.object({
     .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
+  platform: platformQuerySchema.optional(),
   hometownCity: z.string().max(200).nullable().optional().default(null),
   hometownState: z.string().max(200).nullable().optional().default(null),
   livingInCity: z.string().max(200).nullable().optional().default(null),
@@ -283,6 +301,7 @@ const hostedQueryFiltersSchema = z.object({
     .optional(),
   from: isoDateSchema.optional().describe('Filter start date'),
   to: isoDateSchema.optional().describe('Filter end date'),
+  platform: platformQuerySchema.optional(),
   hometownCity: z.string().max(200).nullable().optional().default(null),
   hometownState: z.string().max(200).nullable().optional().default(null),
   livingInCity: z.string().max(200).nullable().optional().default(null),

@@ -20,7 +20,13 @@ const router = Router();
  *           type: string
  *         description: ISO 3166-1 alpha-2 country code (hometownCode)
  *         example: CO
- * 
+
+ *       - in: query
+ *         name: platform
+ *         schema:
+ *           type: string
+ *         description: string
+ *         example: couchsurfing
 
  *       - in: query
  *         name: countryCodeWeMet
@@ -227,7 +233,7 @@ const router = Router();
  *         example: "2026-05"
 
 
-  *       - in: query
+ *       - in: query
  *         name: from
  *         schema:
  *           type: string

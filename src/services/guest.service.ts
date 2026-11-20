@@ -15,7 +15,7 @@ import { AppError } from '../middlewares/error.middleware';
 
 // Helpers
 import { generateGuestId } from '../utils/nanoid';
-import { UpdateGuestInput, GuestQueryInput } from '../utils/validation';
+import { UpdateGuestInput, GuestQueryInput, buildPlatformFilter } from '../utils/validation';
 import {
   buildBirthDateFilter,
   buildLocationNameFilter,
@@ -61,6 +61,7 @@ function toMember(doc: GuestLean): GroupMemberListItem {
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
     instagram: doc.instagram,
+    platform: doc.platform,
     gift: doc.gift,
 
     photos: doc.photos,
@@ -105,6 +106,7 @@ function toSolo(doc: GuestLean): SoloListItem {
     isGay: doc.isGay,
     whatsapp: doc.whatsapp,
     urlProfileCs: doc.urlProfileCs,
+    platform: doc.platform,
     instagram: doc.instagram,
     gift: doc.gift,
 
@@ -125,6 +127,7 @@ function buildFilter(query: GuestQueryInput): FilterQuery<IGuestDocument> {
   if (query.country?.length) filter.hometownCode = { $in: query.country };
   if (query.countryCodeWeMet?.length) filter.countryCodeWeMet = { $in: query.countryCodeWeMet };
   if (query.gender) filter.gender = query.gender;
+  if (query.platform?.length) filter.platform = buildPlatformFilter(query.platform);
 
   if (query.hometownState) Object.assign(filter, buildLocationNameFilter('hometownState', query.hometownState));
   if (query.livingInState) Object.assign(filter, buildLocationNameFilter('livingInState', query.livingInState));

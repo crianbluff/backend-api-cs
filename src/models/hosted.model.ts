@@ -86,6 +86,14 @@ export const hostedSchema = new Schema<IHostedDocument>(
     gender: { type: String, required: true, enum: GENDERS },
     isGay: { type: Boolean, default: false },
     whatsapp: nullableString,
+    platform: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      set: (value: string) => (typeof value === 'string' ? value.trim().toLowerCase().replace(/\s+/g, '') : value),
+      maxlength: [100, 'platform cannot exceed 100 characters'],
+    },
     instagram: nullableString,
     // Companionship
     groupTypeCompanionship: { type: String, required: true, enum: GROUP_TYPES },

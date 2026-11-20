@@ -79,6 +79,14 @@ export const guestSchema = new Schema<IGuestDocument>(
     isGay: { type: Boolean, default: false },
     whatsapp: nullableString,
     instagram: nullableString,
+    platform: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      set: (value: string) => (typeof value === 'string' ? value.trim().toLowerCase().replace(/\s+/g, '') : value),
+      maxlength: [100, 'platform cannot exceed 100 characters'],
+    },
     photos: {
       type: [guestPhotoSchema],
       default: [],

@@ -1,7 +1,7 @@
 import { FilterQuery, Model } from 'mongoose';
 import { HostedModel, IHostedDocument } from '../models/hosted.model';
 import { generateGuestId } from '../utils/nanoid';
-import { CreateHostedInput, HostedQueryInput, UpdateHostedInput } from '../utils/validation';
+import { buildPlatformFilter, CreateHostedInput, HostedQueryInput, UpdateHostedInput } from '../utils/validation';
 import { PaginatedResponse, YearlyStat } from '../types/api-response.types';
 import { buildVisitedDateFilter, completeMonthlyStats, parsePagination } from '../utils/api-response';
 
@@ -17,6 +17,7 @@ function buildFilter(query: HostedQueryInput): FilterQuery<IHostedDocument> {
   if (query.country?.length) filter.hometownCode = { $in: query.country };
   if (query.groupTypeCompanionship?.length) filter.groupTypeCompanionship = { $in: query.groupTypeCompanionship };
   if (query.countryCodeWeMet?.length) filter.countryCodeWeMet = { $in: query.countryCodeWeMet };
+  if (query.platform?.length) filter.platform = buildPlatformFilter(query.platform);
   if (query.gender) filter.gender = query.gender;
   if (query.gay !== undefined) filter.isGay = query.gay === 'true';
   if (query.isFirstTime !== undefined) filter.isFirstTime = query.isFirstTime === 'true';

@@ -30,6 +30,11 @@ const router = Router();
  *           type: string
  *           example: "10"
  *       - in: query
+ *         name: platform
+ *         schema:
+ *           type: string
+ *           example: "couchsurfing"
+ *       - in: query
  *         name: continent
  *         schema:
  *           type: string
